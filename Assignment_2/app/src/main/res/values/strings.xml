@@ -3,4 +3,7 @@
     <string name="check_conn">Check Connection</string>
     <string name="get_weather">Get weather</string>
     <string name="stop_service">Stop updating</string>
+    <string name="currentTxt">Vejret</string>
+    <string name="currentWeatherTxt">\??</string>
+    <string name="currentTempTxt">\??</string>
 </resources>
