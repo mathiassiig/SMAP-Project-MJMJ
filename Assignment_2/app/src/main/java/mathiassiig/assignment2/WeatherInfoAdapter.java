@@ -1,6 +1,7 @@
 package mathiassiig.assignment2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,32 +26,55 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
         super(context, 0, weatherInfos);
         this.weatherInfos = weatherInfos;
     }
-    
+
+    //// TODO: 28-09-2016 IMPLEMENT
+    private String getDate(String timeStamp)
+    {
+        return "";
+    }
+
+    //// TODO: 28-09-2016 IMPLEMENT 
+    private String getTime(String timeStamp)
+    {
+        return "";
+    }
+
+    /////TODO: 28-09-2016 IMPLEMENT
+    private int GetWeatherIcon(String weather)
+    {
+        switch(weather)
+        {
+            case "cloudy":
+                //do shit
+                break;
+            default:
+                break;
+        }
+        return 0;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         final WeatherInfo weather = getItem(position);
 
-        /*
-        if(convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reminder, parent, false);
-        TextView tvPlace = (TextView) convertView.findViewById(R.id.textViewPlace);
-        TextView tvTask = (TextView) convertView.findViewById(R.id.textViewTask);
 
-        tvPlace.setText(reminder.Place);
-        tvTask.setText(reminder.Task);
-        ImageView btnDelete = (ImageView) convertView.findViewById(R.id.btnDelete);
-        btnDelete.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                reminders.remove(reminder);
-                DatabaseHelper.getInstance(getContext()).DeleteReminder(reminder.ID);
-                notifyDataSetChanged();
-            }
-        });
-        */
+        if(convertView == null)
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_weatherinfo, parent, false);
+        TextView tvDescription = (TextView) convertView.findViewById(R.id.txtDescription);
+        TextView tvDate = (TextView) convertView.findViewById(R.id.txtDate);
+        TextView tvTemperature = (TextView) convertView.findViewById(R.id.txtTemperature);
+        TextView tvTime = (TextView) convertView.findViewById(R.id.txtTime);
+
+        tvDescription.setText(weather.description);
+        String date = getDate(weather.timestamp);
+        String time = getDate(weather.timestamp);
+        tvDate.setText(date);
+        tvTime.setText(time);
+        tvTemperature.setText(Float.toString(weather.temperature));
+
+        ImageView imgWeather = (ImageView) convertView.findViewById(R.id.imgWeather);
+        imgWeather.setImageResource(GetWeatherIcon(weather.description));
         return convertView;
     }
 }
