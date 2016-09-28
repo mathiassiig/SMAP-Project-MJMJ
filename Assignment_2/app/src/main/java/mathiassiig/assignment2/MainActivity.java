@@ -1,11 +1,15 @@
 package mathiassiig.assignment2;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,14 +22,19 @@ public class MainActivity extends AppCompatActivity {
 
     private Button checkConn;
     private Button getWeather;
+    private Button stopService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
+
+
         checkConn = (Button)findViewById(R.id.buttonCheck);
         getWeather = (Button)findViewById(R.id.buttonWeather);
+        stopService = (Button)findViewById(R.id.buttonStop);
 
         checkConn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 weatherRequest();
+            }
+        });
+
+        stopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopBackgroundService();
             }
         });
     }
@@ -60,5 +76,25 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "No connection " + networkInfo.toString(), Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    private void stopBackgroundService(){
+        Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
+        stopService(backgroundServiceIntent);
+    }
+
+    private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String result = intent.getStringExtra("Result");
+            if(result==null){
+                result = "Error";
+            }
+            handleBackgroundResult(result);
+        }
+    };
+
+    private void handleBackgroundResult(String result){
+        Toast.makeText(MainActivity.this, "Got result from background service:\n" + result, Toast.LENGTH_SHORT).show();
     }
 }
