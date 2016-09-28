@@ -17,8 +17,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
-    private static final long ID_CITY = 2624652; //Aarhus
-    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + ID_CITY + "&APPID=" + API_KEY;
+    private static final String ID_CITY = "Aarhus,dk";
+    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast/weather?q=" + ID_CITY + "&appid=" + API_KEY;
+    //http://api.openweathermap.org/data/2.5/weather?q=Aarhus,dk&appid=d5a8341b52c8adfc0b4ec902bf53261c
 
     private Button checkConn;
     private Button getWeather;
