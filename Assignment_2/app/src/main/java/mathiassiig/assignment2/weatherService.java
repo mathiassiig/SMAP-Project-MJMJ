@@ -18,19 +18,22 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 public class weatherService extends Service {
+
+    public static final long LOOP_TIME = 5000;
+    private boolean started = false;
+
     public weatherService() {
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String weatherURL = intent.getStringExtra("weather");
+        started = true;
         runInBackground(weatherURL);
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void runInBackground(final String weatherURL) {
-
-
 
         AsyncTask<Object, Object, String> task = new AsyncTask<Object, Object, String>() {
             @Override
@@ -38,7 +41,7 @@ public class weatherService extends Service {
                 String weatherData;
                 String s = "Background job";
                 try {
-                   // Thread.sleep(10000);
+                    Thread.sleep(LOOP_TIME);
                     weatherData = callURL(weatherURL);
                 } catch (Exception e) {
                     s+= " did not finish due to error";
@@ -54,12 +57,11 @@ public class weatherService extends Service {
             @Override
             protected void onPostExecute(String stringResult) {
                 super.onPostExecute(stringResult);
-            //    broadcastTaskResult(stringResult);
+                broadcastTaskResult(stringResult);
 
-                //if Service is still running, keep doing this recursively
-             //   if(started){
-             //       doBackgroundThing(waitTimeInMilis);
-             //   }
+                if(started){
+                    runInBackground(weatherURL);
+                }
             }
         };
 
@@ -136,7 +138,7 @@ public class weatherService extends Service {
     }
 
     private void broadcastTaskResult(String result){
-        Intent broadcastIntent = new Intent();
+        Intent broadcastIntent = new Intent("weatherInfo");
         broadcastIntent.putExtra("Result", result);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
@@ -147,5 +149,11 @@ public class weatherService extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void onDestroy() {
+        started = false;
+        super.onDestroy();
     }
 }
