@@ -46,9 +46,9 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
             case "Cloudy":
                 return R.drawable.cloudy;
             case "Rainy":
-                return R.drawable.rainy;
+                return R.drawable.cloudy;
             case "Clear":
-                return R.drawable.clear;
+                return R.drawable.cloudy;
             default:
                 break;
         }
