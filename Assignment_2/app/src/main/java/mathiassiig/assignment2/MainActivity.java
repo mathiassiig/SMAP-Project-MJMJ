@@ -21,51 +21,22 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast/weather?q=" + ID_CITY + "&appid=" + API_KEY;
     //http://api.openweathermap.org/data/2.5/weather?q=Aarhus,dk&appid=d5a8341b52c8adfc0b4ec902bf53261c
 
-    private Button checkConn;
-    private Button getWeather;
-    private Button stopService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
-
-
-        checkConn = (Button)findViewById(R.id.buttonCheck);
-        getWeather = (Button)findViewById(R.id.buttonWeather);
-        stopService = (Button)findViewById(R.id.buttonStop);
-
-        checkConn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkConnection();
-            }
-        });
-
-        getWeather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                weatherRequest();
-            }
-        });
-
-        stopService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopBackgroundService();
-            }
-        });
     }
 
-    private void weatherRequest() {
+    public void weatherRequest(View view) {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         backgroundServiceIntent.putExtra("weather", WEATHER_URL);
         startService(backgroundServiceIntent);
 
     }
 
+    /*
     private boolean checkConnection() {
         ConnectivityManager connectionManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
@@ -78,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+    */
 
-    private void stopBackgroundService(){
+    /*
+    private void stopBackgroundService()
+    {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         stopService(backgroundServiceIntent);
-    }
+    }*/
 
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
@@ -98,4 +72,5 @@ public class MainActivity extends AppCompatActivity {
     private void handleBackgroundResult(String result){
         Toast.makeText(MainActivity.this, "Got result from background service:\n" + result, Toast.LENGTH_SHORT).show();
     }
+
 }
