@@ -32,30 +32,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
 
 
-        checkConn = (Button)findViewById(R.id.buttonCheck);
-        getWeather = (Button)findViewById(R.id.buttonWeather);
-        stopService = (Button)findViewById(R.id.buttonStop);
-
-        checkConn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkConnection();
-            }
-        });
-
-        getWeather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                weatherRequest();
-            }
-        });
-
-        stopService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopBackgroundService();
-            }
-        });
     }
 
     private void weatherRequest() {
