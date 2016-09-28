@@ -39,18 +39,20 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
         return "";
     }
 
-    /////TODO: 28-09-2016 IMPLEMENT
     private int GetWeatherIcon(String weather)
     {
         switch(weather)
         {
-            case "cloudy":
-                //do shit
-                break;
+            case "Cloudy":
+                return R.drawable.cloudy;
+            case "Rainy":
+                return R.drawable.rainy;
+            case "Clear":
+                return R.drawable.clear;
             default:
                 break;
         }
-        return 0;
+        return R.drawable.cloudy;
     }
 
     @Override
