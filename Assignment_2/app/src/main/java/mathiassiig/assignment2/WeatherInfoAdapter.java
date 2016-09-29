@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -31,25 +33,27 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
     //// TODO: 28-09-2016 IMPLEMENT
     private String getDate(Timestamp timeStamp)
     {
-        return "";
+        Date date = new Date(timeStamp.getTime());
+        return date.toString();
     }
 
     //// TODO: 28-09-2016 IMPLEMENT 
     private String getTime(Timestamp timeStamp)
     {
-        return "";
+        Time time = new Time(timeStamp.getTime());
+        return time.toString();
     }
 
-    private int GetWeatherIcon(String weather)
+    public static int GetWeatherIcon(String weather)
     {
         switch(weather)
         {
             case "Cloudy":
                 return R.drawable.cloudy;
-            case "Rainy":
-                return R.drawable.cloudy;
+            case "Rain":
+                return R.drawable.rainy;
             case "Clear":
-                return R.drawable.cloudy;
+                return R.drawable.sunny;
             default:
                 break;
         }
@@ -71,10 +75,10 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
 
         tvDescription.setText(weather.description);
         String date = getDate(weather.timestamp);
-        String time = getDate(weather.timestamp);
+        String time = getTime(weather.timestamp);
         tvDate.setText(date);
         tvTime.setText(time);
-        tvTemperature.setText(Double.toString(weather.temperature));
+        tvTemperature.setText(Double.toString(Math.round(weather.temperature)) + " C");
 
         ImageView imgWeather = (ImageView) convertView.findViewById(R.id.imgWeather);
         imgWeather.setImageResource(GetWeatherIcon(weather.description));

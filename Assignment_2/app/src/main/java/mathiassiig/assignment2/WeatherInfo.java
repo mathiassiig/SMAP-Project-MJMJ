@@ -1,12 +1,13 @@
 package mathiassiig.assignment2;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by Mathias on 28-09-2016.
  */
 
-public class WeatherInfo
+public class WeatherInfo implements Serializable
 {
     public long id;
     public String description;

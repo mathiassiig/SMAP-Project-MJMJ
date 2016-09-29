@@ -1,0 +1,5 @@
+Manuel knap virker ikke
+clear database efter 24 timer
+Icon
+externalized
+LogCat outputs / logging 
