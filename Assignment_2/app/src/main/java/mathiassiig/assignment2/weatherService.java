@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,10 +21,11 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class weatherService extends Service {
 
-    public static final long LOOP_TIME = 3000;
+    public static final long LOOP_TIME = 30*60*1000; //30 minutter, 60 sekunder, 1000 millisekunder
     private boolean started = false;
     private DatabaseHelper dbinstance;
 
@@ -65,22 +67,20 @@ public class weatherService extends Service {
 
     private void runInBackground(final String weatherURL) {
 
-        AsyncTask<Object, Object, String> task = new AsyncTask<Object, Object, String>() {
+        AsyncTask<Object, Object, String> task = new AsyncTask<Object, Object, String>()
+        {
             @Override
-            protected String doInBackground(Object[] params) {
-                String weatherData;
-                String s = "Background job";
-                try {
+            protected String doInBackground(Object[] params){
+                try
+                {
                     Thread.sleep(LOOP_TIME);
-                    weatherData = callURL(weatherURL);
-                } catch (Exception e) {
-                    s+= " did not finish due to error";
-                    return s;
+                }
+                catch (Exception e)
+                {
+                    Log.v("Debug", e.getMessage());
                 }
 
-             //   Toast.makeText(weatherService.this, "Weather:" +weatherData.toString(), Toast.LENGTH_SHORT).show();
-
-                return weatherData;
+                return callURL(weatherURL);
             }
 
 
@@ -92,14 +92,17 @@ public class weatherService extends Service {
                 dbinstance.AddWeatherInfo(currentWeather);
                 ArrayList<WeatherInfo> weatherInfos = dbinstance.GetAllWeatherInfos();
                 broadcastTaskResult(weatherInfos);
-
-                if(started){
+                if(started)
                     runInBackground(weatherURL);
-                }
             }
         };
 
         task.execute();
+
+    }
+
+    public void FetchCurrentWeather()
+    {
 
     }
 
@@ -173,6 +176,7 @@ public class weatherService extends Service {
 
     //http://stackoverflow.com/questions/13601883/how-to-pass-arraylist-of-objects-from-one-to-another-activity-using-intent-in-an
     private void broadcastTaskResult(ArrayList<WeatherInfo> weatherInfos){
+        Collections.reverse(weatherInfos); //Nyeste kommer øverst
         Intent broadcastIntent = new Intent("weatherInfo");
         //broadcastIntent.putExtra("Result", result);
         broadcastIntent.putExtra("WeatherInfoList",weatherInfos);

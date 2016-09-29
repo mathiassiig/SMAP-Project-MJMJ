@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         weatherListView = (ListView) findViewById(R.id.weatherListView);
         SetUpListView();
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
+        startWeatherRequestService();
     }
 
     private void SetUpListView()
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         weatherListView.setAdapter(adapter);
     }
 
-    public void weatherRequest(View view) {
+    public void startWeatherRequestService()
+    {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         backgroundServiceIntent.putExtra("weather", WEATHER_URL);
         startService(backgroundServiceIntent);
@@ -80,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void handleBackgroundResult(ArrayList<WeatherInfo> weatherInfos){
-
+    private void handleBackgroundResult(ArrayList<WeatherInfo> weatherInfos)
+    {
+        adapter.clear();
         for(int i = 0; i < weatherInfos.size();i++)
         {
             adapter.add(weatherInfos.get(i));
