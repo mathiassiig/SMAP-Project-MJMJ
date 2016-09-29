@@ -29,15 +29,16 @@ public class weatherService extends Service {
     private boolean started = false;
     private DatabaseHelper dbinstance;
 
-    public weatherService() {
-    }
+    private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
+    private static final String ID_CITY = "Aarhus,dk";
+    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=" + ID_CITY + "&appid=" + API_KEY+"&units=metric";
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String weatherURL = intent.getStringExtra("weather");
         started = true;
         dbinstance = DatabaseHelper.getInstance(getApplicationContext());
-        runInBackground(weatherURL);
+        FetchCurrentWeather();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -64,92 +65,100 @@ public class weatherService extends Service {
 
         return weather;
     }
-
-    private void runInBackground(final String weatherURL) {
-
-        AsyncTask<Object, Object, String> task = new AsyncTask<Object, Object, String>()
+    private boolean FirstTimeRunning;
+    private AsyncTask<Object, Object, String> backgroundTask;
+    private void runInBackground()
+    {
+        backgroundTask = new AsyncTask<Object, Object, String>()
         {
             @Override
-            protected String doInBackground(Object[] params){
+            protected String doInBackground(Object[] params) {
                 try
                 {
-                    Thread.sleep(LOOP_TIME);
+                    if(!FirstTimeRunning)
+                        Thread.sleep(LOOP_TIME);
+                    FirstTimeRunning = false;
                 }
                 catch (Exception e)
                 {
                     Log.v("Debug", e.getMessage());
                 }
 
-                return callURL(weatherURL);
+                return callURL(WEATHER_URL);
             }
 
 
-            @Override
-            protected void onPostExecute(String stringResult) {
-                super.onPostExecute(stringResult);
-                WeatherInfo currentWeather = ParseJson(stringResult);
+                @Override
+                protected void onPostExecute(String stringResult) {
+                    super.onPostExecute(stringResult);
+                    WeatherInfo currentWeather = ParseJson(stringResult);
 
-                dbinstance.AddWeatherInfo(currentWeather);
-                ArrayList<WeatherInfo> weatherInfos = dbinstance.GetAllWeatherInfos();
-                broadcastTaskResult(weatherInfos);
-                if(started)
-                    runInBackground(weatherURL);
-            }
-        };
+                    dbinstance.AddWeatherInfo(currentWeather);
+                    ArrayList<WeatherInfo> weatherInfos = dbinstance.GetAllWeatherInfos();
+                    broadcastTaskResult(weatherInfos);
+                    if (started)
+                        runInBackground();
+                }
+            };
+        backgroundTask.execute();
 
-        task.execute();
 
     }
 
     public void FetchCurrentWeather()
     {
-
+        FirstTimeRunning = true;
+        runInBackground();
     }
 
+    //Weather Service demo kode fra undervisningen
     private String callURL(String callUrl) {
 
         InputStream is = null;
 
-        try {
-            //create URL
+        try
+        {
             URL url = new URL(callUrl);
-
-            //configure HttpURLConnetion object
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
-
-
-            // Starts the request
-            conn.connect();
-            int response = conn.getResponseCode();
-
-            //probably check check on response code here!
-
-            //give user feedback in case of error
-
-
+            try
+            {
+                conn.connect();
+            }
+            catch(Exception ex)
+            {
+                Log.v("Debug", ex.getMessage());
+            }
             is = conn.getInputStream();
+            String weatherToString = convertStreamToStringBuffered(is);
+            return weatherToString;
 
-            // Convert the InputStream into a string
+        }
+        catch (ProtocolException pe)
+        {
 
-            String contentAsString = convertStreamToStringBuffered(is);
-            return contentAsString;
+        }
+        catch (UnsupportedEncodingException uee)
+        {
 
+        }
+        catch (IOException ioe)
+        {
 
-        } catch (ProtocolException pe) {
-
-        } catch (UnsupportedEncodingException uee) {
-
-        } catch (IOException ioe) {
-
-        } finally {
-            if (is != null) {
-                try {
+        }
+        finally
+        {
+            if (is != null)
+            {
+                try
+                {
                     is.close();
-                } catch (IOException ioe) {
+                }
+                catch (IOException ioe)
+                {
 
                 }
             }
@@ -157,20 +166,22 @@ public class weatherService extends Service {
         return null;
     }
 
+    //Weather Service demo kode fra undervisningen
     private String convertStreamToStringBuffered(InputStream is) {
         String s = "";
-        String line = "";
-
+        String line;
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
-
-        try {
-            while ((line = rd.readLine()) != null) { s += line; }
-        } catch (IOException ex) {
-           ;
+        try
+        {
+            while ((line = rd.readLine()) != null)
+            {
+                s += line;
+            }
         }
+        catch (IOException ex)
+        {
 
-        // Return full string
+        }
         return s;
     }
 
@@ -178,7 +189,6 @@ public class weatherService extends Service {
     private void broadcastTaskResult(ArrayList<WeatherInfo> weatherInfos){
         Collections.reverse(weatherInfos); //Nyeste kommer øverst
         Intent broadcastIntent = new Intent("weatherInfo");
-        //broadcastIntent.putExtra("Result", result);
         broadcastIntent.putExtra("WeatherInfoList",weatherInfos);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
@@ -186,7 +196,8 @@ public class weatherService extends Service {
 
 
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(Intent intent)
+    {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }

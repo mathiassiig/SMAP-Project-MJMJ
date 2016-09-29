@@ -16,11 +16,11 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/currentTxt"
+        android:id="@+id/txtCurrentDescription"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:layout_toRightOf="@+id/currentimageView"
-        android:layout_toEndOf="@+id/currentimageView"
+        android:layout_toRightOf="@+id/imgViewCurrent"
+        android:layout_toEndOf="@+id/imgViewCurrent"
         android:layout_alignParentTop="true"
         tools:text="@string/currentTxt" />
 
@@ -28,23 +28,12 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/currentTxt"
+        android:layout_below="@+id/txtCurrentDescription"
         android:layout_marginTop="16dp"
-        android:id="@+id/currentWeatherTxt"
+        android:id="@+id/txtCurrentTemp"
         tools:text="@string/currentWeatherTxt"
-        android:layout_alignLeft="@+id/currentTxt"
-        android:layout_alignStart="@+id/currentTxt" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/currentWeatherTxt"
-        android:layout_alignLeft="@+id/currentWeatherTxt"
-        android:layout_alignStart="@+id/currentWeatherTxt"
-        android:layout_marginTop="13dp"
-        android:id="@+id/currentTempTxt"
-        tools:text="@string/currentTempTxt" />
+        android:layout_alignLeft="@+id/txtCurrentDescription"
+        android:layout_alignStart="@+id/txtCurrentDescription" />
 
 
     <ImageView
@@ -54,12 +43,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/currentimageView" />
+        android:id="@+id/imgViewCurrent" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/currentimageView"
+        android:layout_below="@+id/imgViewCurrent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -75,11 +64,11 @@
         app:srcCompat="@android:drawable/ic_menu_rotate"
         android:id="@+id/imageButton"
         android:background="@drawable/roundbtn"
-        android:layout_below="@+id/currentTxt"
+        android:layout_below="@+id/txtCurrentDescription"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="14dp"
         android:layout_marginEnd="14dp"
-        android:onClick="weatherRequest"/>
+        android:onClick="button_manualWeatherCheck"/>
 
 </RelativeLayout>
