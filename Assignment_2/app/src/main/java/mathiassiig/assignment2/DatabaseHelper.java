@@ -7,9 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.security.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Mathias on 28-09-2016.
@@ -39,6 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String DATABASE_NAME = "Gruppe22_Assignment2_Database.db";
     private static final int DATABASE_VERSION = 1;
 
+    public static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
     public static final String TABLE_WEATHERINFOS = "weatherinfos";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_DESCRIPTION = "description";
@@ -48,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public static final String DATABASE_CREATE_REMINDERS_TABLE = "CREATE TABLE IF NOT EXISTS "
             + TABLE_WEATHERINFOS + "(" + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_DESCRIPTION + " string, "
-            + COLUMN_TEMPERATURE + " float, "
+            + COLUMN_TEMPERATURE + " double, "
             + COLUMN_TIMESTAMP + " string)";
 
 
@@ -65,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         ContentValues insertValues = new ContentValues();
         insertValues.put(COLUMN_DESCRIPTION, w.description);
         insertValues.put(COLUMN_TEMPERATURE, w.temperature);
-        insertValues.put(COLUMN_TIMESTAMP, w.timestamp);
+        insertValues.put(COLUMN_TIMESTAMP, w.timestamp.toString());
         long primaryKey = database.insert(TABLE_WEATHERINFOS, null, insertValues);
         return primaryKey;
     }
@@ -107,12 +112,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
 
-    private WeatherInfo GetWeatherFromCursor(Cursor cursor)
-    {
+    private WeatherInfo GetWeatherFromCursor(Cursor cursor) throws ParseException {
         long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
-        float temperature = cursor.getFloat(cursor.getColumnIndex(COLUMN_TEMPERATURE));
-        String timestamp = cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP));
+        double temperature = cursor.getDouble(cursor.getColumnIndex(COLUMN_TEMPERATURE));
+        String stamp = cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP));
+        Date parsedDate = format.parse(stamp);
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+
         WeatherInfo weather = new WeatherInfo(description, temperature, timestamp);
         return weather;
     }

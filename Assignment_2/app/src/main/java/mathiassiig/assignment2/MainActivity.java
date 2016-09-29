@@ -17,12 +17,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
-    private static final long ID_CITY = 2624652; //Aarhus
-    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + ID_CITY + "&APPID=" + API_KEY;
-
-    private Button checkConn;
-    private Button getWeather;
-    private Button stopService;
+    private static final String ID_CITY = "Aarhus,dk";
+    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast/weather?q=" + ID_CITY + "&appid=" + API_KEY;
+    //http://api.openweathermap.org/data/2.5/weather?q=Aarhus,dk&appid=d5a8341b52c8adfc0b4ec902bf53261c
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +27,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
-
-
     }
 
-    private void weatherRequest() {
+    public void weatherRequest(View view) {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         backgroundServiceIntent.putExtra("weather", WEATHER_URL);
         startService(backgroundServiceIntent);
 
     }
 
+    /*
     private boolean checkConnection() {
         ConnectivityManager connectionManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
@@ -53,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+    */
 
-    private void stopBackgroundService(){
+    /*
+    private void stopBackgroundService()
+    {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         stopService(backgroundServiceIntent);
-    }
+    }*/
 
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
@@ -73,4 +72,5 @@ public class MainActivity extends AppCompatActivity {
     private void handleBackgroundResult(String result){
         Toast.makeText(MainActivity.this, "Got result from background service:\n" + result, Toast.LENGTH_SHORT).show();
     }
+
 }

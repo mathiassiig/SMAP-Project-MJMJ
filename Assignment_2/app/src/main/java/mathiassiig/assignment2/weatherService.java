@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +32,30 @@ public class weatherService extends Service {
         started = true;
         runInBackground(weatherURL);
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public WeatherInfo ParseJson(String json)
+    {
+        WeatherInfo weather = null;
+        try
+        {
+            JSONObject jsonResponse = new JSONObject(json);
+            JSONObject weatherObject = jsonResponse.getJSONObject("weather");
+            String weatherMain = weatherObject.getString("main");
+
+            JSONObject mainObject = jsonResponse.getJSONObject("main");
+            double temperature = mainObject.getDouble("temp");
+            java.sql.Timestamp timeNow = new java.sql.Timestamp(System.currentTimeMillis());
+
+            weather = new WeatherInfo(weatherMain, temperature, timeNow);
+
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return weather;
     }
 
     private void runInBackground(final String weatherURL) {

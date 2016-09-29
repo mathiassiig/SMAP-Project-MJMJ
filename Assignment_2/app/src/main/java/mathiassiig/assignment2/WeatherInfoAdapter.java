@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -28,13 +29,13 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
     }
 
     //// TODO: 28-09-2016 IMPLEMENT
-    private String getDate(String timeStamp)
+    private String getDate(Timestamp timeStamp)
     {
         return "";
     }
 
     //// TODO: 28-09-2016 IMPLEMENT 
-    private String getTime(String timeStamp)
+    private String getTime(Timestamp timeStamp)
     {
         return "";
     }
@@ -73,7 +74,7 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
         String time = getDate(weather.timestamp);
         tvDate.setText(date);
         tvTime.setText(time);
-        tvTemperature.setText(Float.toString(weather.temperature));
+        tvTemperature.setText(Double.toString(weather.temperature));
 
         ImageView imgWeather = (ImageView) convertView.findViewById(R.id.imgWeather);
         imgWeather.setImageResource(GetWeatherIcon(weather.description));
