@@ -12,21 +12,34 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
     private static final String ID_CITY = "Aarhus,dk";
-    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast/weather?q=" + ID_CITY + "&appid=" + API_KEY;
-    //http://api.openweathermap.org/data/2.5/weather?q=Aarhus,dk&appid=d5a8341b52c8adfc0b4ec902bf53261c
-
+    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=" + ID_CITY + "&appid=" + API_KEY+"&units=metric";
+    //http://api.openweathermap.org/data/2.5/weather?q=Aarhus,dk&appid=d5a8341b52c8adfc0b4ec902bf53261c&units=metric
+    WeatherInfoAdapter adapter;
+    ArrayList<WeatherInfo> weatherInfos;
+    ListView weatherListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        weatherListView = (ListView) findViewById(R.id.weatherListView);
+        SetUpListView();
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
+    }
+
+    private void SetUpListView()
+    {
+        weatherInfos = new ArrayList<>();
+        adapter = new WeatherInfoAdapter(this, weatherInfos);
+        weatherListView.setAdapter(adapter);
     }
 
     public void weatherRequest(View view) {
@@ -61,16 +74,19 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String result = intent.getStringExtra("Result");
-            if(result==null){
-                result = "Error";
-            }
-            handleBackgroundResult(result);
+            ArrayList<WeatherInfo> weatherInfoList = new ArrayList<WeatherInfo>();
+            weatherInfoList = (ArrayList<WeatherInfo>)intent.getSerializableExtra("WeatherInfoList");
+            handleBackgroundResult(weatherInfoList);
         }
     };
 
-    private void handleBackgroundResult(String result){
-        Toast.makeText(MainActivity.this, "Got result from background service:\n" + result, Toast.LENGTH_SHORT).show();
+    private void handleBackgroundResult(ArrayList<WeatherInfo> weatherInfos){
+
+        for(int i = 0; i < weatherInfos.size();i++)
+        {
+            adapter.add(weatherInfos.get(i));
+        }
+        //Toast.makeText(MainActivity.this,  weatherInfos.get(0).description, Toast.LENGTH_SHORT).show();
     }
 
 }

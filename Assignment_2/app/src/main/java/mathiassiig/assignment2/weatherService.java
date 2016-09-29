@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,11 +19,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class weatherService extends Service {
 
-    public static final long LOOP_TIME = 5000;
+    public static final long LOOP_TIME = 3000;
     private boolean started = false;
+    private DatabaseHelper dbinstance;
 
     public weatherService() {
     }
@@ -30,6 +34,7 @@ public class weatherService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String weatherURL = intent.getStringExtra("weather");
         started = true;
+        dbinstance = DatabaseHelper.getInstance(getApplicationContext());
         runInBackground(weatherURL);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -40,8 +45,8 @@ public class weatherService extends Service {
         try
         {
             JSONObject jsonResponse = new JSONObject(json);
-            JSONObject weatherObject = jsonResponse.getJSONObject("weather");
-            String weatherMain = weatherObject.getString("main");
+            JSONArray weatherObject = jsonResponse.getJSONArray("weather");
+            String weatherMain = weatherObject.getJSONObject(0).getString("main");
 
             JSONObject mainObject = jsonResponse.getJSONObject("main");
             double temperature = mainObject.getDouble("temp");
@@ -82,7 +87,11 @@ public class weatherService extends Service {
             @Override
             protected void onPostExecute(String stringResult) {
                 super.onPostExecute(stringResult);
-                broadcastTaskResult(stringResult);
+                WeatherInfo currentWeather = ParseJson(stringResult);
+
+                dbinstance.AddWeatherInfo(currentWeather);
+                ArrayList<WeatherInfo> weatherInfos = dbinstance.GetAllWeatherInfos();
+                broadcastTaskResult(weatherInfos);
 
                 if(started){
                     runInBackground(weatherURL);
@@ -162,9 +171,11 @@ public class weatherService extends Service {
         return s;
     }
 
-    private void broadcastTaskResult(String result){
+    //http://stackoverflow.com/questions/13601883/how-to-pass-arraylist-of-objects-from-one-to-another-activity-using-intent-in-an
+    private void broadcastTaskResult(ArrayList<WeatherInfo> weatherInfos){
         Intent broadcastIntent = new Intent("weatherInfo");
-        broadcastIntent.putExtra("Result", result);
+        //broadcastIntent.putExtra("Result", result);
+        broadcastIntent.putExtra("WeatherInfoList",weatherInfos);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 

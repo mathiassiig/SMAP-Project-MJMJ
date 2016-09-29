@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
     //http://stackoverflow.com/questions/10111166/get-all-rows-from-sqlite
-    public ArrayList<WeatherInfo> GetAllReminders()
+    public ArrayList<WeatherInfo> GetAllWeatherInfos()
     {
         ArrayList<WeatherInfo> weatherInfos = new ArrayList<WeatherInfo>();
         try
