@@ -1,0 +1,5 @@
+Update current weather
+brug images
+clear database efter 24 timer
+indsæt ref i weatherService
+externalized
