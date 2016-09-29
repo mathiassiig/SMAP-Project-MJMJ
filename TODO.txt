@@ -1,5 +1,5 @@
-Update current weather
-brug images
+Manuel knap virker ikke
 clear database efter 24 timer
-indsæt ref i weatherService
+Icon
 externalized
+LogCat outputs / logging 
