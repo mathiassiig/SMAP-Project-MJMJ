@@ -30,15 +30,14 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
         this.weatherInfos = weatherInfos;
     }
 
-    //// TODO: 28-09-2016 IMPLEMENT
-    private String getDate(Timestamp timeStamp)
+    public static String getDate(Timestamp timeStamp)
     {
         Date date = new Date(timeStamp.getTime());
         return date.toString();
     }
 
-    //// TODO: 28-09-2016 IMPLEMENT 
-    private String getTime(Timestamp timeStamp)
+
+    public static String getTime(Timestamp timeStamp)
     {
         Time time = new Time(timeStamp.getTime());
         return time.toString();
@@ -48,7 +47,7 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
     {
         switch(weather)
         {
-            case "Cloudy":
+            case "Clouds":
                 return R.drawable.cloudy;
             case "Rain":
                 return R.drawable.rainy;
@@ -58,6 +57,21 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
                 break;
         }
         return R.drawable.cloudy;
+    }
+
+    public static int GetWeatherText(String weather)
+    {
+        switch(weather)
+        {
+            case "Clouds":
+                return R.string.weather_clouds;
+            case "Rain":
+                return R.string.weather_rain;
+            case "Clear":
+                return R.string.weather_clear;
+            default:
+                return -1;
+        }
     }
 
     @Override
@@ -72,8 +86,11 @@ public class WeatherInfoAdapter extends ArrayAdapter<WeatherInfo>
         TextView tvDate = (TextView) convertView.findViewById(R.id.txtDate);
         TextView tvTemperature = (TextView) convertView.findViewById(R.id.txtTemperature);
         TextView tvTime = (TextView) convertView.findViewById(R.id.txtTime);
-
-        tvDescription.setText(weather.description);
+        int localizedName = GetWeatherText(weather.description);
+        if(localizedName != -1)
+            tvDescription.setText(localizedName);
+        else
+            tvDescription.setText(weather.description);
         String date = getDate(weather.timestamp);
         String time = getTime(weather.timestamp);
         tvDate.setText(date);

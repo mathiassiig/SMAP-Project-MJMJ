@@ -1,9 +1,7 @@
 <resources>
-    <string name="app_name">Assignment 2</string>
-    <string name="check_conn">Check Connection</string>
-    <string name="get_weather">Get weather</string>
-    <string name="stop_service">Stop updating</string>
-    <string name="currentTxt">Vejret</string>
-    <string name="currentWeatherTxt">\??</string>
-    <string name="currentTempTxt">\??</string>
+    <string name="app_name">Weather Aarhus group 22</string>
+    <string name="weather_clouds">Clawdy</string>
+    <string name="weather_rain">Rainay</string>
+    <string name="weather_clear">Clær</string>
+
 </resources>

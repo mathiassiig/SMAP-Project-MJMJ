@@ -44,10 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void button_manualWeatherCheck(View view)
     {
+        stopWeatherService();
+        startWeatherRequestService();
+    }
+
+    private void stopWeatherService()
+    {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         stopService(backgroundServiceIntent);
-        backgroundServiceIntent.putExtra("manual",true);
-        startWeatherRequestService();
     }
 
     public void startWeatherRequestService()
@@ -69,13 +73,19 @@ public class MainActivity extends AppCompatActivity {
     {
         TextView desc = (TextView)findViewById(R.id.txtCurrentDescription);
         TextView temp = (TextView)findViewById(R.id.txtCurrentTemp);
+        TextView time = (TextView)findViewById(R.id.txtCurrentTime);
         int icon = WeatherInfoAdapter.GetWeatherIcon(current.description);
 
 
         ImageView img = (ImageView)findViewById(R.id.imgViewCurrent);
         img.setImageResource(icon);
-        desc.setText(current.description);
-        temp.setText(Double.toString(current.temperature));
+        int localized = WeatherInfoAdapter.GetWeatherText(current.description);
+        if(localized != -1)
+            desc.setText(localized);
+        else
+            desc.setText(current.description);
+        temp.setText(Double.toString(Math.round(current.temperature)) + " C");
+        time.setText(WeatherInfoAdapter.getTime(current.timestamp));
     }
 
     private void handleBackgroundResult(ArrayList<WeatherInfo> weatherInfos)
@@ -84,11 +94,16 @@ public class MainActivity extends AppCompatActivity {
         WeatherInfo current = weatherInfos.get(0);
         UpdateCurrentWeather(current);
         weatherInfos.remove(0);
-        if(weatherInfos.size()>0)
-        for(int i = 1; i < weatherInfos.size();i++)
+        for(int i = 0; i < weatherInfos.size();i++)
         {
             adapter.add(weatherInfos.get(i));
         }
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        //stopWeatherService();
     }
 
 }

@@ -13,7 +13,6 @@
 
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtCurrentDescription"
@@ -22,28 +21,17 @@
         android:layout_toRightOf="@+id/imgViewCurrent"
         android:layout_toEndOf="@+id/imgViewCurrent"
         android:layout_alignParentTop="true"
-        tools:text="@string/currentTxt" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtCurrentDescription"
-        android:layout_marginTop="16dp"
-        android:id="@+id/txtCurrentTemp"
-        tools:text="@string/currentWeatherTxt"
-        android:layout_alignLeft="@+id/txtCurrentDescription"
-        android:layout_alignStart="@+id/txtCurrentDescription" />
+        android:text="weatherType" />
 
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
         app:srcCompat="@android:color/darker_gray"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/imgViewCurrent" />
+        android:id="@+id/imgViewCurrent"
+        android:layout_width="96dp"
+        android:layout_height="96dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -70,5 +58,23 @@
         android:layout_marginRight="14dp"
         android:layout_marginEnd="14dp"
         android:onClick="button_manualWeatherCheck"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCurrentTemp"
+        android:text="weatherTemp"
+        android:layout_below="@+id/txtCurrentDescription"
+        android:layout_alignLeft="@+id/txtCurrentDescription"
+        android:layout_alignStart="@+id/txtCurrentDescription" />
+
+    <TextView
+        android:text="weatherTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCurrentTime"
+        android:layout_below="@+id/txtCurrentTemp"
+        android:layout_alignLeft="@+id/txtCurrentTemp"
+        android:layout_alignStart="@+id/txtCurrentTemp" />
 
 </RelativeLayout>

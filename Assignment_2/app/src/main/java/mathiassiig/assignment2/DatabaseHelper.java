@@ -8,11 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.security.Timestamp;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -75,6 +77,22 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return primaryKey;
     }
 
+    public void PurgeOld()
+    {
+        ArrayList<WeatherInfo> allWeathers = GetAllWeatherInfos();
+        java.sql.Timestamp oneDayAgo = new java.sql.Timestamp(System.currentTimeMillis());
+        long OneDayInMillis = 1000*60*60*24;
+        oneDayAgo.setTime(System.currentTimeMillis()-OneDayInMillis);
+        for (int i = 0; i < allWeathers.size(); i++)
+        {
+            WeatherInfo weatherToCheck = allWeathers.get(i);
+            if(weatherToCheck.timestamp.getTime() <= oneDayAgo.getTime())
+            {
+                DeleteWeatherInfo(weatherToCheck.id);
+            }
+        }
+    }
+
 
 
     public void DeleteWeatherInfo(long weather_id)
@@ -122,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
         WeatherInfo weather = new WeatherInfo(description, temperature, timestamp);
+        weather.id = id;
         return weather;
     }
 
