@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
@@ -33,6 +34,9 @@ public class weatherService extends Service {
     private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
     private static final String ID_CITY = "Aarhus,dk";
     private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=" + ID_CITY + "&appid=" + API_KEY + "&units=metric";
+
+    public static final String INTENT_LOOP = "loopPassed";
+    public static final String INTENT_CURRENT = "currentWeather";
 
     private final IBinder binder = new LocalBinder();
     public boolean ServiceStarted = false;
@@ -75,6 +79,8 @@ public class weatherService extends Service {
             public void run()
             {
                 try {
+                    WeatherInfo w = getCurrentWeather();
+                    broadcastWeather(w);
                     broadcastTaskResult();
                     Thread.sleep(LOOP_TIME);
                 } catch (InterruptedException e) {
@@ -142,12 +148,27 @@ public class weatherService extends Service {
         return s;
     }
 
-    public WeatherInfo getCurrentWeather()
+
+    private WeatherInfo getCurrentWeather()
     {
         String json = callURL(WEATHER_URL);
         WeatherInfo current = ParseJson(json);
         dbinstance.AddWeatherInfo(current);
         return current;
+    }
+
+    public void requestCurrentWeather()
+    {
+        Thread t = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                WeatherInfo w = getCurrentWeather();
+                broadcastWeather(w);
+            }
+        };
+        t.start();
     }
 
 
@@ -160,10 +181,18 @@ public class weatherService extends Service {
         return infos;
     }
 
+    private void broadcastWeather(WeatherInfo w)
+    {
+        Intent broadcastIntent = new Intent(INTENT_CURRENT);
+        broadcastIntent.putExtra("current", w);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+
+
     private void broadcastTaskResult()
     {
         Log.v("Debug", "Broadcasting result back to actvity");
-        Intent broadcastIntent = new Intent("weatherInfo");
+        Intent broadcastIntent = new Intent(INTENT_LOOP);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
