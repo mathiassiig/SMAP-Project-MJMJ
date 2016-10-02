@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_buy_product"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="examproject.group22.roominator.BuyProductActivity"
+    tools:showIn="@layout/activity_buy_product">
+
+
+    <TextView
+        android:text="@string/addproduct_txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/addproduct_txtName" />
+
+    <TextView
+        android:text="@string/addproduct_txtNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addproduct_txtName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/addproduct_txtNumber"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:text="@string/addproduct_txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addproduct_txtNumber"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/addproduct_txtPrice"
+        android:layout_marginTop="50dp"/>
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addproduct_numberpicker"
+        android:layout_below="@+id/addproduct_etPrice"
+        android:layout_alignLeft="@+id/addproduct_etPrice"
+        android:layout_alignStart="@+id/addproduct_etPrice"
+        android:layout_marginLeft="74dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="26dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/addproduct_etPrice"
+        android:text="XX,XX DKK"
+        android:layout_alignBaseline="@+id/addproduct_txtPrice"
+        android:layout_alignBottom="@+id/addproduct_txtPrice"
+        android:layout_toRightOf="@+id/addproduct_txtName"
+        android:layout_toEndOf="@+id/addproduct_txtName" />
+</RelativeLayout>

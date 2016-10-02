@@ -1,12 +1,15 @@
 package mathiassiig.assignment2;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,14 +20,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+import mathiassiig.assignment2.weatherService.LocalBinder;
 
 public class MainActivity extends AppCompatActivity {
+
+    weatherService weatherService;
+    boolean isBound = false;
 
     WeatherInfoAdapter adapter;
     ArrayList<WeatherInfo> weatherInfos;
     ListView weatherListView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +40,25 @@ public class MainActivity extends AppCompatActivity {
         weatherListView = (ListView) findViewById(R.id.weatherListView);
         SetUpListView();
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult, new IntentFilter("weatherInfo"));
-        startWeatherRequestService();
+        //startWeatherRequestService();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to weatherService
+        Intent intent = new Intent(this, weatherService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from weatherService
+        if (isBound) {
+            unbindService(serviceConnection);
+            isBound = false;
+        }
     }
 
     private void SetUpListView()
@@ -44,11 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void button_manualWeatherCheck(View view)
     {
-        stopWeatherService();
-        startWeatherRequestService();
+        //weatherService.FetchCurrentWeather();
+        //stopWeatherService();
+        //startWeatherRequestService();
     }
 
-    private void stopWeatherService()
+    /*private void stopWeatherService()
     {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         stopService(backgroundServiceIntent);
@@ -58,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
         startService(backgroundServiceIntent);
-    }
+    }*/
 
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
@@ -106,4 +133,20 @@ public class MainActivity extends AppCompatActivity {
         //stopWeatherService();
     }
 
+
+    // https://www.youtube.com/watch?v=zCj5Qzzex_A
+    // https://developer.android.com/guide/components/bound-services.html
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            LocalBinder binder = (LocalBinder) service;
+            weatherService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 }
