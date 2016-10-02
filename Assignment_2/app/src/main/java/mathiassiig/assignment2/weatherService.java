@@ -81,6 +81,7 @@ public class weatherService extends Service {
                 try {
                     WeatherInfo w = getCurrentWeather();
                     broadcastWeather(w);
+                    dbinstance.AddWeatherInfo(w);
                     broadcastTaskResult();
                     Thread.sleep(LOOP_TIME);
                 } catch (InterruptedException e) {
@@ -153,7 +154,6 @@ public class weatherService extends Service {
     {
         String json = callURL(WEATHER_URL);
         WeatherInfo current = ParseJson(json);
-        dbinstance.AddWeatherInfo(current);
         return current;
     }
 
