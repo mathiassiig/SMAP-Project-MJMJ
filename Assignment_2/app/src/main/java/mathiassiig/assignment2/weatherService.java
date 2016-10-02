@@ -23,11 +23,11 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class weatherService extends Service {
 
     public static final long LOOP_TIME = 30 * 60 * 1000; //30 minutter, 60 sekunder, 1000 millisekunder
-    private boolean started = false;
     private DatabaseHelper dbinstance;
 
     private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
@@ -35,13 +35,13 @@ public class weatherService extends Service {
     private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=" + ID_CITY + "&appid=" + API_KEY + "&units=metric";
 
     private final IBinder binder = new LocalBinder();
-
+    public boolean ServiceStarted = false;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        ServiceStarted = true;
         Log.v("Debug", "Starting service");
-        started = true;
         dbinstance = DatabaseHelper.getInstance(getApplicationContext());
-        FetchCurrentWeather();
+        runInBackground();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -66,50 +66,23 @@ public class weatherService extends Service {
         return weather;
     }
 
-    private boolean FirstTimeRunning;
     private AsyncTask<Object, Object, String> backgroundTask;
 
     private void runInBackground() {
         Log.v("Debug", "Run in background called");
-        backgroundTask = new AsyncTask<Object, Object, String>() {
+        Thread t = new Thread(){
             @Override
-            protected String doInBackground(Object[] params) {
+            public void run()
+            {
                 try {
-                    Log.v("Debug", "AsyncTask: Do in Background Called");
-                    if (!FirstTimeRunning) {
-                        Log.v("Debug", "AsyncTask: Sleeping for " + LOOP_TIME + " milliseconds");
-                        Thread.sleep(LOOP_TIME);
-                    }
-                    FirstTimeRunning = false;
-                } catch (Exception e) {
-                    Log.v("Debug", e.getMessage());
+                    broadcastTaskResult();
+                    Thread.sleep(LOOP_TIME);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-                return callURL(WEATHER_URL);
-            }
-
-            @Override
-            protected void onPostExecute(String stringResult) {
-
-                super.onPostExecute(stringResult);
-                Log.v("Debug", "AsyncTask: onPostExecute");
-                WeatherInfo currentWeather = ParseJson(stringResult);
-                dbinstance.PurgeOld();
-                dbinstance.AddWeatherInfo(currentWeather);
-                ArrayList<WeatherInfo> weatherInfos = dbinstance.GetAllWeatherInfos();
-
-                broadcastTaskResult(weatherInfos);
-                if (started)
-                    runInBackground();
             }
         };
-        backgroundTask.execute();
-    }
-
-    public void FetchCurrentWeather() {
-        Log.v("Debug", "Fetch current weather called");
-        FirstTimeRunning = true;
-        runInBackground();
+        t.start();
     }
 
 
@@ -169,20 +142,34 @@ public class weatherService extends Service {
         return s;
     }
 
-    //http://stackoverflow.com/questions/13601883/how-to-pass-arraylist-of-objects-from-one-to-another-activity-using-intent-in-an
-    private void broadcastTaskResult(ArrayList<WeatherInfo> weatherInfos) {
+    public WeatherInfo getCurrentWeather()
+    {
+        String json = callURL(WEATHER_URL);
+        WeatherInfo current = ParseJson(json);
+        dbinstance.AddWeatherInfo(current);
+        return current;
+    }
+
+
+
+    public ArrayList<WeatherInfo> getPastWeather()
+    {
+        dbinstance.PurgeOld();
+        ArrayList<WeatherInfo> infos = dbinstance.GetAllWeatherInfos();
+        Collections.reverse(infos);
+        return infos;
+    }
+
+    private void broadcastTaskResult()
+    {
         Log.v("Debug", "Broadcasting result back to actvity");
-        Collections.reverse(weatherInfos); //Nyeste kommer øverst
         Intent broadcastIntent = new Intent("weatherInfo");
-        broadcastIntent.putExtra("WeatherInfoList", weatherInfos);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
     @Override
     public void onDestroy() {
-        Log.v("Debug", "Service onDestroy");
-        started = false;
-        backgroundTask.cancel(true);
+        ServiceStarted = false;
         super.onDestroy();
     }
 
@@ -191,6 +178,7 @@ public class weatherService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
+
 
     //https://www.youtube.com/watch?v=0c4jRCm353c
     //https://developer.android.com/guide/components/bound-services.html
