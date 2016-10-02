@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/imgUser"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:text="@string/customUser_txtTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customUser_txtTotal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginBottom="14dp"
+        android:layout_alignBottom="@+id/imgUser"
+        android:layout_toRightOf="@+id/imgUser"
+        android:layout_toEndOf="@+id/imgUser"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:text="@string/customUser_txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customUser_txtName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_above="@+id/customUser_txtTotal"
+        android:layout_toRightOf="@+id/imgUser"
+        android:layout_toEndOf="@+id/imgUser"
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="20dp"/>
+</RelativeLayout>

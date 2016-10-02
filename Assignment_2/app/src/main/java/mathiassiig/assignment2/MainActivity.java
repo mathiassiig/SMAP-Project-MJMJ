@@ -6,21 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.media.Image;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import mathiassiig.assignment2.weatherService.LocalBinder;
 
@@ -32,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     WeatherInfoAdapter adapter;
     ArrayList<WeatherInfo> weatherInfos;
     ListView weatherListView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
         time.setText(WeatherInfoAdapter.getTime(current.timestamp));
     }
 
-
-
     private void handleBackgroundResult(ArrayList<WeatherInfo> weatherInfos)
     {
         adapter.clear();
@@ -126,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
             adapter.add(weatherInfos.get(i));
         }
     }
-
 
     // https://www.youtube.com/watch?v=zCj5Qzzex_A
     // https://developer.android.com/guide/components/bound-services.html
