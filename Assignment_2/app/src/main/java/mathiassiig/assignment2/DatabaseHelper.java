@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
 
 
-    public long AddWeatherInfo(WeatherInfo w)
+    public synchronized long AddWeatherInfo(WeatherInfo w)
     {
         ContentValues insertValues = new ContentValues();
         insertValues.put(COLUMN_DESCRIPTION, w.description);
@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return primaryKey;
     }
 
-    public void PurgeOld()
+    public synchronized void PurgeOld()
     {
         ArrayList<WeatherInfo> allWeathers = GetAllWeatherInfos();
         java.sql.Timestamp oneDayAgo = new java.sql.Timestamp(System.currentTimeMillis());
@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
 
-    public void DeleteWeatherInfo(long weather_id)
+    public synchronized void DeleteWeatherInfo(long weather_id)
     {
         String where = COLUMN_ID + " =? ";
         database.delete(TABLE_WEATHERINFOS, where, new String[]{String.valueOf(weather_id)});
@@ -104,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
     //http://stackoverflow.com/questions/10111166/get-all-rows-from-sqlite
-    public ArrayList<WeatherInfo> GetAllWeatherInfos()
+    public synchronized ArrayList<WeatherInfo> GetAllWeatherInfos()
     {
         ArrayList<WeatherInfo> weatherInfos = new ArrayList<WeatherInfo>();
         try
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
 
-    private WeatherInfo GetWeatherFromCursor(Cursor cursor) throws ParseException {
+    private synchronized WeatherInfo GetWeatherFromCursor(Cursor cursor) throws ParseException {
         long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
         double temperature = cursor.getDouble(cursor.getColumnIndex(COLUMN_TEMPERATURE));
@@ -146,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
 
 
-    public WeatherInfo GetWeatherInfo(long reminder_id)
+    public synchronized WeatherInfo GetWeatherInfo(long reminder_id)
     {
         WeatherInfo reminder = null;
         try

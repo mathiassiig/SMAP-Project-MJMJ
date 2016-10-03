@@ -92,7 +92,6 @@ public class weatherService extends Service {
         t.start();
     }
 
-
     //Weather Service demo kode fra undervisningen
     private String callURL(String callUrl) {
 
@@ -149,7 +148,6 @@ public class weatherService extends Service {
         return s;
     }
 
-
     private WeatherInfo getCurrentWeather()
     {
         String json = callURL(WEATHER_URL);
@@ -171,8 +169,6 @@ public class weatherService extends Service {
         t.start();
     }
 
-
-
     public ArrayList<WeatherInfo> getPastWeather()
     {
         dbinstance.PurgeOld();
@@ -188,7 +184,6 @@ public class weatherService extends Service {
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
-
     private void broadcastTaskResult()
     {
         Log.v("Debug", "Broadcasting result back to actvity");
@@ -202,12 +197,10 @@ public class weatherService extends Service {
         super.onDestroy();
     }
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
     }
-
 
     //https://www.youtube.com/watch?v=0c4jRCm353c
     //https://developer.android.com/guide/components/bound-services.html

@@ -6,8 +6,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OverviewActivity extends AppCompatActivity {
+
+    ArrayList<UserInfo> userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +33,15 @@ public class OverviewActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        //UserInfo users = new UserInfo("Maria", 200, "UserImage");
+        userInfo = new ArrayList<>();
+        String names[] = {"name1","name2","name3","name4"};
+        //ListAdapter userAdapter = new UserInfoAdapter(this,users);
+        ListAdapter userAdapter = new UserInfoAdapter(this,names);
+        ListView userList = (ListView) findViewById(R.id.overviewList);
+        userList.setAdapter(userAdapter);
     }
 
 }
