@@ -3,6 +3,7 @@ package mathiassiig.assignment2;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 public class WeatherReceiver extends BroadcastReceiver {
     public WeatherReceiver()
@@ -10,9 +11,10 @@ public class WeatherReceiver extends BroadcastReceiver {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        throw new UnsupportedOperationException("Not yet implemented");
+    public void onReceive(Context context, Intent intent)
+    {
+        Log.v("Debug", "Received pendingIntent");
+        Intent backgroundServiceIntent = new Intent(context, weatherService.class);
+        context.startService(backgroundServiceIntent);
     }
 }

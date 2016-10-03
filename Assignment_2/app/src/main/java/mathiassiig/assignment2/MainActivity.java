@@ -1,5 +1,6 @@
 package mathiassiig.assignment2;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -65,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void startWeatherRequestService()
     {
-        if(weatherService == null) {
-            Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
-            startService(backgroundServiceIntent);
-        }
+        Intent backgroundServiceIntent = new Intent(MainActivity.this, weatherService.class);
+        startService(backgroundServiceIntent);
     }
 
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
@@ -110,8 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleBackgroundResult(ArrayList<WeatherInfo> weatherInfos)
     {
+        WeatherInfo first = weatherInfos.get(0);
+        UpdateCurrentWeather(first);
         adapter.clear();
-        for(int i = 0; i < weatherInfos.size();i++)
+        for(int i = 1; i < weatherInfos.size();i++) //i == 1 for vi skipper den første
         {
             adapter.add(weatherInfos.get(i));
         }

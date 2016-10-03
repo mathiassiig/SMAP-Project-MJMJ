@@ -1,5 +1,7 @@
 package mathiassiig.assignment2;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,12 +25,13 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 public class weatherService extends Service {
 
-    public static final long LOOP_TIME = 30 * 60 * 1000; //30 minutter, 60 sekunder, 1000 millisekunder
+    public static final int LOOP_TIME = 30*60 ; //30 minutter, 60 sekunder
     private DatabaseHelper dbinstance;
 
     private static final String API_KEY = "d5a8341b52c8adfc0b4ec902bf53261c"; //Jonas API
@@ -44,9 +47,38 @@ public class weatherService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         ServiceStarted = true;
         Log.v("Debug", "Starting service");
-        dbinstance = DatabaseHelper.getInstance(getApplicationContext());
-        runInBackground();
+        UpdateWeather();
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public void UpdateWeather()
+    {
+        Thread t = new Thread(){
+            @Override
+            public void run()
+            {
+                WeatherInfo w = getActualCurrentWeather();
+                broadcastWeather(w);
+                dbinstance.AddWeatherInfo(w);
+                broadcastTaskResult();
+                setUpAlarm();
+            }
+        };
+        t.start();
+    }
+
+    //https://androidresearch.wordpress.com/2012/07/02/scheduling-an-application-to-start-later/
+    public void setUpAlarm()
+    {
+        AlarmManager aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getBaseContext(), WeatherReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(weatherService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Log.v("Debug", "Setting up the alarm");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, LOOP_TIME);
+        aManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+
     }
 
     public WeatherInfo ParseJson(String json) {
@@ -70,8 +102,8 @@ public class weatherService extends Service {
         return weather;
     }
 
-    private AsyncTask<Object, Object, String> backgroundTask;
 
+    /*
     private void runInBackground() {
         Log.v("Debug", "Run in background called");
         Thread t = new Thread(){
@@ -79,18 +111,20 @@ public class weatherService extends Service {
             public void run()
             {
                 try {
-                    WeatherInfo w = getCurrentWeather();
-                    broadcastWeather(w);
-                    dbinstance.AddWeatherInfo(w);
-                    broadcastTaskResult();
+
+                    Log.v("Debug", "Broadcasted task result, sleeping");
+
                     Thread.sleep(LOOP_TIME);
+                    //runInBackground();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         };
+        Log.v("Debug", "Starting thread");
         t.start();
-    }
+    }*/
 
     //Weather Service demo kode fra undervisningen
     private String callURL(String callUrl) {
@@ -125,7 +159,8 @@ public class weatherService extends Service {
             if (is != null) {
                 try {
                     is.close();
-                } catch (IOException ioe) {
+                } catch (IOException ioe)
+                {
 
                 }
             }
@@ -148,11 +183,18 @@ public class weatherService extends Service {
         return s;
     }
 
-    private WeatherInfo getCurrentWeather()
+    private WeatherInfo getActualCurrentWeather()
     {
         String json = callURL(WEATHER_URL);
         WeatherInfo current = ParseJson(json);
         return current;
+    }
+
+
+    // Men den returnerer egentligt bare den sidsthentede weather
+    public WeatherInfo getCurrentWeather()
+    {
+        return getPastWeather().get(0);
     }
 
     public void requestCurrentWeather()
@@ -162,7 +204,7 @@ public class weatherService extends Service {
             @Override
             public void run()
             {
-                WeatherInfo w = getCurrentWeather();
+                WeatherInfo w = getActualCurrentWeather();
                 broadcastWeather(w);
             }
         };
@@ -184,8 +226,7 @@ public class weatherService extends Service {
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
-    private void broadcastTaskResult()
-    {
+    private void broadcastTaskResult() {
         Log.v("Debug", "Broadcasting result back to actvity");
         Intent broadcastIntent = new Intent(INTENT_LOOP);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
@@ -193,8 +234,16 @@ public class weatherService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.v("Debug", "onDestroy service called");
         ServiceStarted = false;
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreate()
+    {
+        Log.v("Debug", "onCreate service called");
+        dbinstance = DatabaseHelper.getInstance(getApplicationContext());
     }
 
     @Override
