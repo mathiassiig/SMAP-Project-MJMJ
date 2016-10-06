@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="RoomieNator" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Mathias\\Documents\\SMAP-Project-MJMJ\\RoomienatorWeb\\RoomienatorWeb\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Mathias\\Documents\\SMAP-Project-MJMJ\\RoomienatorWeb\\RoomienatorWeb\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="RoomienatorWebContext-Web.config Connection String" description="" value="Server=tcp:roomienator.database.windows.net,1433;Initial Catalog=RoomienatorDB;Persist Security Info=False;User ID=roomie;Password=Mathiaserlækker93;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Mathias\\Documents\\SMAP-Project-MJMJ\\RoomienatorWeb\\RoomienatorWeb\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='RoomienatorWebContext']/@connectionString" />
+  </parameter>
+</parameters>
