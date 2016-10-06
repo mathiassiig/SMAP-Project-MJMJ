@@ -31,13 +31,4 @@
     <!-- Strings related to customUser -->
     <string name="customUser_txtName">Name</string>
     <string name="customUser_txtTotal">Total</string>
-    <string name="action_sign_up">Create new account</string>
-
-    <!-- Strings related to overviewActivity -->
-    <string name="overview_btnShoppinglist">Indkøbsliste</string>
-    <string name="overview_btnUserList">Oversigt</string>
-    <string name="overview_btnUserProfile">Profil</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
