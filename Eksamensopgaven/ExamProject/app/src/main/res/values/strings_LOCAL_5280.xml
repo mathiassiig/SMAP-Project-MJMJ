@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Roominator</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_shopping_list">ShoppingListActivity</string>
+    <string name="title_activity_add_product">AddProductActivity</string>
+    <string name="title_activity_buy_product">BuyProductActivity</string>
+    <string name="title_activity_overview">OverviewActivity</string>
+
+    <!-- Strings related to addProduct -->
+    <string name="addproduct_txtName">Product name:</string>
+    <string name="addproduct_txtNumber">Number:</string>
+    <string name="addproduct_txtPrice">Price:</string>
+
+    <!-- Strings related to buyProduct -->
+    <string name="buyproduct_txtName">Product name</string>
+    <string name="buyproduct_txtNumber">Number:</string>
+    <string name="buyproduct_txtPrice">Price:</string>
+
+    <!-- Strings related to customUser -->
+    <string name="customUser_txtName">Name</string>
+    <string name="customUser_txtTotal">Total</string>
+    <string name="action_sign_up">Create new account</string>
+</resources>

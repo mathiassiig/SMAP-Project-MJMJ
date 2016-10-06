@@ -77,9 +77,13 @@ public class OverviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
         String[] users = {"name1", "name2", "name3", "name4", "name5"};
 
+        ListAdapter userAdapter = new UserInfoAdapter(this.getContext(),users);
+
+
         ListView listView = (ListView) view.findViewById(R.id.overviewList);
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, users);
-        listView.setAdapter(listViewAdapter);
+        //ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, users);
+        //listView.setAdapter(listViewAdapter);
+        listView.setAdapter(userAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
