@@ -22,26 +22,6 @@
         android:layout_alignParentStart="true"
         android:id="@+id/addproduct_txtName" />
 
-    <TextView
-        android:text="@string/addproduct_txtNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addproduct_txtName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/addproduct_txtNumber"
-        android:layout_marginTop="40dp"/>
-
-    <TextView
-        android:text="@string/addproduct_txtPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addproduct_txtNumber"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/addproduct_txtPrice"
-        android:layout_marginTop="50dp"/>
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,27 +35,24 @@
         android:layout_toEndOf="@+id/addproduct_txtName"
         android:layout_marginLeft="20dp"/>
 
-    <EditText
+    <TextView
+        android:text="@string/addproduct_txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/addproduct_etPrice"
-        android:text="XX,XX DKK"
-        android:layout_alignBaseline="@+id/addproduct_txtPrice"
-        android:layout_alignBottom="@+id/addproduct_txtPrice"
-        android:layout_alignLeft="@+id/addproduct_etName"
-        android:layout_alignStart="@+id/addproduct_etName" />
+        android:id="@+id/addproduct_txtNumber"
+        android:layout_marginTop="146dp"
+        android:layout_below="@+id/addproduct_etName"
+        android:layout_toLeftOf="@+id/addproduct_etName"
+        android:layout_toStartOf="@+id/addproduct_etName"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp" />
 
     <NumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addproduct_numberpicker"
-        android:layout_below="@+id/addproduct_etPrice"
-        android:layout_alignLeft="@+id/addproduct_etPrice"
-        android:layout_alignStart="@+id/addproduct_etPrice"
-        android:layout_marginLeft="74dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="26dp" />
+        android:layout_alignBaseline="@+id/addproduct_txtNumber"
+        android:layout_alignBottom="@+id/addproduct_txtNumber"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
