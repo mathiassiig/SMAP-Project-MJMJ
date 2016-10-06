@@ -31,4 +31,5 @@
     <!-- Strings related to customUser -->
     <string name="customUser_txtName">Name</string>
     <string name="customUser_txtTotal">Total</string>
+    <string name="action_sign_up">Create new account</string>
 </resources>

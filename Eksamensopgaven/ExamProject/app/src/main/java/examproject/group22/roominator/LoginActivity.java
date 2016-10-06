@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,13 +34,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import examproject.group22.roominator.Models.User;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
+    private String TAG = "DEBUG";
+    public User currentUser;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -50,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "roomie@example.com:1234", "bar@example.com:world"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -72,25 +76,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //attemptLogin();
-                //Intent btnLoginIntent = new Intent(LoginActivity.this, ShoppingListActivity.class);
-                Intent btnLoginIntent = new Intent(LoginActivity.this, OverviewActivity.class);
-                startActivity(btnLoginIntent);
+                attemptLogin();
+
+            }
+        });
+
+        Button mSignUpButton = (Button)findViewById(R.id.sign_up_button);
+        mSignUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentUser = new User(mEmailView.getText().toString(),mPasswordView.getText().toString(),null);
+                Log.v(TAG, "Current user" + currentUser.toString());
+                Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+                i.putExtra("user", currentUser);
+                startActivity(i);
             }
         });
 
@@ -165,18 +169,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError("WOOOOHAAA your pass word is incorrect");
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.setError("Enter an email ");
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError("invalid Emial");
             focusView = mEmailView;
             cancel = true;
         }
@@ -195,13 +199,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        if(email.contains("@") && email.contains(".com")) {
+            Log.v(TAG, "isEmailValid: true ");
+            return true;
+        }else{
+            Log.v(TAG, "isEmailValid: false ");
+            return false;
+        }
+
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+            if(password.length() == 4){
+                Log.v(TAG, "isPasswordValid: true ");
+                return true;
+            }else {
+                Log.v(TAG, "isPasswordValid: false ");
+                return false;
+            }
     }
 
     /**
@@ -314,6 +329,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 // Simulate network access.
+                Log.v(TAG, "doInBackground: ready to sleep");
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 return false;
@@ -322,6 +338,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
+                    Log.v(TAG, "doInBackground: Email used: "+ mEmail);
+                    Log.v(TAG, "doInBackground: password used: "+ mPassword);
+
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
@@ -338,8 +357,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 finish();
+                Log.v(TAG, "onPostExecute: finished");
+                Intent btnLoginIntent = new Intent(LoginActivity.this, OverviewActivity.class);
+                startActivity(btnLoginIntent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError("PASSWORD MUST BE 4");
                 mPasswordView.requestFocus();
             }
         }
