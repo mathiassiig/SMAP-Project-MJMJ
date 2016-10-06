@@ -28,7 +28,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             @Override
             public void onClick(View v) {
                 OverviewFragment overviewFragment = new OverviewFragment();
-                getSupportFragmentManager().beginTransaction().add(R.id.content_fragment, overviewFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment,overviewFragment);
             }
         });
 
@@ -36,7 +36,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             @Override
             public void onClick(View v) {
                 OverviewFragment overviewFragment = new OverviewFragment();
-                getSupportFragmentManager().beginTransaction().add(R.id.content_fragment, overviewFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment,overviewFragment);
             }
         });
 
@@ -44,7 +44,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             @Override
             public void onClick(View v) {
                 OverviewFragment overviewFragment = new OverviewFragment();
-                getSupportFragmentManager().beginTransaction().add(R.id.content_fragment, overviewFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment,overviewFragment);
             }
         });
     }
