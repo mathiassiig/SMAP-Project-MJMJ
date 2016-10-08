@@ -1,5 +1,8 @@
 package examproject.group22.roominator.Models;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -7,7 +10,7 @@ import java.sql.Timestamp;
  * Created by Mathias on 08-Oct-16.
  */
 
-public class GroceryItem
+public class GroceryItem implements Serializable
 {
     public int id;
     public String name;

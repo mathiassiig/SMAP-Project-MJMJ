@@ -27,12 +27,23 @@ public class ResponseParser
 {
     public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 
-    public ArrayList<User> parseUsers(String response)
+    public ArrayList<User> parseUsers(String response, boolean withPass)
     {
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<User>();
         try
         {
-            JSONObject jsonResponse = new JSONObject(response);
+            JSONArray array = new JSONArray(response);
+            for (int i = 0; i < array.length(); i++)
+            {
+                JSONObject object = array.getJSONObject(i);
+                String name = object.getString("Name");
+                String pass = "";
+                //TODO: image
+                if(withPass)
+                    pass = object.getString("Password");
+
+                users.add(new User(name, pass, null));
+            }
         }
         catch(JSONException e)
         {
@@ -41,9 +52,28 @@ public class ResponseParser
         return users;
     }
 
-    public ArrayList<Apartment> parseApartments(String response)
+    public ArrayList<Apartment> parseApartments(String response, boolean withPass)
     {
-        return null;
+        ArrayList<Apartment> apartments = new ArrayList<Apartment>();
+        try
+        {
+            JSONArray array = new JSONArray(response);
+            for (int i = 0; i < array.length(); i++)
+            {
+                JSONObject object = array.getJSONObject(i);
+                String name = object.getString("Name");
+                String pass = "";
+                if(withPass)
+                    pass = object.getString("Password");
+
+                apartments.add(new Apartment(name, pass));
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return apartments;
     }
 
     public ArrayList<GroceryItem> parseGroceries(String response)
@@ -59,11 +89,8 @@ public class ResponseParser
                 int id = object.getInt("Id");
                 String name = object.getString("Name");
                 int price = object.getInt("Price");
-
-                String creationString = object.getString("Creation").replace('T', ' ');
-                java.util.Date creationDate = TIME_FORMAT.parse(creationString);
+                Date creationDate = (Date) TIME_FORMAT.parse(object.getString("Creation"));
                 Timestamp creation = new Timestamp(creationDate.getTime());
-
                 int apartmentId = object.getInt("ApartmentID");
                 //If it has been bought:
                 groceries.add(new GroceryItem(id, name, price, creation, apartmentId));
