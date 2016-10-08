@@ -1,5 +1,7 @@
 package examproject.group22.roominator;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 /**
@@ -10,9 +12,9 @@ public class UserInfo implements Serializable{
     public long id;
     public String userName;
     public int totalPrice;
-    public String userImg;
+    public byte[] userImg;
 
-    public UserInfo(String name, int total, String image)
+    public UserInfo(String name, int total, byte[] image)
     {
         userName = name;
         totalPrice = total;
