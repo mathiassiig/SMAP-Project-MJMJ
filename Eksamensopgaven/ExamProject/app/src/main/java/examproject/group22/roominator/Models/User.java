@@ -15,7 +15,7 @@ public class User implements Serializable {
     public String name;
     public String password;
     public Bitmap image;
-
+    public int id;
 
     public User(String name, String password, Bitmap image) {
         this.name = name;

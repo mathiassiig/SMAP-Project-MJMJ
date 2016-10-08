@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "roomie@example.com:1234", "bar@example.com:world"
+            "roomie:1234", "bar@example.com:world"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -199,7 +200,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        if(email.contains("@") && email.contains(".com")) {
+       // if(email.contains("@") && email.contains(".com")) {
+        if(email.length()>=4){
             Log.v(TAG, "isEmailValid: true ");
             return true;
         }else{
@@ -326,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+            // TODO: connect to db and check for user.
             try {
                 // Simulate network access.
                 Log.v(TAG, "doInBackground: ready to sleep");
