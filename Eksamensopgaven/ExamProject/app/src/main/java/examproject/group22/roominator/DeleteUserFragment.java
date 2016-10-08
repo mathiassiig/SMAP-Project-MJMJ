@@ -1,34 +1,31 @@
 package examproject.group22.roominator;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.view.Window;
 
-import java.util.ArrayList;
-
-// KILDER:
-// https://developer.android.com/reference/android/widget/AdapterView.OnItemLongClickListener.html
+// KILDE:
+// https://developer.android.com/guide/topics/ui/dialogs.html
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LongClickListener} interface
+ * {@link DeleteUserDialogListener} interface
  * to handle interaction events.
- * Use the {@link OverviewFragment#newInstance} factory method to
+ * Use the {@link DeleteUserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OverviewFragment extends Fragment {
-
-    ArrayList<UserInfo> userInfo;
-
+public class DeleteUserFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,9 +35,9 @@ public class OverviewFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private LongClickListener mListener;
+    private DeleteUserDialogListener mListener;
 
-    public OverviewFragment() {
+    public DeleteUserFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +47,11 @@ public class OverviewFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OverviewFragment.
+     * @return A new instance of fragment DeleteUserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OverviewFragment newInstance(String param1, String param2) {
-        OverviewFragment fragment = new OverviewFragment();
+    public static DeleteUserFragment newInstance(String param1, String param2) {
+        DeleteUserFragment fragment = new DeleteUserFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,45 +68,38 @@ public class OverviewFragment extends Fragment {
         }
     }
 
-    //TODO: Indsæt kilde
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_title);
+        builder.setMessage(R.string.dialog_message)
+                .setPositiveButton(R.string.dialog_btnOK, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mListener.onDialogPositiveClick(DeleteUserFragment.this);
+                    }
+                })
+                .setNegativeButton(R.string.dialog_btnCancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mListener.onDialogNegativeClick(DeleteUserFragment.this);
+                    }
+                });
 
-        View view = inflater.inflate(R.layout.fragment_overview, container, false);
-        String[] users = {"name1", "name2", "name3", "name4", "name5"};
-
-        ListAdapter userAdapter = new UserInfoAdapter(this.getContext(),users);
-
-
-        ListView listView = (ListView) view.findViewById(R.id.overviewList);
-        //ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, users);
-        //listView.setAdapter(listViewAdapter);
-        listView.setAdapter(userAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return view;
+        return builder.create();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(AdapterView<?> parent, View view, int position, long id) {
+    public void onButtonPressed(DialogFragment dialog) {
         if (mListener != null) {
-            mListener.onItemLongClick(parent, view, position, id);
+            mListener.onDialogPositiveClick(dialog);
+            mListener.onDialogNegativeClick(dialog);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof LongClickListener) {
-            mListener = (LongClickListener) context;
+        if (context instanceof DeleteUserDialogListener) {
+            mListener = (DeleteUserDialogListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement DeleteUserDialogListener");
@@ -132,8 +122,11 @@ public class OverviewFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface LongClickListener {
+
+    public interface DeleteUserDialogListener {
         // TODO: Update argument type and name
-        void onItemLongClick(AdapterView<?> parent, View view, int position, long id);
+        //void onItemLongClick(Uri uri);
+        public void onDialogPositiveClick(DialogFragment dialog);
+        public void onDialogNegativeClick(DialogFragment dialog);
     }
 }

@@ -38,6 +38,12 @@
     <string name="overview_btnUserList">Oversigt</string>
     <string name="overview_btnUserProfile">Profil</string>
 
+    <!-- Strings related to deleteUserFragment -->
+    <string name="dialog_title">Vil du slette brugeren?</string>
+    <string name="dialog_message">Brugerens data vil blive slettet permanent.</string>
+    <string name="dialog_btnCancel">Annuller</string>
+    <string name="dialog_btnOK">OK</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

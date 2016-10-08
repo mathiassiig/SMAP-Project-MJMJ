@@ -107,7 +107,7 @@ public class ProductListFragment extends Fragment {
             mListener = (OnFragmentInteractionListener2) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement DeleteUserDialogListener");
         }
     }
 
