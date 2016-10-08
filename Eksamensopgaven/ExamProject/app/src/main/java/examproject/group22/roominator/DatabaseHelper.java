@@ -9,45 +9,95 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
+
+import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
+
 public class DatabaseHelper {
 
     private static DatabaseHelper sInstance;
     private static String HOST_API = "http://roomienator.azurewebsites.net/api/";
     private static String TABLE_APARTMENTS = "Apartments";
-    public static synchronized DatabaseHelper getInstance()
+    private static String TABLE_USERS = "Users";
+    private static String TABLE_GROCERIES = "GroceryItems";
+    private Context current_context;
+    public  ResponseParser parser;
+    public static synchronized DatabaseHelper getInstance(Context context)
     {
         if (sInstance == null)
-            sInstance = new DatabaseHelper();
+            sInstance = new DatabaseHelper(context);
         return sInstance;
     }
 
-    private DatabaseHelper()
+    private DatabaseHelper(Context context)
     {
+        current_context = context;
+        parser = new ResponseParser();
     }
 
-    //https://developer.android.com/training/volley/simple.html
-    public void SendRequest(Context context)
+    public void getGroceriesInApartment(int apartment_id)
     {
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String url = HOST_API+TABLE_APARTMENTS;
-        //"The most disgusting tabulation you will ever see".java
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_GROCERIES+"?ApartmentID="+apartment_id;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
-                        // Display the first 500 characters of the response string.
-                        Log.v("DatabaseHelper", "Response is: " + response.substring(0, 500));
+                        ArrayList<GroceryItem> groceries = parser.parseGroceries(response);
+                        sendGroceries(groceries);
                     }
                 }, new Response.ErrorListener()
-                    {
-                        @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
-                            Log.v("DatabaseHelper", "Request didn't work: " + error.getMessage());
-                        }
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Log.v("DatabaseHelper", "Couldn't fetch groceries: " + error.getMessage());
+            }
         });
         queue.add(stringRequest);
     }
+
+    private void sendGroceries(ArrayList<GroceryItem> groceries)
+    {
+        //broadcast
+    }
+
+    /*
+    public void getUsersInApartment(int apartment_id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+
+                    }
+                }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Log.v("DatabaseHelper", "Request didn't work: " + error.getMessage());
+            }
+        });
+        queue.add(stringRequest);
+    }*/
+
+    private void sendUsersInApartment()
+    {
+
+    }
+
+    public void broadcastResult()
+    {
+
+    }
+
+
+    //https://developer.android.com/training/volley/simple.html
 }
