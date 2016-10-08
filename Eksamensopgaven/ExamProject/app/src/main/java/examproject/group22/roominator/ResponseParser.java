@@ -25,7 +25,7 @@ import examproject.group22.roominator.Models.User;
 
 public class ResponseParser
 {
-    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("YYYY-MM-DDTHH:MM:SS.M");
+    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 
     public ArrayList<User> parseUsers(String response)
     {
@@ -59,8 +59,11 @@ public class ResponseParser
                 int id = object.getInt("Id");
                 String name = object.getString("Name");
                 int price = object.getInt("Price");
-                Date creationDate = (Date) TIME_FORMAT.parse(object.getString("Creation"));
+
+                String creationString = object.getString("Creation").replace('T', ' ');
+                java.util.Date creationDate = TIME_FORMAT.parse(creationString);
                 Timestamp creation = new Timestamp(creationDate.getTime());
+
                 int apartmentId = object.getInt("ApartmentID");
                 //If it has been bought:
                 groceries.add(new GroceryItem(id, name, price, creation, apartmentId));
