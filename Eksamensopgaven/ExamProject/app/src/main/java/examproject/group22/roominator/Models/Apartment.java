@@ -8,5 +8,11 @@ public class Apartment {
 
     public int id;
     public String name;
+    public String password;
     //ArrayList<Users> users ? //necessary?
+
+    public Apartment(String name, String password)
+    {
+
+    }
 }
