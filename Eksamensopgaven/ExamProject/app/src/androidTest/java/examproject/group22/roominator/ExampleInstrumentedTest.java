@@ -23,4 +23,12 @@ public class ExampleInstrumentedTest {
 
         assertEquals("examproject.group22.roominator", appContext.getPackageName());
     }
+
+    @Test
+    public void DatabaseHelper_SendRequest() throws Exception {
+
+        Context context = InstrumentationRegistry.getTargetContext();
+
+        DatabaseHelper.getInstance().SendRequest(context);
+    }
 }
