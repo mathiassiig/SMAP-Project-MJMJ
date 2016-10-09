@@ -37,6 +37,7 @@
     <string name="overview_btnShoppinglist">Indkøbsliste</string>
     <string name="overview_btnUserList">Oversigt</string>
     <string name="overview_btnUserProfile">Profil</string>
+    <string name="overview_UserDeleted">Brugeren er slettet</string>
 
     <!-- Strings related to deleteUserFragment -->
     <string name="dialog_title">Vil du slette brugeren?</string>

@@ -87,13 +87,6 @@ public class OverviewFragment extends Fragment {
         //listView.setAdapter(listViewAdapter);
         listView.setAdapter(userAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
         // Inflate the layout for this fragment
         return view;
     }

@@ -1,74 +1,39 @@
 package examproject.group22.roominator;
 
 import android.net.Uri;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
+public class OverviewActivity extends AppCompatActivity implements OverviewFragment.LongClickListener, ProductListFragment.OnFragmentInteractionListener2, DeleteUserFragment.DeleteUserDialogListener {
 
-public class OverviewActivity extends AppCompatActivity implements OverviewFragment.LongClickListener, ProductListFragment.OnFragmentInteractionListener2, DeleteUserFragment.DeleteUserDialogListener{
-
-    private Button btnList;
-    private Button btnOverview;
-    private Button btnProfile;
+    // KILDER:
+    // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        ProductListFragment productlistFragment = new ProductListFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_fragment, productlistFragment).commit();
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this);
+        viewPager.setAdapter(pagerAdapter);
 
-        btnList = (Button) findViewById(R.id.overview_btnShoppinglist);
-        btnOverview = (Button) findViewById(R.id.overview_btnUserList);
-        btnProfile = (Button) findViewById(R.id.overview_btnUserProfile);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
 
-        btnList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OverviewFragment overviewFragment = new OverviewFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment, overviewFragment).commit();
-
-            }
-        });
-
-        btnOverview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OverviewFragment overviewFragment = new OverviewFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment, overviewFragment).commit();
-            }
-        });
-
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OverviewFragment overviewFragment = new OverviewFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment, overviewFragment).commit();
-            }
-        });
     }
+
 
     @Override
     public void onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListView userList = (ListView) findViewById(R.id.overviewList);
-        userList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "On long click listener", Toast.LENGTH_LONG).show();
-                //DialogFragment dialog = new DeleteUserFragment();
-                //dialog.show(getSupportFragmentManager(), "DeleteUserDialogFragment");
-                return false;
-            }
-        });
+
     }
 
     @Override
@@ -80,10 +45,13 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
+        //TODO Implement
+        Toast.makeText(this, R.string.overview_UserDeleted, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         // User touched the dialog's negative button
+        //TODO Implement
     }
 }
