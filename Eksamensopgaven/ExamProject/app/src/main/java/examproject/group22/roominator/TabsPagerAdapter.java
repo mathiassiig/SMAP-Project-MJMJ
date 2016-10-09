@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import examproject.group22.roominator.Fragments.OverviewFragment;
+
 /**
  * Created by Maria Dam on 09-10-2016.
  */
@@ -31,7 +33,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position){
         switch (position){
             case 0:
-                return new OverviewFragment();
+                return new ProfileFragment();
             case 1:
                 return new ProductListFragment();
             case 2:

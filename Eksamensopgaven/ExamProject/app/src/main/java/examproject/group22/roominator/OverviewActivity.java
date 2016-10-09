@@ -1,5 +1,6 @@
 package examproject.group22.roominator;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
@@ -11,7 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-public class OverviewActivity extends AppCompatActivity implements OverviewFragment.LongClickListener, ProductListFragment.OnFragmentInteractionListener2, DeleteUserFragment.DeleteUserDialogListener {
+import examproject.group22.roominator.Fragments.OverviewFragment;
+
+public class OverviewActivity extends AppCompatActivity implements OverviewFragment.ItemClickListener,
+        ProductListFragment.OnFragmentInteractionListener2,
+        DeleteUserFragment.DeleteUserDialogListener,
+        ProfileFragment.OnFragmentInteractionListener{
 
     // KILDER:
     // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
@@ -32,13 +38,25 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
 
     @Override
-    public void onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
+        startActivity(detailIntent);
+        Toast.makeText(this, "Item clicked", Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, "Item long clicked", Toast.LENGTH_LONG).show();
+        DialogFragment dialog= new DeleteUserFragment();
+        dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
     }
 
     @Override
     public void onFragmentInteraction2(Uri uri) {
-
     }
 
 

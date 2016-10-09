@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="examproject.group22.roominator.Fragments.OverviewFragment">
+    tools:context="examproject.group22.roominator.Fragments.DetailFragment">
 
     <ListView
         android:layout_width="match_parent"
@@ -10,6 +10,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/overviewList" />
+        android:id="@+id/detailList" />
 
 </FrameLayout>
