@@ -49,4 +49,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signUp_password">Password</string>
     <string name="signUp_create_button">Create</string>
+    
+    <string-array name="product_names">
+        <item>Apple</item>
+        <item>Banana</item>
+        <item>Soap</item>
+    </string-array>
+    <string-array name="product_number">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
