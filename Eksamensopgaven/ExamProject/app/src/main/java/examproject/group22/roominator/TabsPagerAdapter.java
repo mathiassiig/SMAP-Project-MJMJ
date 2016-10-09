@@ -1,0 +1,58 @@
+package examproject.group22.roominator;
+
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+
+/**
+ * Created by Maria Dam on 09-10-2016.
+ */
+
+// KILDER:
+// https://www.youtube.com/watch?v=zQekzaAgIlQ
+
+
+public class TabsPagerAdapter extends FragmentPagerAdapter {
+
+    Context context;
+
+    public TabsPagerAdapter(FragmentManager fragmentManager, Context context){
+        super(fragmentManager);
+        this.context = context;
+    }
+
+    @Override
+    public int getCount(){
+        return 3;
+    }
+
+    @Override
+    public Fragment getItem(int position){
+        switch (position){
+            case 0:
+                return new OverviewFragment();
+            case 1:
+                return new ProductListFragment();
+            case 2:
+                return new OverviewFragment();
+            default:
+                return null;
+        }
+    }
+
+    //KILDE: http://stackoverflow.com/questions/20006736/cant-use-method-getstringint-resid-in-fragmentpageradapter
+    @Override
+    public CharSequence getPageTitle(int position){
+        switch (position){
+            case 0:
+                return context.getResources().getString(R.string.overview_btnUserProfile);
+            case 1:
+                return context.getResources().getString(R.string.overview_btnShoppinglist);
+            case 2:
+                return context.getResources().getString(R.string.overview_btnUserList);
+            default:
+                return null;
+        }
+    }
+}
