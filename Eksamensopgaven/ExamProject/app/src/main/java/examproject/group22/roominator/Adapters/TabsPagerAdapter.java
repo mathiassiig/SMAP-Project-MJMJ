@@ -1,4 +1,4 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import examproject.group22.roominator.Fragments.OverviewFragment;
+import examproject.group22.roominator.Fragments.ProductListFragment;
+import examproject.group22.roominator.Fragments.ProfileFragment;
+import examproject.group22.roominator.R;
 
 /**
  * Created by Maria Dam on 09-10-2016.

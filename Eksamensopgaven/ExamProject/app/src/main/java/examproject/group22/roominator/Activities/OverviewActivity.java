@@ -1,4 +1,4 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import examproject.group22.roominator.Fragments.DeleteUserFragment;
 import examproject.group22.roominator.Fragments.OverviewFragment;
+import examproject.group22.roominator.Fragments.ProductListFragment;
+import examproject.group22.roominator.Fragments.ProfileFragment;
+import examproject.group22.roominator.R;
+import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 
 public class OverviewActivity extends AppCompatActivity implements OverviewFragment.ItemClickListener,
         ProductListFragment.OnFragmentInteractionListener2,

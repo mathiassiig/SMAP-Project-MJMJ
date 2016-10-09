@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.UserInfo;
-import examproject.group22.roominator.UserInfoAdapter;
+import examproject.group22.roominator.Adapters.UserInfoAdapter;
 
 // KILDER:
 // https://developer.android.com/reference/android/widget/AdapterView.OnItemLongClickListener.html

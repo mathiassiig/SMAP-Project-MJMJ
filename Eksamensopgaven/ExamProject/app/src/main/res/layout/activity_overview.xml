@@ -4,7 +4,7 @@
     android:id="@+id/activity_overview_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="examproject.group22.roominator.OverviewActivity">
+    tools:context="examproject.group22.roominator.Activities.OverviewActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"

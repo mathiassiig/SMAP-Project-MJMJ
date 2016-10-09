@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,21 +23,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".Activities.SignUpActivity" />
         <activity
-            android:name=".ShoppingListActivity"
+            android:name=".Activities.ShoppingListActivity"
             android:label="@string/title_activity_shopping_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddProductActivity"
+            android:name=".Activities.AddProductActivity"
             android:label="@string/title_activity_add_product"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BuyProductActivity"
+            android:name=".Activities.BuyProductActivity"
             android:label="@string/title_activity_buy_product"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".OverviewActivity"></activity>
+        <activity android:name=".Activities.DetailActivity" />
+        <activity android:name=".Activities.OverviewActivity"></activity>
     </application>
 
 </manifest>

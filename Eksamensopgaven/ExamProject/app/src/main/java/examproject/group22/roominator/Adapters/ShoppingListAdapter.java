@@ -1,4 +1,4 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import examproject.group22.roominator.R;
+import examproject.group22.roominator.ShoppingListProvider;
 
 /**
  * Created by Jonas on 10/9/2016.

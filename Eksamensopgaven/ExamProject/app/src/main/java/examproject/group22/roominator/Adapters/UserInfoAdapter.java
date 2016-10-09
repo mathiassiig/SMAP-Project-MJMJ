@@ -1,4 +1,4 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import examproject.group22.roominator.R;
+import examproject.group22.roominator.UserInfo;
 
 /**
  * Created by Maria Dam on 02-10-2016.

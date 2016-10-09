@@ -1,10 +1,11 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Activities;
 
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import examproject.group22.roominator.Fragments.DetailFragment;
+import examproject.group22.roominator.R;
 
 public class DetailActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener {
 
