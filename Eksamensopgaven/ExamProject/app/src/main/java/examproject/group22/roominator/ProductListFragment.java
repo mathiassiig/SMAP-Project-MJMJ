@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProductListFragment.OnFragmentInteractionListener} interface
+ * {@link ProductListFragment.OnFragmentInteractionListener2} interface
  * to handle interaction events.
  * Use the {@link ProductListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -32,6 +32,7 @@ public class ProductListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
 
     private OnFragmentInteractionListener2  mListener;
@@ -66,18 +67,38 @@ public class ProductListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
     }
+    String[] Products;
+    String[] Number;
+    ShoppingListAdapter S_adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-        String[] test = new String[] { "test",
+        ListView listView = (ListView) view.findViewById(R.id.ProductListView);
+
+        Products = getResources().getStringArray(R.array.product_names);
+        Number = getResources().getStringArray(R.array.product_number);
+        S_adapter = new ShoppingListAdapter(getContext(), R.layout.row_shoppinglist_layout);
+        listView.setAdapter(S_adapter);
+
+        int i = 0;
+        for(String products: Products){
+            ShoppingListProvider dataprovider = new ShoppingListProvider(products,Number[i]);
+            S_adapter.add(dataprovider);
+            i++;
+        }
+
+
+
+
+        /* String[] test = new String[] { "test",
                 "tesst",
                 "tessst",
         };
-
         ListView listView = (ListView) view.findViewById(R.id.ProductListView);
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, test);
         listView.setAdapter(listViewAdapter);
@@ -87,7 +108,7 @@ public class ProductListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
-        });
+        });    */
 
         // Inflate the layout for this fragment
         return view;
