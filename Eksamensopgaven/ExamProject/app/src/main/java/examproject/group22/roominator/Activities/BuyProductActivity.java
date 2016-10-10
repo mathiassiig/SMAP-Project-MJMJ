@@ -43,19 +43,22 @@ public class BuyProductActivity extends AppCompatActivity {
             TextviewProductName.setText("Produkt: " + bundle.getString("productname"));
             numberpicker.setValue(bundle.getInt("productnumber"));
         }else{
-            Toast.makeText(this, "Tested",Toast.LENGTH_LONG).show();}
+            Toast.makeText(this, "Send data med fra liste",Toast.LENGTH_SHORT).show();}
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_buy);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Opdater databasen!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //   Intent addIntent = new Intent(BuyProductActivity.this, OverviewActivity.class);
-                //   startActivity(addIntent);
+                RemoveFromDB();
             }
         });
+    }
+
+    private void RemoveFromDB() {
+        Toast.makeText(this, "Remove from DB", Toast.LENGTH_LONG).show();
+        //   Intent addIntent = new Intent(BuyProductActivity.this, OverviewActivity.class);
+        //   startActivity(addIntent);
     }
 
     public void Calc_total(View view){

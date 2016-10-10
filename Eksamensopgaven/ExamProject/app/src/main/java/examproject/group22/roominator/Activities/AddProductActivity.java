@@ -7,13 +7,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import examproject.group22.roominator.R;
 
 public class AddProductActivity extends AppCompatActivity {
 
     private NumberPicker numberPicker;
+    private EditText EditTextProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class AddProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        EditTextProduct = (EditText)findViewById(R.id.addproduct_etName);
         numberPicker = (NumberPicker)findViewById(R.id.addproduct_NumberPicker);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(99);
@@ -30,12 +34,21 @@ public class AddProductActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Opdater databasen!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-             //   Intent addIntent = new Intent(AddProductActivity.this, OverviewActivity.class);
-             //   startActivity(addIntent);
+                saveProductToDB();
             }
         });
+    }
+
+    private void saveProductToDB() {
+        if (EditTextProduct.getText().toString().trim().length() != 0) {
+            Toast.makeText(this, "Save to DB", Toast.LENGTH_LONG).show();
+            //   Intent addIntent = new Intent(AddProductActivity.this, OverviewActivity.class);
+            //   startActivity(addIntent);
+        }
+        else{
+            Toast.makeText(this, "Udfyld produkt", Toast.LENGTH_LONG).show();
+
+        }
     }
 
 }

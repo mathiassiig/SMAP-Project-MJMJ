@@ -46,19 +46,6 @@
         android:layout_marginBottom="19dp"
         android:id="@+id/buyproduct_NumberPicker" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buyproduct_textViewNumber"
-        android:layout_marginBottom="123dp"
-        android:text="@string/buyproduct_txtNumber"
-        android:layout_alignBottom="@+id/buyproduct_txtPrice"
-        android:layout_alignRight="@+id/buyproduct_txtName"
-        android:layout_alignEnd="@+id/buyproduct_txtName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="18sp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,30 +58,6 @@
         android:layout_toRightOf="@+id/buyproduct_txtNumber"
         android:layout_toEndOf="@+id/buyproduct_txtNumber" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buyproduct_etPrice"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="59dp"
-        android:id="@+id/buyproduct_totalSum"
-        android:text="@string/buyproduct_total"
-        android:onClick="Calc_total" />
-
-    <TextView
-        android:text="Total sum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buyproduct_textViewTotal"
-        android:textSize="18sp"
-        android:layout_alignBaseline="@+id/buyproduct_totalSum"
-        android:layout_alignBottom="@+id/buyproduct_totalSum"
-        android:layout_alignRight="@+id/buyproduct_etPrice"
-        android:layout_alignEnd="@+id/buyproduct_etPrice"
-        android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp" />
-
     <TextView
         android:text="@string/buyproduct_txtPrice"
         android:layout_width="wrap_content"
@@ -105,5 +68,29 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/buyproduct_txt_Total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyproduct_textViewTotal"
+        android:textSize="18sp"
+        android:layout_marginRight="31dp"
+        android:layout_marginEnd="31dp"
+        android:layout_alignBaseline="@+id/buyproduct_totalSum"
+        android:layout_alignBottom="@+id/buyproduct_totalSum"
+        android:layout_alignRight="@+id/buyproduct_etPrice"
+        android:layout_alignEnd="@+id/buyproduct_etPrice" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyproduct_totalSum"
+        android:text="@string/buyproduct_btnTotal"
+        android:onClick="Calc_total"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp" />
 
 </RelativeLayout>

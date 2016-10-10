@@ -27,7 +27,8 @@
     <string name="buyproduct_txtName">Produkt:</string>
     <string name="buyproduct_txtNumber">Antal:</string>
     <string name="buyproduct_txtPrice">Pris:</string>
-    <string name="buyproduct_total">Udregn beløb</string>
+    <string name="buyproduct_btnTotal">Udregn beløb</string>
+    <string name="buyproduct_txt_Total">Total</string>
 
     <!-- Strings related to customUser -->
     <string name="customUser_txtName">Navn</string>
@@ -55,10 +56,10 @@
     <string name="signUp_create_button">Opret</string>
     
     <string-array name="product_names">
-        <item>Garbage bags</item>
-        <item>Toilet paper</item>
-        <item>Toilet Soap</item>
-        <item>Soap</item>
+        <item>Skraldeposer</item>
+        <item>Toiletpapir</item>
+        <item>Toiletsæbe</item>
+        <item>Sæbe</item>
         <item>nytnyt</item>
         <item>nytnyt</item>
     </string-array>
