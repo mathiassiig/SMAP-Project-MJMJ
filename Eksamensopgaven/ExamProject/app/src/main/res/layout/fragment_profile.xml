@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="examproject.group22.roominator.Fragments.ProductListFragment">
+    tools:context="examproject.group22.roominator.Fragments.ProfileFragment">
 
-    <ListView
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/ProductListView" />
+        android:text="@string/hello_blank_fragment" />
+
 </FrameLayout>

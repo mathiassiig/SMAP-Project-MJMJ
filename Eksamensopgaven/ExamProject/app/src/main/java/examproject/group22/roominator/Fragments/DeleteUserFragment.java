@@ -1,17 +1,14 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
+
+import examproject.group22.roominator.R;
 
 // KILDE:
 // https://developer.android.com/guide/topics/ui/dialogs.html
