@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -114,14 +113,14 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mListener != null){
-            mListener.onItemClick(parent,view,position,id);
+            mListener.onUserItemClick(parent,view,position,id);
         }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         if (mListener != null) {
-            mListener.onItemLongClick(parent, view, position, id);
+            mListener.onUserItemLongClick(parent, view, position, id);
         }
         return true;
     }
@@ -138,7 +137,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
      */
     public interface ItemClickListener {
         // TODO: Update argument type and name
-        void onItemLongClick(AdapterView<?> parent, View view, int position, long id);
-        void onItemClick(AdapterView<?> parent, View view, int position, long id);
+        void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id);
+        void onUserItemClick(AdapterView<?> parent, View view, int position, long id);
     }
 }
