@@ -18,11 +18,11 @@ public class AddProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_buy);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addIntent = new Intent(AddProductActivity.this, ShoppingListActivity.class);
+                Intent addIntent = new Intent(AddProductActivity.this, OverviewActivity.class);
                 startActivity(addIntent);
             }
         });

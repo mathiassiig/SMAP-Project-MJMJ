@@ -39,7 +39,7 @@
         android:text="@string/addproduct_txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addproduct_txtNumber"
+        android:id="@+id/buyproduct_txtNumber"
         android:layout_marginTop="146dp"
         android:layout_below="@+id/addproduct_etName"
         android:layout_toLeftOf="@+id/addproduct_etName"
@@ -51,8 +51,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addproduct_numberpicker"
-        android:layout_alignBaseline="@+id/addproduct_txtNumber"
-        android:layout_alignBottom="@+id/addproduct_txtNumber"
+        android:layout_alignBaseline="@+id/buyproduct_txtNumber"
+        android:layout_alignBottom="@+id/buyproduct_txtNumber"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
