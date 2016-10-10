@@ -47,7 +47,8 @@
     <string name="dialog_btnOK">OK</string>
 
     <!-- Strings related to ProfileFragment -->
-    <string name="profile_lbName">Name: </string>
+    <string name="profile_lbName">Navn: </string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

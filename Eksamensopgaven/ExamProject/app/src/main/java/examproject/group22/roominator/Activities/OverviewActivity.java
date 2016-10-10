@@ -52,12 +52,10 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
         startActivity(detailIntent);
-        Toast.makeText(this, "Item clicked", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Item long clicked", Toast.LENGTH_LONG).show();
         DialogFragment dialog= new DeleteUserFragment();
         dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");
     }

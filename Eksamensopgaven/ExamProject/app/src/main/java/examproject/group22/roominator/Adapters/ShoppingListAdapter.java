@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -61,8 +59,8 @@ public class ShoppingListAdapter extends ArrayAdapter {
                 LayoutInflater inflater = (LayoutInflater)this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 row=inflater.inflate(R.layout.row_shoppinglist_layout,parent,false);
                 handler = new DataHandler();
-                handler.productname = (TextView) row.findViewById(R.id.TextviewProduct);
-                handler.productnumber = (TextView) row.findViewById(R.id.TextviewProductnumber);
+                handler.productname = (TextView) row.findViewById(R.id.detail_lbDate);
+                handler.productnumber = (TextView) row.findViewById(R.id.detail_lbPrice);
                 row.setTag(handler);
             }
         else{
