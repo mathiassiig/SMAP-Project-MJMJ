@@ -3,8 +3,12 @@ package examproject.group22.roominator.Activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,16 +25,24 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import examproject.group22.roominator.Activities.OverviewActivity;
+import examproject.group22.roominator.Activities.SignUpActivity;
+import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
@@ -42,6 +54,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
     private String TAG = "DEBUG";
     public User currentUser;
+    private DatabaseService dbService;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -84,11 +97,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mSignUpButton = (Button)findViewById(R.id.sign_up_button);
+        Button mSignUpButton = (Button) findViewById(R.id.sign_up_button);
         mSignUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentUser = new User(mEmailView.getText().toString(),mPasswordView.getText().toString(),null);
+                currentUser = new User(mEmailView.getText().toString(), mPasswordView.getText().toString(), null);
                 Log.v(TAG, "Current user" + currentUser.toString());
                 Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
                 i.putExtra("user", currentUser);
@@ -166,10 +179,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError("WOOOOHAAA your pass word is incorrect");
-            focusView = mPasswordView;
-            cancel = true;
+        if (!TextUtils.isEmpty(password)) {
+            if (!isPasswordValid(password)) {
+                mPasswordView.setError("WOOOOHAAA your pass word is incorrect");
+                focusView = mPasswordView;
+                cancel = true;
+            }
         }
 
         // Check for a valid email address.
@@ -182,6 +197,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         }
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -197,11 +213,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-       // if(email.contains("@") && email.contains(".com")) {
-        if(email.length()>=4){
+        // if(email.contains("@") && email.contains(".com")) {
+        if (email.length() >= 4) {
             Log.v(TAG, "isEmailValid: true ");
             return true;
-        }else{
+        } else {
             Log.v(TAG, "isEmailValid: false ");
             return false;
         }
@@ -209,13 +225,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-            if(password.length() == 4){
-                Log.v(TAG, "isPasswordValid: true ");
-                return true;
-            }else {
-                Log.v(TAG, "isPasswordValid: false ");
-                return false;
-            }
+        boolean isValid = false;
+        if (password.length() >= 4) {
+            Log.v(TAG, "isPasswordValid: true ");
+            isValid = true;
+        } else {
+            Log.v(TAG, "isPasswordValid: false ");
+            isValid = false;
+        }
+        return isValid;
     }
 
     /**
@@ -327,26 +345,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
             // TODO: connect to db and check for user.
             try {
-                // Simulate network access.
-                Log.v(TAG, "doInBackground: ready to sleep");
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                boolean connected;
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                if (networkInfo != null) {
+                    connected = true;
+                    Log.v(TAG, "connection succes");
+                    return true;
+                } else {
+                    connected = false;
+                    Log.v(TAG, "connection failure");
+                    return false;
+                }
+            } catch (Exception e) {
+                Log.v(TAG, e.toString());
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    Log.v(TAG, "doInBackground: Email used: "+ mEmail);
-                    Log.v(TAG, "doInBackground: password used: "+ mPassword);
-
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
@@ -371,5 +386,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+    private BroadcastReceiver UserAuthenticationAnswerReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    };
 }
 
