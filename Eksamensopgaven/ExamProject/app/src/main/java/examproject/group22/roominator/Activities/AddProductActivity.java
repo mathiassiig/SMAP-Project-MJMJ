@@ -22,7 +22,7 @@ public class AddProductActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addIntent = new Intent(AddProductActivity.this, ShoppingListActivity.class);
+                Intent addIntent = new Intent(AddProductActivity.this, OverviewActivity.class);
                 startActivity(addIntent);
             }
         });
