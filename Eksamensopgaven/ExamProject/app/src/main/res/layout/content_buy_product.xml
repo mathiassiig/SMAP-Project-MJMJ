@@ -44,7 +44,7 @@
         android:layout_alignLeft="@+id/buyproduct_etPrice"
         android:layout_alignStart="@+id/buyproduct_etPrice"
         android:layout_marginBottom="19dp"
-        android:id="@+id/numberPickerBuyProduct" />
+        android:id="@+id/buyproduct_NumberPicker" />
 
     <TextView
         android:layout_width="wrap_content"

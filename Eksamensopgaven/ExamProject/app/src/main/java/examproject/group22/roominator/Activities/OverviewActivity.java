@@ -29,7 +29,7 @@ import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
 
 public class OverviewActivity extends AppCompatActivity implements OverviewFragment.ItemClickListener,
-        ProductListFragment.OnFragmentInteractionListener2,
+        ProductListFragment.GroceryItemClickListener,
         DeleteUserFragment.DeleteUserDialogListener,
         ProfileFragment.OnImageClickListener {
 
@@ -69,7 +69,21 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     }
 
     @Override
-    public void onFragmentInteraction2(Uri uri) {
+    public void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent buyIntent = new Intent(OverviewActivity.this, BuyProductActivity.class);
+        //String messageproduct = Products[position];
+        //int messagenumber = Integer.parseInt(Number[position]);
+        buyIntent.putExtra("productnumber", position);
+        Toast.makeText(this, "Grocery clicked",Toast.LENGTH_LONG).show();
+        startActivity(buyIntent);
+
+    }
+
+    @Override
+    public void onFABClick(View view) {
+        Intent addIntent = new Intent(OverviewActivity.this, AddProductActivity.class);
+        Toast.makeText(this, "Add clicked",Toast.LENGTH_LONG).show();
+        startActivity(addIntent);
     }
 
 
