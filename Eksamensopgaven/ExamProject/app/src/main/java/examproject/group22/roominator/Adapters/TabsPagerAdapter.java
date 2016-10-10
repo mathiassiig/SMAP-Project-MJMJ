@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import examproject.group22.roominator.Fragments.OverviewFragment;
+import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Fragments.ProfileFragment;
 import examproject.group22.roominator.R;
@@ -40,7 +40,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new ProductListFragment();
             case 2:
-                return new OverviewFragment();
+                return new UsersFragment();
             default:
                 return null;
         }
