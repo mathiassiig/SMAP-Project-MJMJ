@@ -3,7 +3,6 @@ package examproject.group22.roominator.Activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
@@ -19,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
-import examproject.group22.roominator.Fragments.OverviewFragment;
+import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Fragments.ProfileFragment;
 import examproject.group22.roominator.R;
@@ -28,7 +27,8 @@ import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 // KILDER:
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
 
-public class OverviewActivity extends AppCompatActivity implements OverviewFragment.ItemClickListener,
+
+public class OverviewActivity extends AppCompatActivity implements UsersFragment.UserItemClickListener,
         ProductListFragment.GroceryItemClickListener,
         DeleteUserFragment.DeleteUserDialogListener,
         ProfileFragment.OnImageClickListener {
@@ -50,14 +50,14 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
         startActivity(detailIntent);
         Toast.makeText(this, "Item clicked", Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, "Item long clicked", Toast.LENGTH_LONG).show();
         DialogFragment dialog= new DeleteUserFragment();
         dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");

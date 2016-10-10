@@ -122,7 +122,7 @@ public class DeleteUserFragment extends DialogFragment {
 
     public interface DeleteUserDialogListener {
         // TODO: Update argument type and name
-        //void onItemLongClick(Uri uri);
+        //void onUserItemLongClick(Uri uri);
         public void onDialogPositiveClick(DialogFragment dialog);
         public void onDialogNegativeClick(DialogFragment dialog);
     }

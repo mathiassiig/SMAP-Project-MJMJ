@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -24,12 +23,12 @@ import examproject.group22.roominator.Adapters.UserInfoAdapter;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ItemClickListener} interface
+ * {@link UserItemClickListener} interface
  * to handle interaction events.
- * Use the {@link OverviewFragment#newInstance} factory method to
+ * Use the {@link UsersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OverviewFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class UsersFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     ArrayList<UserInfo> userInfo;
 
@@ -44,9 +43,9 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
 
     ListAdapter userAdapter;
     ListView listView;
-    private ItemClickListener mListener;
+    private UserItemClickListener mListener;
 
-    public OverviewFragment() {
+    public UsersFragment() {
         // Required empty public constructor
     }
 
@@ -56,11 +55,11 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OverviewFragment.
+     * @return A new instance of fragment UsersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OverviewFragment newInstance(String param1, String param2) {
-        OverviewFragment fragment = new OverviewFragment();
+    public static UsersFragment newInstance(String param1, String param2) {
+        UsersFragment fragment = new UsersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,7 +81,7 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_overview, container, false);
+        View view = inflater.inflate(R.layout.fragment_users, container, false);
 
         String[] users = {"name1", "name2", "name3", "name4", "name5"};
         listView = (ListView) view.findViewById(R.id.overviewList);
@@ -97,8 +96,8 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ItemClickListener) {
-            mListener = (ItemClickListener) context;
+        if (context instanceof UserItemClickListener) {
+            mListener = (UserItemClickListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement DeleteUserDialogListener");
@@ -114,14 +113,14 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mListener != null){
-            mListener.onItemClick(parent,view,position,id);
+            mListener.onUserItemClick(parent,view,position,id);
         }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         if (mListener != null) {
-            mListener.onItemLongClick(parent, view, position, id);
+            mListener.onUserItemLongClick(parent, view, position, id);
         }
         return true;
     }
@@ -136,9 +135,9 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface ItemClickListener {
+    public interface UserItemClickListener {
         // TODO: Update argument type and name
-        void onItemLongClick(AdapterView<?> parent, View view, int position, long id);
-        void onItemClick(AdapterView<?> parent, View view, int position, long id);
+        void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id);
+        void onUserItemClick(AdapterView<?> parent, View view, int position, long id);
     }
 }

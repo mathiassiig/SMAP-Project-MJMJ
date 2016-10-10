@@ -2,6 +2,7 @@ package examproject.group22.roominator;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -25,17 +26,18 @@ import examproject.group22.roominator.Models.User;
 
 public class DatabaseService extends Service {
 
-    private static String HOST_API = "http://roomienator.azurewebsites.net/api/";
-    private static String TABLE_APARTMENTS = "Apartments";
-    private static String TABLE_USERS = "Users";
-    private static String TABLE_GROCERIES = "GroceryItems";
+    public static String HOST_API = "http://roomienator.azurewebsites.net/api/";
+    public static String TABLE_APARTMENTS = "Apartments";
+    public static String TABLE_USERS = "Users";
+    public static String TABLE_GROCERIES = "GroceryItems";
 
-    private static String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
-    private static String INTENT_USER_AUTHENTICATION = "userAuthentication";
-    private static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
+    public static String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
+    public static String INTENT_USER_AUTHENTICATION = "userAuthentication";
+    public static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
 
     private Context current_context;
     public  ResponseParser parser;
+    private final IBinder binder = new LocalBinder();
 
 
     //Spørgsmål til Jesper:
@@ -156,11 +158,18 @@ public class DatabaseService extends Service {
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
+    // taget fra timens eksempel
+    public class LocalBinder extends Binder {
+        public DatabaseService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return DatabaseService.this;
+        }
+    }
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
     }
 
 }
