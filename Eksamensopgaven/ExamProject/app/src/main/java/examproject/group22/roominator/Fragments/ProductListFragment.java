@@ -1,14 +1,21 @@
 package examproject.group22.roominator.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import examproject.group22.roominator.Activities.BuyProductActivity;
+import examproject.group22.roominator.Activities.OverviewActivity;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.ShoppingListAdapter;
 import examproject.group22.roominator.ShoppingListProvider;
@@ -66,6 +73,15 @@ public class ProductListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+   /*     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+
 
     }
     String[] Products;
@@ -90,6 +106,20 @@ public class ProductListFragment extends Fragment {
             S_adapter.add(dataprovider);
             i++;
         }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent intent = new Intent(getActivity(), BuyProductActivity.class);
+                String messageproduct = Products[position];
+                int messagenumber = Integer.parseInt(Number[position]);
+                intent.putExtra("productname", messageproduct);
+                intent.putExtra("productnumber", messagenumber);
+                startActivity(intent);
+             //   Toast.makeText(getActivity(), messageproduct,Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 

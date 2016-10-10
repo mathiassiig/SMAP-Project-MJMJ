@@ -15,54 +15,95 @@
 
 
     <TextView
-        android:text="@string/addproduct_txtName"
+        android:text="@string/buyproduct_txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/addproduct_txtName" />
+        android:id="@+id/buyproduct_txtName"
+        android:textSize="24sp" />
 
     <TextView
-        android:text="@string/addproduct_txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/addproduct_txtName"
+        android:id="@+id/buyproduct_txtNumber"
+        android:layout_marginBottom="123dp"
+        android:text="@string/buyproduct_txtNumber"
+        android:layout_alignBottom="@+id/buyproduct_txtPrice"
+        android:layout_alignRight="@+id/buyproduct_txtName"
+        android:layout_alignEnd="@+id/buyproduct_txtName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/addproduct_txtNumber"
-        android:layout_marginTop="40dp"/>
-
-    <TextView
-        android:text="@string/addproduct_txtPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addproduct_txtNumber"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/addproduct_txtPrice"
-        android:layout_marginTop="50dp"/>
+        android:textSize="18sp" />
 
     <NumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addproduct_numberpicker"
-        android:layout_below="@+id/addproduct_etPrice"
-        android:layout_alignLeft="@+id/addproduct_etPrice"
-        android:layout_alignStart="@+id/addproduct_etPrice"
-        android:layout_marginLeft="74dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="26dp" />
+        android:layout_above="@+id/buyproduct_txtPrice"
+        android:layout_alignLeft="@+id/buyproduct_etPrice"
+        android:layout_alignStart="@+id/buyproduct_etPrice"
+        android:layout_marginBottom="19dp"
+        android:id="@+id/numberPickerBuyProduct" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyproduct_textViewNumber"
+        android:layout_marginBottom="123dp"
+        android:text="@string/buyproduct_txtNumber"
+        android:layout_alignBottom="@+id/buyproduct_txtPrice"
+        android:layout_alignRight="@+id/buyproduct_txtName"
+        android:layout_alignEnd="@+id/buyproduct_txtName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="18sp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:id="@+id/addproduct_etPrice"
-        android:text="XX,XX DKK"
-        android:layout_alignBaseline="@+id/addproduct_txtPrice"
-        android:layout_alignBottom="@+id/addproduct_txtPrice"
-        android:layout_toRightOf="@+id/addproduct_txtName"
-        android:layout_toEndOf="@+id/addproduct_txtName" />
+        android:id="@+id/buyproduct_etPrice"
+        android:hint="Indtast pris"
+        android:layout_alignBaseline="@+id/buyproduct_txtPrice"
+        android:layout_alignBottom="@+id/buyproduct_txtPrice"
+        android:layout_toRightOf="@+id/buyproduct_txtNumber"
+        android:layout_toEndOf="@+id/buyproduct_txtNumber" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buyproduct_etPrice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="59dp"
+        android:id="@+id/buyproduct_totalSum"
+        android:text="@string/buyproduct_total"
+        android:onClick="Calc_total" />
+
+    <TextView
+        android:text="Total sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyproduct_textViewTotal"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/buyproduct_totalSum"
+        android:layout_alignBottom="@+id/buyproduct_totalSum"
+        android:layout_alignRight="@+id/buyproduct_etPrice"
+        android:layout_alignEnd="@+id/buyproduct_etPrice"
+        android:layout_marginRight="31dp"
+        android:layout_marginEnd="31dp" />
+
+    <TextView
+        android:text="@string/buyproduct_txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyproduct_txtPrice"
+        android:layout_marginBottom="199dp"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

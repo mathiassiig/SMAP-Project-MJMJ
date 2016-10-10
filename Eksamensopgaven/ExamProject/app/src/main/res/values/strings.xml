@@ -24,9 +24,10 @@
     <string name="addproduct_txtPrice">Price:</string>
 
     <!-- Strings related to buyProduct -->
-    <string name="buyproduct_txtName">Product name</string>
-    <string name="buyproduct_txtNumber">Number:</string>
-    <string name="buyproduct_txtPrice">Price:</string>
+    <string name="buyproduct_txtName">Produkt:</string>
+    <string name="buyproduct_txtNumber">Antal:</string>
+    <string name="buyproduct_txtPrice">Pris:</string>
+    <string name="buyproduct_total">Udregn beløb</string>
 
     <!-- Strings related to customUser -->
     <string name="customUser_txtName">Name</string>
@@ -51,13 +52,19 @@
     <string name="signUp_create_button">Create</string>
     
     <string-array name="product_names">
-        <item>Apple</item>
-        <item>Banana</item>
+        <item>Garbage bags</item>
+        <item>Toilet paper</item>
+        <item>Toilet Soap</item>
         <item>Soap</item>
+        <item>nytnyt</item>
+        <item>nytnyt</item>
     </string-array>
     <string-array name="product_number">
         <item>1</item>
-        <item>2</item>
+        <item>1</item>
         <item>3</item>
+        <item>3</item>
+        <item>5</item>
+        <item>5</item>
     </string-array>
 </resources>
