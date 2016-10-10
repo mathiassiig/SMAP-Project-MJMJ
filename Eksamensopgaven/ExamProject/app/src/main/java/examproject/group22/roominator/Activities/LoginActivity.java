@@ -1,4 +1,4 @@
-package examproject.group22.roominator;
+package examproject.group22.roominator.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -40,7 +40,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import examproject.group22.roominator.Activities.OverviewActivity;
+import examproject.group22.roominator.Activities.SignUpActivity;
+import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -93,11 +97,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mSignUpButton = (Button)findViewById(R.id.sign_up_button);
+        Button mSignUpButton = (Button) findViewById(R.id.sign_up_button);
         mSignUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentUser = new User(mEmailView.getText().toString(),mPasswordView.getText().toString(),null);
+                currentUser = new User(mEmailView.getText().toString(), mPasswordView.getText().toString(), null);
                 Log.v(TAG, "Current user" + currentUser.toString());
                 Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
                 i.putExtra("user", currentUser);
@@ -176,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password)) {
-            if(!isPasswordValid(password)) {
+            if (!isPasswordValid(password)) {
                 mPasswordView.setError("WOOOOHAAA your pass word is incorrect");
                 focusView = mPasswordView;
                 cancel = true;
@@ -193,10 +197,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         }
-        // check if user exists in db
-        if()){
 
-        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -212,11 +213,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-       // if(email.contains("@") && email.contains(".com")) {
-        if(email.length()>=4){
+        // if(email.contains("@") && email.contains(".com")) {
+        if (email.length() >= 4) {
             Log.v(TAG, "isEmailValid: true ");
             return true;
-        }else{
+        } else {
             Log.v(TAG, "isEmailValid: false ");
             return false;
         }
@@ -225,13 +226,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         boolean isValid = false;
-            if(password.length() >= 4){
-                Log.v(TAG, "isPasswordValid: true ");
-                isValid=true;
-            }else {
-                Log.v(TAG, "isPasswordValid: false ");
-                isValid=false;
-            }
+        if (password.length() >= 4) {
+            Log.v(TAG, "isPasswordValid: true ");
+            isValid = true;
+        } else {
+            Log.v(TAG, "isPasswordValid: false ");
+            isValid = false;
+        }
         return isValid;
     }
 
@@ -345,19 +346,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: connect to db and check for user.
             try {
                 boolean connected;
-                ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                if(networkInfo !=null){
-                    connected=true;
+                if (networkInfo != null) {
+                    connected = true;
                     Log.v(TAG, "connection succes");
                     return true;
-                }else{
-                    connected=false;
+                } else {
+                    connected = false;
                     Log.v(TAG, "connection failure");
                     return false;
                 }
             } catch (Exception e) {
-                Log.v(TAG,e.toString());
+                Log.v(TAG, e.toString());
                 return false;
             }
 
@@ -385,10 +386,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
     private BroadcastReceiver UserAuthenticationAnswerReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
         }
-    }
+    };
+}
 
