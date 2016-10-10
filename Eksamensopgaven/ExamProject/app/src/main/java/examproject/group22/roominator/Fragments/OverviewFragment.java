@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -41,6 +42,8 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
     private String mParam1;
     private String mParam2;
 
+    ListAdapter userAdapter;
+    ListView listView;
     private ItemClickListener mListener;
 
     public OverviewFragment() {
@@ -74,36 +77,21 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
         }
     }
 
-    //TODO: Indsæt kilde
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
 
-
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-
         String[] users = {"name1", "name2", "name3", "name4", "name5"};
-        ListView listView = (ListView) getActivity().findViewById(R.id.overviewList);
-        ListAdapter userAdapter = new UserInfoAdapter(this.getContext(),users);
+        listView = (ListView) view.findViewById(R.id.overviewList);
+        userAdapter = new UserInfoAdapter(this.getContext(),users);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(AdapterView<?> parent, View view, int position, long id) {
-        if (mListener != null) {
-            mListener.onItemClick(parent, view, position, id);
-            mListener.onItemLongClick(parent, view, position, id);
-        }
+        return view;
     }
 
     @Override
@@ -125,13 +113,17 @@ public class OverviewFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mListener.onItemClick(parent,view,position,id);
+        if (mListener != null){
+            mListener.onItemClick(parent,view,position,id);
+        }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        mListener.onItemLongClick(parent,view,position,id);
-        return false;
+        if (mListener != null) {
+            mListener.onItemLongClick(parent, view, position, id);
+        }
+        return true;
     }
 
     /**
