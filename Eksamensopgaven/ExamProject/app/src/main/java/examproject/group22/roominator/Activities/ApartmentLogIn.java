@@ -1,6 +1,7 @@
 package examproject.group22.roominator.Activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -72,11 +73,21 @@ public class ApartmentLogIn extends AppCompatActivity {
         }
     };
     public void makePopMessage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ApartmentLogIn.this);
-        builder.setTitle("New Apartment?"); //TODO: Externalize
-        builder.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
-        builder.setPositiveButton("Create", null); //TODO: Externalize
-        builder.setNegativeButton("Cancel", null); //TODO: Externalize
-        builder.show();
+        AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
+        alertDialog.setTitle("New Apartment?"); //TODO: Externalize
+        alertDialog.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Create", new DialogInterface.OnClickListener(){
+           public void onClick(DialogInterface dialog, int which){
+               Apartment a = new Apartment(name.getText().toString(),password.getText().toString());
+               db.post_NewApartment(a);
+
+           }
+        });
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+
+            }
+        });
+        alertDialog.show();
     }
 }
