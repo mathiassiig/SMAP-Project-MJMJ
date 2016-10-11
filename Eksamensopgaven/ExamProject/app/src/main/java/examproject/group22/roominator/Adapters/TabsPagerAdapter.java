@@ -42,12 +42,16 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return new ProfileFragment();
             case 1:
                 ProductListFragment plf = new ProductListFragment();
-                Bundle b = new Bundle();
-                b.putSerializable("apartment", currentApartment);
-                plf.setArguments(b);
+                Bundle b1 = new Bundle();
+                b1.putSerializable("apartment", currentApartment);
+                plf.setArguments(b1);
                 return plf;
             case 2:
-                return new UsersFragment();
+                UsersFragment uf = new UsersFragment();
+                Bundle b2 = new Bundle();
+                b2.putSerializable("apartment", currentApartment);
+                uf.setArguments(b2);
+                return uf;
             default:
                 return null;
         }

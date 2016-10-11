@@ -79,7 +79,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         }
 
     }
-    
+
     GroceryItemAdapter G_adapter;
 
     @Override
