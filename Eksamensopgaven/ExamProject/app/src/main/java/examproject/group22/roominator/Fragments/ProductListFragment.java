@@ -34,7 +34,7 @@ import examproject.group22.roominator.ShoppingListProvider;
  * Use the {@link ProductListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener{
+public class ProductListFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -129,15 +129,24 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     }
 
     @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        if (mListener != null){
+            mListener.onGroceryItemLongClick(parent,view,position,id);
+        }
+        return true;
+    }
+
+    @Override
     public void onClick(View v) {
         if (mListener != null){
             mListener.onFABClick(v);
         }
     }
 
+
     public interface GroceryItemClickListener {
         void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id);
+        void onGroceryItemLongClick(AdapterView<?> parent, View view, int position, long id);
         void onFABClick(View view);
-
     }
 }

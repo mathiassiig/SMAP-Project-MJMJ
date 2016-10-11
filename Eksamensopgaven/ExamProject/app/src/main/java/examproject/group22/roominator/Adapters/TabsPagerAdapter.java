@@ -32,21 +32,19 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount(){
-        return 3;
+        return 2;
     }
 
     @Override
     public Fragment getItem(int position){
         switch (position){
             case 0:
-                return new ProfileFragment();
-            case 1:
                 ProductListFragment plf = new ProductListFragment();
                 Bundle b1 = new Bundle();
                 b1.putSerializable("apartment", currentApartment);
                 plf.setArguments(b1);
                 return plf;
-            case 2:
+            case 1:
                 UsersFragment uf = new UsersFragment();
                 Bundle b2 = new Bundle();
                 b2.putSerializable("apartment", currentApartment);
@@ -62,10 +60,8 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position){
         switch (position){
             case 0:
-                return context.getResources().getString(R.string.overview_btnUserProfile);
-            case 1:
                 return context.getResources().getString(R.string.overview_btnShoppinglist);
-            case 2:
+            case 1:
                 return context.getResources().getString(R.string.overview_btnUserList);
             default:
                 return null;

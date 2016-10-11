@@ -79,13 +79,13 @@ public class DeleteProductFragment extends DialogFragment {
         return builder.create();
     }
 
-/*    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(DialogFragment dialog) {
         if (mListener != null) {
-            mListener.onProductDialogNegativeClick();
-            mListener.onProductDialogPositiveClick();
+            mListener.onProductDialogNegativeClick(dialog);
+            mListener.onProductDialogPositiveClick(dialog);
         }
-    }*/
+    }
 
     @Override
     public void onAttach(Context context) {
