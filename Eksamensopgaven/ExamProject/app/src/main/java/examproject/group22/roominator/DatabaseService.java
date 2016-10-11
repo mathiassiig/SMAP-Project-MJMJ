@@ -15,8 +15,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.security.Timestamp;
 import java.text.ParseException;
@@ -33,7 +36,7 @@ import examproject.group22.roominator.Models.User;
 
 public class DatabaseService extends Service {
 
-    public static String HOST_API = "http://localhost:63785/api/";
+    public static String HOST_API = "http://roomienatorweb3.azurewebsites.net/api/";
     public static String TABLE_APARTMENTS = "Apartments";
     public static String TABLE_USERS = "Users";
     public static String TABLE_GROCERIES = "GroceryItems";
@@ -175,153 +178,98 @@ public class DatabaseService extends Service {
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response)
-            {
-                //TODO: Det gik bare godt!
-            }
-        }, new Response.ErrorListener()
-        {
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Name",a.name);
+        params.put("Pass",a.password);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
 
             }
-        }){
-            @Override
-            protected Map<String,String> getParams()
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Name",a.name);
-                params.put("Pass",a.password);
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
-            }
-        };
-
-        queue.add(stringRequest);
+        });
+        queue.add(req);
     }
 
     public void post_NewUser(final User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response)
-            {
-            }
-        }, new Response.ErrorListener()
-        {
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Name",u.name);
+        params.put("Pass",u.password);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                //TODO: Det gik bare godt!
-            }
-        }){
-            @Override
-            protected Map<String,String> getParams()
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Name",u.name);
-                params.put("Pass",u.password);
-                return params;
-            }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
             }
-        };
-
-        queue.add(stringRequest);
+        });
+        queue.add(req);
     }
 
     public void post_NewGrocery(final GroceryItem i)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response)
-            {
-            }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                //TODO: Det gik bare godt!
-            }
-        }){
-            @Override
-            protected Map<String,String> getParams()
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Name", i.name);
-                params.put("Creation", parser.TIME_FORMAT.format(i.creationStamp));
-                params.put("ApartmentID", Integer.toString(i.apartmentID));
-                return params;
-            }
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Name", i.name);
+        params.put("Creation", parser.TIME_FORMAT.format(i.creationStamp));
+        params.put("ApartmentID", Integer.toString(i.apartmentID));
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
-            }
-        };
-
-        queue.add(stringRequest);
+                    }
+        });
+        queue.add(req);
     }
 
     public void put_UpdateGrocery(final GroceryItem i)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+i.id;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response)
-            {
-            }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                //TODO: Det gik bare godt!
-            }
-        }){
-            @Override
-            protected Map<String,String> getParams()
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Price", Integer.toString(i.price));
-                params.put("Bought", parser.TIME_FORMAT.format(i.boughtStamp));
-                params.put("UserId", Integer.toString(i.buyerID));
-                return params;
-            }
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Price", Integer.toString(i.price));
+        params.put("Bought", parser.TIME_FORMAT.format(i.boughtStamp));
+        params.put("UserId", Integer.toString(i.buyerID));
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
-            }
-        };
+                    }
+        });
+        queue.add(req);
     }
 
     public void setContext(Context c)
