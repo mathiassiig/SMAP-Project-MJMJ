@@ -20,7 +20,16 @@ namespace RoomienatorWeb.Controllers
         // GET: api/Apartments
         public IQueryable<Apartment> GetApartments()
         {
-            return db.Apartments;
+            var apartments = db.Apartments;
+            int count = apartments.Count();
+            foreach (var a in apartments)
+            {
+                foreach (var g in a.GroceryItems)
+                {
+                    g.Apartment = null;
+                }
+            }
+            return apartments;
         }
 
         // GET: api/Apartments/5
@@ -32,7 +41,10 @@ namespace RoomienatorWeb.Controllers
             {
                 return NotFound();
             }
-
+            foreach (var g in apartment.GroceryItems)
+            {
+                g.Apartment = null;
+            }
             return Ok(apartment);
         }
 

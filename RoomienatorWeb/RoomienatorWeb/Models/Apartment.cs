@@ -12,6 +12,7 @@ namespace RoomienatorWeb.Models
         [Required]
         public string Pass { get; set; }
 
-        List<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<GroceryItem> GroceryItems { get; set; }
     }
 }

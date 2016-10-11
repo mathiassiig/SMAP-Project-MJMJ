@@ -10,6 +10,5 @@ namespace RoomienatorWeb.Models
         public string Name { get; set; }
         public string Pass { get; set; }
         public byte[] Avatar { get; set; }
-
     }
 }

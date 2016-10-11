@@ -53,9 +53,5 @@ C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\bin\N
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\bin\System.Net.Http.Formatting.xml
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\bin\System.Web.Http.xml
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\bin\System.Web.Http.WebHost.xml
-C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Debug\RoomienatorWeb.csprojResolveAssemblyReference.cache
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Debug\RoomienatorWeb.dll
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Debug\RoomienatorWeb.pdb
-C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Debug\RoomienatorWeb.Migrations.Initial.resources
-C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Debug\RoomienatorWeb.csproj.GenerateResource.Cache
-C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Debug\RoomienatorWeb.Migrations.Initial1.resources

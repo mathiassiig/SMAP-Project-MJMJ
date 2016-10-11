@@ -7,6 +7,8 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using Newtonsoft.Json;
+using System.Net.Http.Formatting;
 
 namespace RoomienatorWeb
 {

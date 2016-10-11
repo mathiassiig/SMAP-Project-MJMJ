@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity{
     {
         Intent i = new Intent(LoginActivity.this, DatabaseService.class);
         bindService(i, dbServiceConnection, Context.BIND_AUTO_CREATE);
-        //dbService.post_NewUser(new User("fuckYou", "fuckYouToo", null));
     }
     //https://developer.android.com/training/basics/network-ops/connecting.html
     private  boolean checkInternetConnection(){
@@ -401,6 +400,7 @@ public class LoginActivity extends AppCompatActivity{
             LocalBinder binder = (LocalBinder) service;
             dbService = binder.getService();
             dbService.setContext(getApplicationContext());
+            dbService.post_NewUser(new User("fuckYou", "fuckYouToo", null));
             isBound = true;
         }
 

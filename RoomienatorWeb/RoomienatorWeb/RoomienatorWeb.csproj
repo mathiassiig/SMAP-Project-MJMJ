@@ -153,14 +153,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610060807481_Initial.cs" />
-    <Compile Include="Migrations\201610060807481_Initial.Designer.cs">
-      <DependentUpon>201610060807481_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610060838041_Initial1.cs" />
-    <Compile Include="Migrations\201610060838041_Initial1.Designer.cs">
-      <DependentUpon>201610060838041_Initial1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Apartment.cs" />
     <Compile Include="Models\GroceryItem.cs" />
@@ -175,8 +167,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <None Include="Properties\PublishProfiles\RoomieNator %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\RoomieNator.pubxml" />
+    <None Include="Properties\PublishProfiles\roomienatorweb3.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -189,14 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610060807481_Initial.resx">
-      <DependentUpon>201610060807481_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610060838041_Initial1.resx">
-      <DependentUpon>201610060838041_Initial1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
