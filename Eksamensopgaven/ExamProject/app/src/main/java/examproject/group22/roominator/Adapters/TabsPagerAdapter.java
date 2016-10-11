@@ -1,6 +1,7 @@
 package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -40,9 +41,17 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new ProfileFragment();
             case 1:
-                return new ProductListFragment();
+                ProductListFragment plf = new ProductListFragment();
+                Bundle b1 = new Bundle();
+                b1.putSerializable("apartment", currentApartment);
+                plf.setArguments(b1);
+                return plf;
             case 2:
-                return new UsersFragment();
+                UsersFragment uf = new UsersFragment();
+                Bundle b2 = new Bundle();
+                b2.putSerializable("apartment", currentApartment);
+                uf.setArguments(b2);
+                return uf;
             default:
                 return null;
         }
