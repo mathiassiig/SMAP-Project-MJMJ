@@ -13,10 +13,11 @@ public class Apartment implements Serializable{
     public String name;
     public String password;
     public ArrayList<GroceryItem> groceries;
+    public ArrayList<User> users;
 
     public Apartment(String name, String password)
     {
         this.name = name;
-        this.password = name;
+        this.password = password;
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Assignment 2</string>
+    <string name="currentTxt">"Current "</string>
+    <string name="currentTempTxt">\??</string>
+    <string name="currentWeatherTxt">\??</string>
+</resources>

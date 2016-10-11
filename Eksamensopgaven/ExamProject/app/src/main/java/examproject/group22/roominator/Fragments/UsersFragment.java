@@ -12,8 +12,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.UserInfo;
 import examproject.group22.roominator.Adapters.UserInfoAdapter;
 
 // KILDER:
@@ -30,7 +31,7 @@ import examproject.group22.roominator.Adapters.UserInfoAdapter;
  */
 public class UsersFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    ArrayList<UserInfo> userInfo;
+    ArrayList<User> userInfo;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,9 +84,12 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
 
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-        String[] users = {"name1", "name2", "name3", "name4", "name5"};
+        Bundle b = getArguments();
+        Apartment apartment = (Apartment)b.getSerializable("apartment");
+
+
         listView = (ListView) view.findViewById(R.id.overviewList);
-        userAdapter = new UserInfoAdapter(this.getContext(),users);
+        userAdapter = new UserInfoAdapter(this.getContext(),apartment.users);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);

@@ -12,8 +12,8 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.UserInfo;
 
 public class SignUpActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -41,7 +41,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
     public void onClickCreate(View view){
         Intent createIntent = new Intent(SignUpActivity.this, OverviewActivity.class);
-        createIntent.putExtra("newUser",new UserInfo(name.getText().toString(),Integer.parseInt(password.getText().toString()),convertImgToByteArray(avatar)));
+        String n = name.getText().toString();
+        String p = password.getText().toString();
+        byte[] img = convertImgToByteArray(avatar); //TODO: Den skal være et billede her og først konverteres senere
+        User u = new User(n, p, null);
+        createIntent.putExtra("newUser",u);
         startActivity(createIntent);
     }
 
@@ -64,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
         byte[] byteArray = BAPS.toByteArray();
         return  byteArray;
     }
-    public void saveUserToDataBase(UserInfo user){
+    public void saveUserToDataBase(User user){
 
     }
 }

@@ -18,8 +18,6 @@ public class BuyProductActivity extends AppCompatActivity {
 
     private TextView TextviewProductName;
     private EditText editTextPrice;
-    private NumberPicker numberpicker;
-    private TextView TextviewTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +27,14 @@ public class BuyProductActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextviewProductName = (TextView) findViewById(R.id.buyproduct_txtName);
-        TextviewTotal = (TextView) findViewById(R.id.buyproduct_textViewTotal);
         editTextPrice = (EditText) findViewById(R.id.buyproduct_etPrice);
-        numberpicker = (NumberPicker)findViewById(R.id.buyproduct_NumberPicker);
 
-        numberpicker.setMinValue(1);
-        numberpicker.setMaxValue(99);
 
         Bundle bundle = getIntent().getExtras();
 
         if(bundle.getString("productname")!= null)
         {
             TextviewProductName.setText("Produkt: " + bundle.getString("productname"));
-            numberpicker.setValue(bundle.getInt("productnumber"));
         }else{
             Toast.makeText(this, "Send data med fra liste",Toast.LENGTH_SHORT).show();}
 
@@ -61,19 +54,6 @@ public class BuyProductActivity extends AppCompatActivity {
         //   startActivity(addIntent);
     }
 
-    public void Calc_total(View view){
-        int price = 0;
-        int number = numberpicker.getValue();
-        if(editTextPrice.getText().toString().trim().length() != 0){
-            price = Integer.parseInt(editTextPrice.getText().toString());
-        }
-        int total = number*price;
-        if(total!=0) {
-            TextviewTotal.setText(total + " kr.");
-        }
-        else {
-            TextviewTotal.setText("0 kr.");
-        }
-    }
+
 
 }

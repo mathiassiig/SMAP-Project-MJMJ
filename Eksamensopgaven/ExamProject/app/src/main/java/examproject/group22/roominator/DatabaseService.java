@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.Timestamp;
@@ -72,7 +73,7 @@ public class DatabaseService{
 
 
     //https://developer.android.com/training/volley/simple.html
-    public void get_ApartmentWithGroceries(int apartment_id)
+    public void get_Apartment(int apartment_id)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS+"/"+apartment_id;
@@ -175,7 +176,12 @@ public class DatabaseService{
                     @Override
                     public void onResponse(String response)
                     {
-                        ArrayList<User> users = parser.parseUsers(response, true);
+                        ArrayList<User> users = null;
+                        try {
+                            users = parser.parseUsers(response, true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         User a = null;
                         for(int i = 0; i < users.size();i++)
                         {
