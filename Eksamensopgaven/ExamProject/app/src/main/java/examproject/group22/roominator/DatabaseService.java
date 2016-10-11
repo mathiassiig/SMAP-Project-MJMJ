@@ -26,7 +26,7 @@ import examproject.group22.roominator.Models.User;
 
 public class DatabaseService extends Service {
 
-    public static String HOST_API = "http://roomienator.azurewebsites.net/api/";
+    public static String HOST_API = "http://localhost:63785/api/";
     public static String TABLE_APARTMENTS = "Apartments";
     public static String TABLE_USERS = "Users";
     public static String TABLE_GROCERIES = "GroceryItems";
@@ -49,7 +49,7 @@ public class DatabaseService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        parser = new ResponseParser();
+        Log.v("Debug", "onCreate service called");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -123,10 +123,10 @@ public class DatabaseService extends Service {
     }
 
     //omg it's so safe, it's crazy
-    public void checkPassWithUsername(String username, final String password)
+    public void checkPassWithUsername(final String username, final String password)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
-        String url = HOST_API+TABLE_USERS+"?Name="+username;
+        String url = HOST_API+TABLE_USERS;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>()
                 {
@@ -134,7 +134,15 @@ public class DatabaseService extends Service {
                     public void onResponse(String response)
                     {
                         ArrayList<User> users = parser.parseUsers(response,true);
-                        User u = users.get(0); //there can be only ONE user with that username
+                        User u = null;
+                        for(int i =0; i<users.size();i++)
+                        {
+                            if(users.get(i).name.equals(username))
+                            {
+                                u = users.get(i);
+                            }
+                        }
+
                         sendUserAuthenticationAnswer(u, password);
                     }
                 }, new Response.ErrorListener()
@@ -142,34 +150,53 @@ public class DatabaseService extends Service {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                Log.v("DatabaseHelper", "Couldn't fetch groceries: " + error.getMessage());
+                Log.v("DatabaseHelper", "Couldn't fetch fisse: " + error.getMessage());
             }
         });
         queue.add(stringRequest);
     }
 
+    @Override
+    public void onDestroy() {
+        Log.v("Debug", "onDestroy service called");
+        super.onDestroy();
+    }
+
+    public void setContext(Context c)
+    {
+        current_context = c;
+    }
+
+    @Override
+    public void onCreate()
+    {
+        parser = new ResponseParser();
+        Log.v("Debug", "onCreate service called");
+    }
+
     private void sendUserAuthenticationAnswer(User u, String passwordGuess)
     {
         boolean same = false;
-        if(u.password.equals(passwordGuess))
-            same = true;
+        if(u != null) {
+            if (u.password.equals(passwordGuess))
+                same = true;
+        }
         Intent intent = new Intent(INTENT_USER_AUTHENTICATION);
         intent.putExtra("AreEqual", same);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
-    }
-
-    // taget fra timens eksempel
-    public class LocalBinder extends Binder {
-        public DatabaseService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return DatabaseService.this;
-        }
     }
 
 
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
+    }
+    // taget fra timens eksempel
+    public class LocalBinder extends Binder {
+        public DatabaseService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return DatabaseService.this;
+        }
     }
 
 }
