@@ -96,7 +96,6 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
 
         Products = getResources().getStringArray(R.array.product_names);
         Number = getResources().getStringArray(R.array.product_number);
-        //S_adapter = new ShoppingListAdapter(getContext(), R.layout.row_shoppinglist_layout);
 
 
         Bundle b = getArguments();
@@ -106,19 +105,6 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         G_adapter = new GroceryItemAdapter(getContext(), apartment.groceries);
         listView.setAdapter(G_adapter);
         listView.setOnItemClickListener(this);
-/*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Intent intent = new Intent(getActivity(), BuyProductActivity.class);
-                String messageproduct = Products[position];
-                int messagenumber = Integer.parseInt(Number[position]);
-                intent.putExtra("productname", messageproduct);
-                intent.putExtra("productnumber", messagenumber);
-                startActivity(intent);
-            }
-        }); */
 
         return view;
     }
@@ -154,16 +140,6 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface GroceryItemClickListener {
         void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id);
         void onFABClick(View view);
