@@ -62,14 +62,14 @@ public class LoginActivity extends AppCompatActivity
 
     public void tryLogin(View view)
     {
-        DatabaseService.getInstance(getApplicationContext());
         String username = txtUsername.getText().toString();
-        if(username == "")
-            LoginError("Username must be at least 1 character"); //TODO: Externalize
         String password = txtPassword.getText().toString();
-        if(password == "")
-            LoginError("Password must be at least 1 character"); //TODO:;
-        db.get_checkPassWithUsername(username, password);
+        if(username.equals(""))
+            LoginError("Username must be at least 1 character"); //TODO: Externalize
+        else if(password.equals(""))
+            LoginError("Password must be at least 1 character"); //TODO: Externalize
+        else
+            db.get_checkPassWithUsername(username, password);
     }
 
     public void LoginError(String error)
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean areEqual = false;
-            intent.getBooleanExtra("areEqual", areEqual);
+            areEqual = intent.getBooleanExtra("areEqual", false);
             if(areEqual)
             {
                 Intent loggedInIntent = new Intent(LoginActivity.this, OverviewActivity.class);
@@ -89,6 +89,8 @@ public class LoginActivity extends AppCompatActivity
                 startActivity(loggedInIntent);
                 finish();
             }
+            else
+                LoginError("Username and password did not match, perhaps the user doesn't exist.");
         }
     };
 }
