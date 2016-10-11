@@ -16,6 +16,7 @@ public class Apartment implements Serializable{
 
     public Apartment(String name, String password)
     {
-
+        this.name = name;
+        this.password = name;
     }
 }

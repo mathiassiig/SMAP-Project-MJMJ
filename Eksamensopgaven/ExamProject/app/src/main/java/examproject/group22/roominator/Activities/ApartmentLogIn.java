@@ -59,33 +59,41 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getExtras()!=null)
-            {
-                Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
-                int id = intent.getIntExtra("apartmentID", 0);
-                loggedInIntent.putExtra("apartmentID", id);
-                startActivity(loggedInIntent);
-                finish();
-            }else{
+        public void onReceive(Context context, Intent intent)
+        {
+            int id = intent.getIntExtra("apartmentID", 0);
+            boolean passwordOK = intent.getBooleanExtra("apartmentOK", false);
+            if(id == 0) //the apartment doesn't exist
                 makePopMessage();
+            else if(passwordOK == false)
+                LoginError("That apartment exists, but the password is wrong!"); //TODO: Externalize
+            else {
+                LogIn(id);
             }
         }
     };
+
+    public void LogIn(int apartment_id)
+    {
+        Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
+        loggedInIntent.putExtra("apartmentID", apartment_id);
+        startActivity(loggedInIntent);
+        finish();
+    }
     public void makePopMessage() {
-        AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
         alertDialog.setTitle("New Apartment?"); //TODO: Externalize
         alertDialog.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Create", new DialogInterface.OnClickListener(){
            public void onClick(DialogInterface dialog, int which){
                Apartment a = new Apartment(name.getText().toString(),password.getText().toString());
                db.post_NewApartment(a);
-
            }
         });
         alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which){
-
+            public void onClick(DialogInterface dialog, int which)
+            {
+                alertDialog.cancel();
             }
         });
         alertDialog.show();

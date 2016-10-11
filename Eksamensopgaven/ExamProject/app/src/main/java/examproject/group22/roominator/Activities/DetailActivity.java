@@ -10,7 +10,8 @@ import examproject.group22.roominator.R;
 public class DetailActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 

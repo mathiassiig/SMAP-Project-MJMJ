@@ -152,7 +152,11 @@ public class DatabaseService{
         if(apartment != null) {
             intent.putExtra("apartmentID", apartment.id);
         }
-            intent.putExtra("apartmentOK", passWordOk);
+        else
+        {
+            intent.putExtra("apartmentID", 0);
+        }
+        intent.putExtra("apartmentOK", passWordOk);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
@@ -183,7 +187,7 @@ public class DatabaseService{
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                Log.v("DatabaseHelper", "Couldn't fetch fisse: " + error.getMessage());
+                Log.v("DatabaseHelper", "Couldn't fetch: " + error.getMessage());
             }
         });
         queue.add(stringRequest);
@@ -208,7 +212,8 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        Apartment a = parser.ParseSingleApartmentNoGroceries(response);
+                        sendApartmentAuthenticationAnswer(a, true);
                     }
                 }, new Response.ErrorListener() {
             @Override

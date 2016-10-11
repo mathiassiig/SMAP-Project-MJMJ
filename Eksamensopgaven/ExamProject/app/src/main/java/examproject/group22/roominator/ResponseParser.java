@@ -52,6 +52,24 @@ public class ResponseParser
         return users;
     }
 
+    public Apartment ParseSingleApartmentNoGroceries(JSONObject object)
+    {
+        Apartment a = null;
+        try{
+            String name = object.getString("Name");
+            String pass = object.getString("Pass");
+            int apartmentID = object.getInt("Id");
+
+            a = new Apartment(name, pass);
+            a.id = apartmentID;
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return a;
+    }
+
     public ArrayList<Apartment> GetAllApartmentsNoGroceries(String response)
     {
         ArrayList<Apartment> apartments = new ArrayList<Apartment>();
