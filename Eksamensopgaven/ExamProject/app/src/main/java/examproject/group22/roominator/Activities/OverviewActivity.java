@@ -74,7 +74,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, currentApartment);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -116,6 +115,13 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         Toast.makeText(this, "Grocery clicked",Toast.LENGTH_LONG).show();
         startActivity(buyIntent);
 
+    }
+
+    @Override
+    public void onGroceryItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        DialogFragment dialog= new DeleteProductFragment();
+        dialog.show(getSupportFragmentManager(),"DeleteProductDialogFragment");
+        Toast.makeText(this, "Grocery long clicked",Toast.LENGTH_LONG).show();
     }
 
     @Override
