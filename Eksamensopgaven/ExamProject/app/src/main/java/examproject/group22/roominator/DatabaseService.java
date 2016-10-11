@@ -124,13 +124,16 @@ public class DatabaseService{
                     {
                         ArrayList<Apartment> apartments = parser.GetAllApartmentsNoGroceries(response);
                         Apartment a = null;
+                        boolean passOK = false;
                         for(int i = 0; i < apartments.size();i++)
                         {
                             Apartment b = apartments.get(i);
-                            if(b.name.equals(apartmentName) && b.password.equals(password))
+                            if(b.name.equals(apartmentName))
                                 a = b;
+                            if(b.password.equals(password))
+                                passOK = true;
                         }
-                        sendApartmentAuthenticationAnswer(a);
+                        sendApartmentAuthenticationAnswer(a, passOK);
                     }
                 }, new Response.ErrorListener()
         {
@@ -143,10 +146,13 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendApartmentAuthenticationAnswer(Apartment apartment)
+    private void sendApartmentAuthenticationAnswer(Apartment apartment, boolean passWordOk)
     {
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
-        intent.putExtra("apartmentID", apartment.id);
+        if(apartment != null) {
+            intent.putExtra("apartmentID", apartment.id);
+        }
+            intent.putExtra("apartmentOK", passWordOk);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
