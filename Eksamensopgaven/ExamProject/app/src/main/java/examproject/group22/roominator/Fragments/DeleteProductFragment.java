@@ -10,19 +10,15 @@ import android.support.v4.app.Fragment;
 
 import examproject.group22.roominator.R;
 
-// KILDE:
-// https://developer.android.com/guide/topics/ui/dialogs.html
-
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DeleteUserDialogListener} interface
+ * {@link DeleteProductDialogListener} interface
  * to handle interaction events.
- * Use the {@link DeleteUserFragment#newInstance} factory method to
+ * Use the {@link DeleteProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DeleteUserFragment extends DialogFragment {
+public class DeleteProductFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,9 +28,9 @@ public class DeleteUserFragment extends DialogFragment {
     private String mParam1;
     private String mParam2;
 
-    private DeleteUserDialogListener mListener;
+    private DeleteProductDialogListener mListener;
 
-    public DeleteUserFragment() {
+    public DeleteProductFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +40,11 @@ public class DeleteUserFragment extends DialogFragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DeleteUserFragment.
+     * @return A new instance of fragment DeleteProductFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DeleteUserFragment newInstance(String param1, String param2) {
-        DeleteUserFragment fragment = new DeleteUserFragment();
+    public static DeleteProductFragment newInstance(String param1, String param2) {
+        DeleteProductFragment fragment = new DeleteProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,38 +64,37 @@ public class DeleteUserFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.dialog_user_title);
-        builder.setMessage(R.string.dialog_user_message)
-                .setPositiveButton(R.string.dialog_user_btnOK, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.dialog_product_message)
+                .setPositiveButton(R.string.dialog_product_btnOK, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onUserDialogPositiveClick(DeleteUserFragment.this);
+                        mListener.onProductDialogPositiveClick(DeleteProductFragment.this);
                     }
                 })
-                .setNegativeButton(R.string.dialog_user_btnCancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_product_btnCancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onUserDialogNegativeClick(DeleteUserFragment.this);
+                        mListener.onProductDialogNegativeClick(DeleteProductFragment.this);
                     }
                 });
 
         return builder.create();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(DialogFragment dialog) {
+/*    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onUserDialogPositiveClick(dialog);
-            mListener.onUserDialogNegativeClick(dialog);
+            mListener.onProductDialogNegativeClick();
+            mListener.onProductDialogPositiveClick();
         }
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof DeleteUserDialogListener) {
-            mListener = (DeleteUserDialogListener) context;
+        if (context instanceof DeleteProductDialogListener) {
+            mListener = (DeleteProductDialogListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement DeleteUserDialogListener");
+                    + " must implement DeleteProductDialogListener");
         }
     }
 
@@ -119,11 +114,8 @@ public class DeleteUserFragment extends DialogFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-
-    public interface DeleteUserDialogListener {
-        // TODO: Update argument type and name
-        //void onUserItemLongClick(Uri uri);
-        public void onUserDialogPositiveClick(DialogFragment dialog);
-        public void onUserDialogNegativeClick(DialogFragment dialog);
+    public interface DeleteProductDialogListener {
+        public void onProductDialogPositiveClick(DialogFragment dialog);
+        public void onProductDialogNegativeClick(DialogFragment dialog);
     }
 }
