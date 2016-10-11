@@ -79,9 +79,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         }
 
     }
-    String[] Products;
-    String[] Number;
-    //ShoppingListAdapter S_adapter;
+    
     GroceryItemAdapter G_adapter;
 
     @Override
@@ -93,9 +91,6 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         fab.setOnClickListener(this);
 
         ListView listView = (ListView) view.findViewById(R.id.ProductListView);
-
-        Products = getResources().getStringArray(R.array.product_names);
-        Number = getResources().getStringArray(R.array.product_number);
 
 
         Bundle b = getArguments();
