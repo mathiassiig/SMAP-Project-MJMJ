@@ -1,15 +1,18 @@
 package examproject.group22.roominator.Models;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by Mathias on 08-Oct-16.
  */
 
-public class Apartment {
+public class Apartment implements Serializable{
 
     public int id;
     public String name;
     public String password;
-    //ArrayList<Users> users ? //necessary?
+    public ArrayList<GroceryItem> groceries;
 
     public Apartment(String name, String password)
     {

@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Models.Apartment;
@@ -39,13 +40,6 @@ public class DatabaseService extends Service {
     public  ResponseParser parser;
     private final IBinder binder = new LocalBinder();
 
-
-    //Spørgsmål til Jesper:
-    //Forbindelse fra User til Apartment?
-    //Skal der være en seperat tabel til det?
-    //Eller skal der fikses noget i CodeFirst/Entity Framework??
-
-    //TODO: Pull groceries every 10 minutes or so? Alarmmanager
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -54,18 +48,25 @@ public class DatabaseService extends Service {
     }
 
     //https://developer.android.com/training/volley/simple.html
-    public void getGroceriesInApartment(int apartment_id)
+    public void getApartmentWithGroceries(int apartment_id)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
-        String url = HOST_API+TABLE_GROCERIES+"?ApartmentID="+apartment_id;
+        String url = HOST_API+TABLE_APARTMENTS+"/"+apartment_id;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
         new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response)
             {
-                ArrayList<GroceryItem> groceries = parser.parseGroceries(response);
-                sendReceivedGroceries(groceries);
+                try
+                {
+                    Apartment a = parser.parseApartmentWithGroceries(response);
+                    sendApartmentWithGroceries(a);
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener()
         {
@@ -78,28 +79,34 @@ public class DatabaseService extends Service {
         queue.add(stringRequest);
     }
 
-    private void sendReceivedGroceries(ArrayList<GroceryItem> groceries)
+    private void sendApartmentWithGroceries(Apartment a)
     {
         Intent intent = new Intent(INTENT_ALL_GROCERIES_IN_APARTMENT);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("groceries", groceries);
+        bundle.putSerializable("apartment", a);
         intent.putExtras(bundle);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
-    public void checkPassWithApartmentName(String apartmentName, final String password)
+    public void checkPassWithApartmentName(final String apartmentName, final String password)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
-        String url = HOST_API+TABLE_USERS+"?Name="+apartmentName;
+        String url = HOST_API+TABLE_APARTMENTS;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
-                        ArrayList<Apartment> apartments = parser.parseApartments(response,true);
-                        Apartment a = apartments.get(0); //there can be only ONE user with that username
-                        sendApartmentAuthenticationAnswer(a, password);
+                        ArrayList<Apartment> apartments = parser.GetAllApartmentsNoGroceries(response);
+                        boolean areEqual = false;
+                        for(int i = 0; i < apartments.size();i++)
+                        {
+                            Apartment b = apartments.get(i);
+                            if(b.name.equals(apartmentName) && b.password.equals(password))
+                                areEqual = true;
+                        }
+                        sendApartmentAuthenticationAnswer(areEqual);
                     }
                 }, new Response.ErrorListener()
         {
@@ -112,17 +119,13 @@ public class DatabaseService extends Service {
         queue.add(stringRequest);
     }
 
-    private void sendApartmentAuthenticationAnswer(Apartment a, String passwordGuess)
+    private void sendApartmentAuthenticationAnswer(boolean areEqual)
     {
-        boolean same = false;
-        if(a.password.equals(passwordGuess))
-            same = true;
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
-        intent.putExtra("AreEqual", same);
+        intent.putExtra("areEqual", areEqual);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
-    //omg it's so safe, it's crazy
     public void checkPassWithUsername(final String username, final String password)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
@@ -133,17 +136,15 @@ public class DatabaseService extends Service {
                     @Override
                     public void onResponse(String response)
                     {
-                        ArrayList<User> users = parser.parseUsers(response,true);
-                        User u = null;
-                        for(int i =0; i<users.size();i++)
+                        ArrayList<User> users = parser.parseUsers(response, true);
+                        boolean areEqual = false;
+                        for(int i = 0; i < users.size();i++)
                         {
-                            if(users.get(i).name.equals(username))
-                            {
-                                u = users.get(i);
-                            }
+                            User b = users.get(i);
+                            if(b.name.equals(username) && b.password.equals(password))
+                                areEqual = true;
                         }
-
-                        sendUserAuthenticationAnswer(u, password);
+                        sendUserAuthenticationAnswer(areEqual);
                     }
                 }, new Response.ErrorListener()
         {
@@ -156,10 +157,11 @@ public class DatabaseService extends Service {
         queue.add(stringRequest);
     }
 
-    @Override
-    public void onDestroy() {
-        Log.v("Debug", "onDestroy service called");
-        super.onDestroy();
+    private void sendUserAuthenticationAnswer(boolean areEqual)
+    {
+        Intent intent = new Intent(INTENT_USER_AUTHENTICATION);
+        intent.putExtra("areEqual", areEqual);
+        LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
     public void setContext(Context c)
@@ -174,17 +176,12 @@ public class DatabaseService extends Service {
         Log.v("Debug", "onCreate service called");
     }
 
-    private void sendUserAuthenticationAnswer(User u, String passwordGuess)
-    {
-        boolean same = false;
-        if(u != null) {
-            if (u.password.equals(passwordGuess))
-                same = true;
-        }
-        Intent intent = new Intent(INTENT_USER_AUTHENTICATION);
-        intent.putExtra("AreEqual", same);
-        LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
+    @Override
+    public void onDestroy() {
+        Log.v("Debug", "onDestroy service called");
+        super.onDestroy();
     }
+
 
 
     @Override

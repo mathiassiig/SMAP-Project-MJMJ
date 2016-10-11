@@ -52,21 +52,22 @@ public class ResponseParser
         return users;
     }
 
-    public ArrayList<Apartment> parseApartments(String response, boolean withPass)
+    public ArrayList<Apartment> GetAllApartmentsNoGroceries(String response)
     {
         ArrayList<Apartment> apartments = new ArrayList<Apartment>();
-        try
-        {
+        try{
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
                 String name = object.getString("Name");
-                String pass = "";
-                if(withPass)
-                    pass = object.getString("Password");
+                String pass = object.getString("Pass");
+                int apartmentID = object.getInt("Id");
 
-                apartments.add(new Apartment(name, pass));
+                Apartment a = new Apartment(name, pass);
+                a.id = apartmentID;
+                apartments.add(a);
+
             }
         }
         catch(JSONException e)
@@ -76,34 +77,66 @@ public class ResponseParser
         return apartments;
     }
 
-    public ArrayList<GroceryItem> parseGroceries(String response)
-    {
-        ArrayList<GroceryItem> groceries = new ArrayList<GroceryItem>();
+    public Apartment parseApartmentWithGroceries(String response) throws ParseException {
+        Apartment a = null;
         try
         {
-            JSONArray array = new JSONArray(response);
-            for (int i = 0; i < array.length(); i++)
-            {
-                JSONObject object = array.getJSONObject(i);
-                //Must-haves:
-                int id = object.getInt("Id");
-                String name = object.getString("Name");
-                int price = object.getInt("Price");
-                Date creationDate = (Date) TIME_FORMAT.parse(object.getString("Creation"));
-                Timestamp creation = new Timestamp(creationDate.getTime());
-                int apartmentId = object.getInt("ApartmentID");
-                //If it has been bought:
-                groceries.add(new GroceryItem(id, name, price, creation, apartmentId));
-            }
+            JSONObject object = new JSONObject(response);
+            String name = object.getString("Name");
+            String pass = "";
+            int apartmentID = object.getInt("Id");
+
+            JSONArray groceries = object.getJSONArray("GroceryItems");
+            ArrayList<GroceryItem> groceryItemArrayList = parseGroceries(groceries);
+
+            a = new Apartment(name, pass);
+            a.id = apartmentID;
+            a.groceries = groceryItemArrayList;
         }
         catch(JSONException e)
         {
             e.printStackTrace();
         }
-        catch (ParseException e)
+        return a;
+    }
+
+    private ArrayList<GroceryItem> parseGroceries(JSONArray groceries) throws JSONException, ParseException {
+        ArrayList<GroceryItem> groceryItemArrayList = new ArrayList<GroceryItem>();
+        for(int g = 0; g < groceries.length(); g++)
         {
-            e.printStackTrace();
+            JSONObject currentGrocery = groceries.getJSONObject(g);
+            int g_id = currentGrocery.getInt("Id");
+            String g_name = currentGrocery.getString("Name");
+            int g_price = currentGrocery.getInt("Price");
+            Date creationDate = (Date) TIME_FORMAT.parse(currentGrocery.getString("Creation"));
+            Timestamp g_creation = new Timestamp(creationDate.getTime());
+            Timestamp g_bought = null;
+            try
+            {
+                Date boughtDate = (Date) TIME_FORMAT.parse(currentGrocery.getString("Bought"));
+                g_bought = new Timestamp(creationDate.getTime());
+            }
+            catch(Exception ex)
+            {
+
+            }
+            int ApartmentID = currentGrocery.getInt("ApartmentID");
+            int UserID = 0;
+            try
+            {
+                UserID = currentGrocery.getInt("UserID");
+            }
+            catch(Exception ex)
+            {
+
+            }
+            GroceryItem grocery = new GroceryItem(g_id, g_name, g_price, g_creation, ApartmentID);
+            if(UserID != 0)
+                grocery.buyerID = UserID;
+            if(g_bought != null)
+                grocery.boughtStamp = g_bought;
+            groceryItemArrayList.add(grocery);
         }
-        return groceries;
+        return groceryItemArrayList;
     }
 }
