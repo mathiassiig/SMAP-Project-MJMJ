@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Fragments.ProfileFragment;
+import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.R;
 
 /**
@@ -21,10 +22,11 @@ import examproject.group22.roominator.R;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
-
-    public TabsPagerAdapter(FragmentManager fragmentManager, Context context){
+    Apartment currentApartment;
+    public TabsPagerAdapter(FragmentManager fragmentManager, Context context, Apartment a){
         super(fragmentManager);
         this.context = context;
+        currentApartment = a;
     }
 
     @Override

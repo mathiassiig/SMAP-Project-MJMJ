@@ -14,8 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import examproject.group22.roominator.Activities.BuyProductActivity;
 import examproject.group22.roominator.Activities.OverviewActivity;
+import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.ShoppingListAdapter;
 import examproject.group22.roominator.ShoppingListProvider;
@@ -92,6 +96,13 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         Number = getResources().getStringArray(R.array.product_number);
         S_adapter = new ShoppingListAdapter(getContext(), R.layout.row_shoppinglist_layout);
         listView.setAdapter(S_adapter);
+
+
+        Bundle b = getArguments();
+        Apartment apartment = (Apartment)b.getSerializable("apartment");
+        
+
+
 
         int i = 0;
         for(String products: Products){

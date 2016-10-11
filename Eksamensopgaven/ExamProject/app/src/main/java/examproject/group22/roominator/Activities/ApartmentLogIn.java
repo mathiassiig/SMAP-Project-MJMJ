@@ -15,6 +15,7 @@ import android.provider.ContactsContract;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,18 +30,32 @@ public class ApartmentLogIn extends AppCompatActivity {
     EditText name;
     EditText password;
     DatabaseService db;
+    User currentUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_log_in);
         name = (EditText)findViewById(R.id.apartment_name_txt);
         password = (EditText)findViewById(R.id.apartment_password_txt);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
-
+        FetchUser();
 
     }
+
+    public void FetchUser()
+    {
+        Intent i = getIntent();
+        User u = (User)i.getSerializableExtra("User");
+        currentUser = u;
+        //Log.v("Ah", "oh");
+        //Check if user is in apartment ?
+        //If yes, cool
+        //If not, add him to apartment... somehow :'(
+    }
+
     public void onClicLogInApartment(View view){
         String username = name.getText().toString();
         String upassword = password.getText().toString();
@@ -77,9 +92,11 @@ public class ApartmentLogIn extends AppCompatActivity {
     {
         Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
+        loggedInIntent.putExtra("User", currentUser);
         startActivity(loggedInIntent);
         finish();
     }
+
     public void makePopMessage() {
         final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
         alertDialog.setTitle("New Apartment?"); //TODO: Externalize

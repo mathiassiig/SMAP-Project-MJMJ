@@ -15,7 +15,6 @@ import examproject.group22.roominator.R;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    private NumberPicker numberPicker;
     private EditText EditTextProduct;
 
     @Override
@@ -26,10 +25,6 @@ public class AddProductActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         EditTextProduct = (EditText)findViewById(R.id.addproduct_etName);
-        numberPicker = (NumberPicker)findViewById(R.id.addproduct_NumberPicker);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(99);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

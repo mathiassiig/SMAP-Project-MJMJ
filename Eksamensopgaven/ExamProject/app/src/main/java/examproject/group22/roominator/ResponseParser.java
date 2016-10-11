@@ -38,11 +38,12 @@ public class ResponseParser
                 JSONObject object = array.getJSONObject(i);
                 String name = object.getString("Name");
                 String pass = "";
-                //TODO: image
+                int id = object.getInt("Id");
                 if(withPass)
                     pass = object.getString("Pass");
-
-                users.add(new User(name, pass, null));
+                User u = new User(name, pass, null);
+                u.id = id;
+                users.add(u);
             }
         }
         catch(JSONException e)
@@ -118,6 +119,12 @@ public class ResponseParser
         return a;
     }
 
+    private Timestamp GetTimestampFromString(String string) throws ParseException {
+        String replaced = string.replace('T',' ');
+        java.sql.Date date = new java.sql.Date((TIME_FORMAT.parse(replaced)).getTime());
+        return new Timestamp(date.getTime());
+    }
+
     private ArrayList<GroceryItem> parseGroceries(JSONArray groceries) throws JSONException, ParseException {
         ArrayList<GroceryItem> groceryItemArrayList = new ArrayList<GroceryItem>();
         for(int g = 0; g < groceries.length(); g++)
@@ -126,13 +133,11 @@ public class ResponseParser
             int g_id = currentGrocery.getInt("Id");
             String g_name = currentGrocery.getString("Name");
             int g_price = currentGrocery.getInt("Price");
-            Date creationDate = (Date) TIME_FORMAT.parse(currentGrocery.getString("Creation"));
-            Timestamp g_creation = new Timestamp(creationDate.getTime());
+            Timestamp g_creation = GetTimestampFromString(currentGrocery.getString("Creation"));
             Timestamp g_bought = null;
             try
             {
-                Date boughtDate = (Date) TIME_FORMAT.parse(currentGrocery.getString("Bought"));
-                g_bought = new Timestamp(creationDate.getTime());
+                g_bought = GetTimestampFromString(currentGrocery.getString("Bought"));
             }
             catch(Exception ex)
             {

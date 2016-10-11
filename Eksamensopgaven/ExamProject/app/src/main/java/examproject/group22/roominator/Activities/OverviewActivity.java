@@ -1,7 +1,10 @@
 package examproject.group22.roominator.Activities;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -9,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +21,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Fragments.ProfileFragment;
+import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 
@@ -35,18 +42,46 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     private static final int REQUEST_IMG_ACTIVITY = 100;
     private static final int REQUEST_PERMISSION_CAM = 200;
+    public Apartment currentApartment;
+    public User currentUser;
+    public DatabaseService db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this);
+        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, currentApartment);
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+        db = DatabaseService.getInstance(getApplicationContext());
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
+        Setup();
+    }
+
+    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            Apartment a = (Apartment)intent.getSerializableExtra("apartment");
+            currentApartment = a;
+            //TODO: populate UI
+        }
+    };
+
+
+    public void Setup()
+    {
+        Intent i = getIntent();
+        int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
+        User u = (User)i.getSerializableExtra("User");
+        currentUser = u;
+        db.get_ApartmentWithGroceries(apartmentId);
+
     }
 
     @Override

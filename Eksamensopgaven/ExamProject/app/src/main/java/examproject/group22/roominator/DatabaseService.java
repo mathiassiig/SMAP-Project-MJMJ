@@ -129,9 +129,14 @@ public class DatabaseService{
                         {
                             Apartment b = apartments.get(i);
                             if(b.name.equals(apartmentName))
+                            {
                                 a = b;
-                            if(b.password.equals(password))
-                                passOK = true;
+                                if (b.password.equals(password))
+                                {
+                                    passOK = true;
+                                    break;
+                                }
+                            }
                         }
                         sendApartmentAuthenticationAnswer(a, passOK);
                     }
@@ -171,16 +176,16 @@ public class DatabaseService{
                     public void onResponse(String response)
                     {
                         ArrayList<User> users = parser.parseUsers(response, true);
-                        boolean areEqual = false;
+                        User a = null;
                         for(int i = 0; i < users.size();i++)
                         {
                             User b = users.get(i);
                             if(b.name.equals(username) && b.password.equals(password)) {
-                                areEqual = true;
+                                a = b;
                                 break;
                             }
                         }
-                        sendUserAuthenticationAnswer(areEqual);
+                        sendUserAuthenticationAnswer(a);
                     }
                 }, new Response.ErrorListener()
         {
@@ -193,10 +198,10 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendUserAuthenticationAnswer(boolean areEqual)
+    private void sendUserAuthenticationAnswer(User u)
     {
         Intent intent = new Intent(INTENT_USER_AUTHENTICATION);
-        intent.putExtra("areEqual", areEqual);
+        intent.putExtra("User", u);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 

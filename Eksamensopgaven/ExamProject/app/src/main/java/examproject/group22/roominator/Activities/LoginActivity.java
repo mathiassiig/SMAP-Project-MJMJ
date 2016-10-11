@@ -80,12 +80,11 @@ public class LoginActivity extends AppCompatActivity
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean areEqual = false;
-            areEqual = intent.getBooleanExtra("areEqual", false);
-            if(areEqual)
+            User u = (User)intent.getSerializableExtra("User");
+            if(u != null)
             {
                 Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
-                loggedInIntent.putExtra("Username", txtUsername.getText().toString());
+                loggedInIntent.putExtra("User", u);
                 startActivity(loggedInIntent);
                 finish();
             }
