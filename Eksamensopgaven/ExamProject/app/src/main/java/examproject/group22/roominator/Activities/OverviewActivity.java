@@ -52,16 +52,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         setContentView(R.layout.activity_overview);
 
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, currentApartment);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        tabLayout.setupWithViewPager(viewPager);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
-        Setup();
+        SetupData();
     }
 
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
@@ -70,12 +63,22 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
             currentApartment = a;
-            //TODO: populate UI
+            SetUpGui();
         }
     };
 
+    private void SetUpGui()
+    {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, currentApartment);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(1);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
-    public void Setup()
+
+    public void SetupData()
     {
         Intent i = getIntent();
         int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck

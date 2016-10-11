@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import examproject.group22.roominator.Activities.BuyProductActivity;
 import examproject.group22.roominator.Activities.OverviewActivity;
+import examproject.group22.roominator.Adapters.GroceryItemAdapter;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
@@ -42,7 +43,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    public Apartment currentApartment;
 
 
     private GroceryItemClickListener  mListener;
@@ -80,7 +81,8 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     }
     String[] Products;
     String[] Number;
-    ShoppingListAdapter S_adapter;
+    //ShoppingListAdapter S_adapter;
+    GroceryItemAdapter G_adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,22 +96,15 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
 
         Products = getResources().getStringArray(R.array.product_names);
         Number = getResources().getStringArray(R.array.product_number);
-        S_adapter = new ShoppingListAdapter(getContext(), R.layout.row_shoppinglist_layout);
-        listView.setAdapter(S_adapter);
+        //S_adapter = new ShoppingListAdapter(getContext(), R.layout.row_shoppinglist_layout);
 
 
         Bundle b = getArguments();
         Apartment apartment = (Apartment)b.getSerializable("apartment");
-        
 
 
-
-        int i = 0;
-        for(String products: Products){
-            ShoppingListProvider dataprovider = new ShoppingListProvider(products,Number[i]);
-            S_adapter.add(dataprovider);
-            i++;
-        }
+        G_adapter = new GroceryItemAdapter(getContext(), apartment.groceries);
+        listView.setAdapter(G_adapter);
         listView.setOnItemClickListener(this);
 /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
