@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity
             areEqual = intent.getBooleanExtra("areEqual", false);
             if(areEqual)
             {
-                Intent loggedInIntent = new Intent(LoginActivity.this, OverviewActivity.class);
+                Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
                 loggedInIntent.putExtra("Username", txtUsername.getText().toString());
                 startActivity(loggedInIntent);
                 finish();

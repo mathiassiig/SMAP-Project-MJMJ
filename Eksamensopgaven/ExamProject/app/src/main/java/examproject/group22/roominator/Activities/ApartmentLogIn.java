@@ -41,17 +41,16 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     }
     public void onClicLogInApartment(View view){
-        makePopMessage();
         String username = name.getText().toString();
-        if(username==""){
-            LoginError("Username must be at least 1 character");
-        }
         String upassword = password.getText().toString();
-        if(upassword==""){
+        if(username.equals(""))
+            LoginError("Username must be at least 1 character");
+        else if(upassword.equals(""))
             LoginError("Password must be at least 1 character");
-        }
-        db.get_CheckPassWithApartmentName(name.getText().toString(), password.getText().toString());*/
+        else
+            db.get_CheckPassWithApartmentName(name.getText().toString(), password.getText().toString());
     }
+
     public void LoginError(String error)
     {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
@@ -63,6 +62,8 @@ public class ApartmentLogIn extends AppCompatActivity {
             if(intent.getExtras()!=null)
             {
                 Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
+                int id = intent.getIntExtra("apartmentID", 0);
+                loggedInIntent.putExtra("apartmentID", id);
                 startActivity(loggedInIntent);
                 finish();
             }else{
@@ -72,10 +73,10 @@ public class ApartmentLogIn extends AppCompatActivity {
     };
     public void makePopMessage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ApartmentLogIn.this);
-        builder.setTitle("Uprgade");
-        builder.setMessage("Upgrade Text Here");
-        builder.setPositiveButton("create new",null);
-        builder.setNegativeButton("nope i made a huge mistake", null);
+        builder.setTitle("New Apartment?"); //TODO: Externalize
+        builder.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
+        builder.setPositiveButton("Create", null); //TODO: Externalize
+        builder.setNegativeButton("Cancel", null); //TODO: Externalize
         builder.show();
     }
 }

@@ -146,7 +146,7 @@ public class DatabaseService{
     private void sendApartmentAuthenticationAnswer(Apartment apartment)
     {
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
-        intent.putExtra("apartment", apartment);
+        intent.putExtra("apartmentID", apartment.id);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
