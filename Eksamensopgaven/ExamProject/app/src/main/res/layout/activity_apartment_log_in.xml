@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_apartment_log_in"
     android:layout_width="match_parent"
@@ -19,7 +20,8 @@
         android:onClick="onClicLogInApartment"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/check_icon" />
 
     <EditText
         android:layout_width="match_parent"
