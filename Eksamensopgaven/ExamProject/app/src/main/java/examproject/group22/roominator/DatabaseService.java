@@ -34,7 +34,7 @@ import examproject.group22.roominator.Models.User;
 
 
 
-public class DatabaseService extends Service {
+public class DatabaseService{
 
     public static String HOST_API = "http://roomienatorweb3.azurewebsites.net/api/";
     public static String TABLE_APARTMENTS = "Apartments";
@@ -47,16 +47,29 @@ public class DatabaseService extends Service {
 
     private Context current_context;
     public  ResponseParser parser;
-    private final IBinder binder = new LocalBinder();
+    //private final IBinder binder = new LocalBinder();
 
+    /*
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.v("Debug", "onCreate service called");
         return super.onStartCommand(intent, flags, startId);
+    }*/
+
+    private static DatabaseService instance;
+    protected DatabaseService(Context c)
+    {
+
+    }
+    public static DatabaseService getInstance(Context c)
+    {
+        if(instance == null)
+            instance = new DatabaseService(c);
+        return instance;
     }
 
-    //region GET methods
+
     //https://developer.android.com/training/volley/simple.html
     public void get_ApartmentWithGroceries(int apartment_id)
     {
@@ -109,14 +122,14 @@ public class DatabaseService extends Service {
                     public void onResponse(String response)
                     {
                         ArrayList<Apartment> apartments = parser.GetAllApartmentsNoGroceries(response);
-                        boolean areEqual = false;
+                        Apartment a = null;
                         for(int i = 0; i < apartments.size();i++)
                         {
                             Apartment b = apartments.get(i);
                             if(b.name.equals(apartmentName) && b.password.equals(password))
-                                areEqual = true;
+                                a = b;
                         }
-                        sendApartmentAuthenticationAnswer(areEqual);
+                        sendApartmentAuthenticationAnswer(a);
                     }
                 }, new Response.ErrorListener()
         {
@@ -129,10 +142,10 @@ public class DatabaseService extends Service {
         queue.add(stringRequest);
     }
 
-    private void sendApartmentAuthenticationAnswer(boolean areEqual)
+    private void sendApartmentAuthenticationAnswer(Apartment apartment)
     {
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
-        intent.putExtra("areEqual", areEqual);
+        intent.putExtra("apartment", apartment);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
@@ -277,6 +290,7 @@ public class DatabaseService extends Service {
         current_context = c;
     }
 
+    /*
     @Override
     public void onCreate()
     {
@@ -302,6 +316,6 @@ public class DatabaseService extends Service {
             // Return this instance of LocalService so clients can call public methods
             return DatabaseService.this;
         }
-    }
+    }*/
 
 }
