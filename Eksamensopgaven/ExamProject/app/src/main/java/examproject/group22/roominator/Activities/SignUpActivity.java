@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.UserInfo;
 
 public class SignUpActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
