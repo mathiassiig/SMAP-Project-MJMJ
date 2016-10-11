@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import examproject.group22.roominator.DatabaseService;
+import examproject.group22.roominator.Fragments.DeleteProductFragment;
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
@@ -38,6 +39,7 @@ import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 public class OverviewActivity extends AppCompatActivity implements UsersFragment.UserItemClickListener,
         ProductListFragment.GroceryItemClickListener,
         DeleteUserFragment.DeleteUserDialogListener,
+        DeleteProductFragment.DeleteProductDialogListener,
         ProfileFragment.OnImageClickListener {
 
     private static final int REQUEST_IMG_ACTIVITY = 100;
@@ -122,17 +124,31 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
+    public void onUserDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         //TODO Implement
         Toast.makeText(this, R.string.overview_UserDeleted, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    public void onUserDialogNegativeClick(DialogFragment dialog) {
         // User touched the dialog's negative button
         //TODO Implement
     }
+
+    @Override
+    public void onProductDialogPositiveClick(DialogFragment dialog) {
+        // User touched the dialog's positive button
+        //TODO Implement
+        Toast.makeText(this, R.string.overview_UserDeleted, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProductDialogNegativeClick(DialogFragment dialog) {
+        // User touched the dialog's negative button
+        // TODO Implement
+    }
+
 
     public void takePicture(){
         Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -163,4 +179,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
                 break;
         }
     }
+
+
 }
