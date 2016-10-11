@@ -44,6 +44,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(1);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
