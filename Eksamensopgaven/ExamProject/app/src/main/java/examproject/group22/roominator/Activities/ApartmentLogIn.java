@@ -1,16 +1,25 @@
 package examproject.group22.roominator.Activities;
 
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.ApplicationInfo;
 import android.os.IBinder;
+import android.provider.ContactsContract;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import examproject.group22.roominator.DatabaseService;
+import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
@@ -18,16 +27,55 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     EditText name;
     EditText password;
+    DatabaseService db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_log_in);
         name = (EditText)findViewById(R.id.apartment_name_txt);
         password = (EditText)findViewById(R.id.apartment_password_txt);
+        db = DatabaseService.getInstance(getApplicationContext());
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
 
 
     }
     public void onClicLogInApartment(View view){
-        if()
+        makePopMessage();
+        String username = name.getText().toString();
+        if(username==""){
+            LoginError("Username must be at least 1 character");
+        }
+        String upassword = password.getText().toString();
+        if(upassword==""){
+            LoginError("Password must be at least 1 character");
+        }
+        db.get_CheckPassWithApartmentName(name.getText().toString(), password.getText().toString());*/
+    }
+    public void LoginError(String error)
+    {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getExtras()!=null)
+            {
+                Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
+                startActivity(loggedInIntent);
+                finish();
+            }else{
+                makePopMessage();
+            }
+        }
+    };
+    public void makePopMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ApartmentLogIn.this);
+        builder.setTitle("Uprgade");
+        builder.setMessage("Upgrade Text Here");
+        builder.setPositiveButton("create new",null);
+        builder.setNegativeButton("nope i made a huge mistake", null);
+        builder.show();
     }
 }
