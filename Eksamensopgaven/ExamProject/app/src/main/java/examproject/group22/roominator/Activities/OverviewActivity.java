@@ -86,7 +86,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
-        db.get_ApartmentWithGroceries(apartmentId);
+        db.get_Apartment(apartmentId);
 
     }
 
