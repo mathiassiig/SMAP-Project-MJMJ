@@ -60,7 +60,8 @@ public class DatabaseService{
     private static DatabaseService instance;
     protected DatabaseService(Context c)
     {
-
+        parser = new ResponseParser();
+        current_context = c;
     }
     public static DatabaseService getInstance(Context c)
     {
@@ -164,8 +165,10 @@ public class DatabaseService{
                         for(int i = 0; i < users.size();i++)
                         {
                             User b = users.get(i);
-                            if(b.name.equals(username) && b.password.equals(password))
+                            if(b.name.equals(username) && b.password.equals(password)) {
                                 areEqual = true;
+                                break;
+                            }
                         }
                         sendUserAuthenticationAnswer(areEqual);
                     }

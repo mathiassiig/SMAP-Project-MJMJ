@@ -40,7 +40,7 @@ public class ResponseParser
                 String pass = "";
                 //TODO: image
                 if(withPass)
-                    pass = object.getString("Password");
+                    pass = object.getString("Pass");
 
                 users.add(new User(name, pass, null));
             }
