@@ -54,7 +54,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signUp_password">Password</string>
     <string name="signUp_create_button">Opret</string>
-    
+
     <string-array name="product_names">
         <item>Skraldeposer</item>
         <item>Toiletpapir</item>
@@ -71,4 +71,6 @@
         <item>5</item>
         <item>5</item>
     </string-array>
+    <string name="apartment_name">Navn</string>
+    <string name="apartment_name">Navn</string>
 </resources>
