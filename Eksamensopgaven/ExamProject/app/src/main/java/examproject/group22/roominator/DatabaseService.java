@@ -2,6 +2,7 @@ package examproject.group22.roominator;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,8 +18,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.security.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
@@ -47,8 +53,9 @@ public class DatabaseService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    //region GET methods
     //https://developer.android.com/training/volley/simple.html
-    public void getApartmentWithGroceries(int apartment_id)
+    public void get_ApartmentWithGroceries(int apartment_id)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS+"/"+apartment_id;
@@ -88,7 +95,7 @@ public class DatabaseService extends Service {
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
-    public void checkPassWithApartmentName(final String apartmentName, final String password)
+    public void get_CheckPassWithApartmentName(final String apartmentName, final String password)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS;
@@ -126,7 +133,7 @@ public class DatabaseService extends Service {
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
-    public void checkPassWithUsername(final String username, final String password)
+    public void get_checkPassWithUsername(final String username, final String password)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS;
@@ -162,6 +169,159 @@ public class DatabaseService extends Service {
         Intent intent = new Intent(INTENT_USER_AUTHENTICATION);
         intent.putExtra("areEqual", areEqual);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
+    }
+
+    public void post_NewApartment(final Apartment a)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_APARTMENTS;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+                //TODO: Det gik bare godt!
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams()
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Name",a.name);
+                params.put("Pass",a.password);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
+    public void post_NewUser(final User u)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_USERS;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                //TODO: Det gik bare godt!
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams()
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Name",u.name);
+                params.put("Pass",u.password);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
+    public void post_NewGrocery(final GroceryItem i)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_GROCERIES;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                //TODO: Det gik bare godt!
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams()
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Name", i.name);
+                params.put("Creation", parser.TIME_FORMAT.format(i.creationStamp));
+                params.put("ApartmentID", Integer.toString(i.apartmentID));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
+    public void put_UpdateGrocery(final GroceryItem i)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_GROCERIES+"/"+i.id;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                //TODO: Det gik bare godt!
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams()
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Price", Integer.toString(i.price));
+                params.put("Bought", parser.TIME_FORMAT.format(i.boughtStamp));
+                params.put("UserId", Integer.toString(i.buyerID));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                return params;
+            }
+        };
     }
 
     public void setContext(Context c)
