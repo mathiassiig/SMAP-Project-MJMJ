@@ -13,7 +13,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.UserInfo;
 import examproject.group22.roominator.Adapters.UserInfoAdapter;
 
 // KILDER:

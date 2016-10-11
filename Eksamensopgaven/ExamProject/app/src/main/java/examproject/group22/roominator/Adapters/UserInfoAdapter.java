@@ -8,13 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.UserInfo;
 
 /**
  * Created by Maria Dam on 02-10-2016.
@@ -23,54 +21,36 @@ import examproject.group22.roominator.UserInfo;
 //https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
 //public class UserInfoAdapter extends ArrayAdapter<UserInfo> {
-public class UserInfoAdapter extends ArrayAdapter<String> {
+public class UserInfoAdapter extends ArrayAdapter<User> {
 
-    ArrayList<UserInfo> users;
-   /* public UserInfoAdapter(Context context, ArrayList<UserInfo> users)
+    ArrayList<User> users;
+    public UserInfoAdapter(Context context, ArrayList<User> users)
     {
         super(context, 0, users);
         this.users = users;
     }
 
-     public static String getName(String userName)
-    {
-        //return R.string.customUser_txtName;
-        return "TEST_NAVN";
-    }
-
-    public static int getTotal(int total)
-    {
-        return 100;
-    }
-
-    public static int getUserImage(String userName)
-    {
-        return R.drawable.user_image;
-    }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        final UserInfo users = getItem(position);
-
+        final User user = getItem(position);
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_users, parent, false);
 
         TextView txtName= (TextView) convertView.findViewById(R.id.customUser_txtName);
-        TextView txtTotal = (TextView) convertView.findViewById(R.id.customUser_txtTotal);
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 
-        txtName.setText(getName(users.userName));
-        txtTotal.setText(getTotal(users.totalPrice));
-        imgUser.setImageResource(getUserImage(users.userImg));
+        txtName.setText(user.name);
+        imgUser.setImageResource(R.drawable.img_placeholder);
 
         return convertView;
-    }*/
-
+    }
+    /*
    public UserInfoAdapter(Context context, String[] names)
    {
        super(context, 0, names);
    }
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
@@ -87,7 +67,7 @@ public class UserInfoAdapter extends ArrayAdapter<String> {
         imgUser.setImageResource(R.drawable.img_placeholder);
 
         return convertView;
-    }
+    }*/
 
 
 }

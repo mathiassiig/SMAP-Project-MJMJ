@@ -27,12 +27,16 @@ public class ResponseParser
 {
     public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 
-    public ArrayList<User> parseUsers(String response, boolean withPass)
+    public ArrayList<User> parseUsers(String response, boolean withPass) throws JSONException {
+        return getUsersFromJson(new JSONArray(response), withPass);
+    }
+
+    private ArrayList<User> getUsersFromJson(JSONArray users, boolean withPass)
     {
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> usersArray = new ArrayList<User>();
         try
         {
-            JSONArray array = new JSONArray(response);
+            JSONArray array = users;
             for (int i = 0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
@@ -43,14 +47,14 @@ public class ResponseParser
                     pass = object.getString("Pass");
                 User u = new User(name, pass, null);
                 u.id = id;
-                users.add(u);
+                usersArray.add(u);
             }
         }
         catch(JSONException e)
         {
             e.printStackTrace();
         }
-        return users;
+        return usersArray;
     }
 
     public Apartment ParseSingleApartmentNoGroceries(JSONObject object)
@@ -105,12 +109,17 @@ public class ResponseParser
             String pass = "";
             int apartmentID = object.getInt("Id");
 
+            JSONArray users = object.getJSONArray("Users");
+            ArrayList<User> userArrayList = getUsersFromJson(users, false);
+
             JSONArray groceries = object.getJSONArray("GroceryItems");
             ArrayList<GroceryItem> groceryItemArrayList = parseGroceries(groceries);
 
             a = new Apartment(name, pass);
             a.id = apartmentID;
             a.groceries = groceryItemArrayList;
+            a.users = userArrayList;
+
         }
         catch(JSONException e)
         {
