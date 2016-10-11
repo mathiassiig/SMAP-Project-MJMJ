@@ -156,9 +156,9 @@ public class LoginActivity extends AppCompatActivity{
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+        //if (mAuthTask != null) {
+        //    return;
+        //}
 
         // Reset errors.
         mEmailView.setError(null);
@@ -200,8 +200,12 @@ public class LoginActivity extends AppCompatActivity{
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            //mAuthTask = new UserLoginTask(email, password);
+            //mAuthTask.execute((Void) null);
+
+            Intent i = new Intent(LoginActivity.this, DatabaseService.class);
+            boolean bob = bindService(i, dbServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
@@ -343,8 +347,10 @@ public class LoginActivity extends AppCompatActivity{
                     {
                         //https://developer.android.com/guide/components/bound-services.html
                         Intent i = new Intent(LoginActivity.this, DatabaseService.class);
-                        succes = bindService(i, dbServiceConnection, Context.BIND_AUTO_CREATE);
-
+                        succes = bindService(i, dbServiceConnection, 0);
+                        succes = true;
+                        Intent i2 = new Intent(LoginActivity.this, DatabaseService.class);
+                        startService(i2);
                     }
                     catch (Exception e)
                     {
@@ -368,7 +374,8 @@ public class LoginActivity extends AppCompatActivity{
             try {
                 if (success) {
                     if (isBound) {
-                        dbService.checkPassWithApartmentName(mEmail, mPassword);
+                        //dbService.checkPassWithApartmentName(mEmail, mPassword);
+                        dbService.checkPassWithApartmentName("mathiasSiig", "abeabeabe");
                         finish();
                     }
                 }
@@ -385,8 +392,10 @@ public class LoginActivity extends AppCompatActivity{
     private ServiceConnection dbServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            dbService = ((DatabaseService.LocalBinder)service).getService();
-            Log.v(TAG, "Connected to service");
+            LocalBinder binder = (LocalBinder) service;
+            dbService = binder.getService();
+            dbService.setContext(getApplicationContext());
+            dbService.checkPassWithUsername("mathiasSiig", "abeabeabe");
             isBound = true;
         }
 
