@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import examproject.group22.roominator.Adapters.DetailListAdapter;
+import examproject.group22.roominator.Adapters.ShoppingListAdapter;
+import examproject.group22.roominator.DetailListProvider;
 import examproject.group22.roominator.R;
+import examproject.group22.roominator.ShoppingListProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +32,10 @@ public class DetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    String[] Products;
+    String[] Price;
+    DetailListAdapter detailListAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,8 +73,22 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        ListView listView = (ListView) view.findViewById(R.id.detailList);
+
+        Products = getResources().getStringArray(R.array.product_names);
+        Price = getResources().getStringArray(R.array.product_number);
+        detailListAdapter = new DetailListAdapter(getContext(), R.layout.custom_details);
+        listView.setAdapter(detailListAdapter);
+
+        int i = 0;
+        for(String products: Products){
+            DetailListProvider dataprovider = new DetailListProvider(products,Price[i]);
+            detailListAdapter.add(dataprovider);
+            i++;
+        }
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

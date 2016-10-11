@@ -24,12 +24,12 @@ import examproject.group22.roominator.ShoppingListProvider;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProductListFragment.OnFragmentInteractionListener2} interface
+ * {@link ProductListFragment.GroceryItemClickListener} interface
  * to handle interaction events.
  * Use the {@link ProductListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,7 +41,7 @@ public class ProductListFragment extends Fragment {
 
 
 
-    private OnFragmentInteractionListener2  mListener;
+    private GroceryItemClickListener  mListener;
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -73,16 +73,6 @@ public class ProductListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-   /*     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-
     }
     String[] Products;
     String[] Number;
@@ -90,8 +80,11 @@ public class ProductListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btnFloatingActionAddProduct);
+        fab.setOnClickListener(this);
 
         ListView listView = (ListView) view.findViewById(R.id.ProductListView);
 
@@ -106,7 +99,8 @@ public class ProductListFragment extends Fragment {
             S_adapter.add(dataprovider);
             i++;
         }
-
+        listView.setOnItemClickListener(this);
+/*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -117,44 +111,17 @@ public class ProductListFragment extends Fragment {
                 intent.putExtra("productname", messageproduct);
                 intent.putExtra("productnumber", messagenumber);
                 startActivity(intent);
-             //   Toast.makeText(getActivity(), messageproduct,Toast.LENGTH_LONG).show();
             }
-        });
+        }); */
 
-
-
-
-        /* String[] test = new String[] { "test",
-                "tesst",
-                "tessst",
-        };
-        ListView listView = (ListView) view.findViewById(R.id.ProductListView);
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, test);
-        listView.setAdapter(listViewAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });    */
-
-        // Inflate the layout for this fragment
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction2(uri);
-        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener2) {
-            mListener = (OnFragmentInteractionListener2) context;
+        if (context instanceof GroceryItemClickListener) {
+            mListener = (GroceryItemClickListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement DeleteUserDialogListener");
@@ -167,6 +134,20 @@ public class ProductListFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (mListener != null){
+            mListener.onGroceryItemClick(parent,view,position,id);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mListener != null){
+            mListener.onFABClick(v);
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -177,8 +158,9 @@ public class ProductListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener2 {
-        // TODO: Update argument type and name
-        void onFragmentInteraction2(Uri uri);
+    public interface GroceryItemClickListener {
+        void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id);
+        void onFABClick(View view);
+
     }
 }

@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Roominator</string>
+    <string name="app_name">Roomienator</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Login</string>
+    <string name="action_sign_in">Log ind</string>
+    <string name="action_sign_in_short">Log ind</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -19,20 +19,21 @@
     <string name="title_activity_overview">OverviewActivity</string>
 
     <!-- Strings related to addProduct -->
-    <string name="addproduct_txtName">Product name:</string>
-    <string name="addproduct_txtNumber">Number:</string>
-    <string name="addproduct_txtPrice">Price:</string>
+    <string name="addproduct_txtName">Produkt:</string>
+    <string name="addproduct_txtNumber">Antal:</string>
+    <string name="addproduct_txtPrice">Pris:</string>
 
     <!-- Strings related to buyProduct -->
     <string name="buyproduct_txtName">Produkt:</string>
     <string name="buyproduct_txtNumber">Antal:</string>
     <string name="buyproduct_txtPrice">Pris:</string>
-    <string name="buyproduct_total">Udregn beløb</string>
+    <string name="buyproduct_btnTotal">Udregn beløb</string>
+    <string name="buyproduct_txt_Total">Total</string>
 
     <!-- Strings related to customUser -->
-    <string name="customUser_txtName">Name</string>
+    <string name="customUser_txtName">Navn</string>
     <string name="customUser_txtTotal">Total</string>
-    <string name="action_sign_up">Create new account</string>
+    <string name="action_sign_up">Opret ny bruger</string>
 
     <!-- Strings related to overviewActivity -->
     <string name="overview_btnShoppinglist">Indkøbsliste</string>
@@ -47,18 +48,18 @@
     <string name="dialog_btnOK">OK</string>
 
     <!-- Strings related to ProfileFragment -->
-    <string name="profile_lbName">Name: </string>
+    <string name="profile_lbName">"Navn: "</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signUp_password">Password</string>
-    <string name="signUp_create_button">Create</string>
+    <string name="signUp_create_button">Opret</string>
     
     <string-array name="product_names">
-        <item>Garbage bags</item>
-        <item>Toilet paper</item>
-        <item>Toilet Soap</item>
-        <item>Soap</item>
+        <item>Skraldeposer</item>
+        <item>Toiletpapir</item>
+        <item>Toiletsæbe</item>
+        <item>Sæbe</item>
         <item>nytnyt</item>
         <item>nytnyt</item>
     </string-array>

@@ -27,8 +27,9 @@ import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 // KILDER:
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
 
+
 public class OverviewActivity extends AppCompatActivity implements UsersFragment.UserItemClickListener,
-        ProductListFragment.OnFragmentInteractionListener2,
+        ProductListFragment.GroceryItemClickListener,
         DeleteUserFragment.DeleteUserDialogListener,
         ProfileFragment.OnImageClickListener {
 
@@ -52,12 +53,10 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
         startActivity(detailIntent);
-        Toast.makeText(this, "Item clicked", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Item long clicked", Toast.LENGTH_LONG).show();
         DialogFragment dialog= new DeleteUserFragment();
         dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");
     }
@@ -68,7 +67,21 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
     @Override
-    public void onFragmentInteraction2(Uri uri) {
+    public void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent buyIntent = new Intent(OverviewActivity.this, BuyProductActivity.class);
+        //String messageproduct = Products[position];
+        //int messagenumber = Integer.parseInt(Number[position]);
+        buyIntent.putExtra("productnumber", position);
+        Toast.makeText(this, "Grocery clicked",Toast.LENGTH_LONG).show();
+        startActivity(buyIntent);
+
+    }
+
+    @Override
+    public void onFABClick(View view) {
+        Intent addIntent = new Intent(OverviewActivity.this, AddProductActivity.class);
+        Toast.makeText(this, "Add clicked",Toast.LENGTH_LONG).show();
+        startActivity(addIntent);
     }
 
 

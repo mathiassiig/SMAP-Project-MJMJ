@@ -13,46 +13,44 @@
     tools:context="examproject.group22.roominator.Activities.AddProductActivity"
     tools:showIn="@layout/activity_add_product">
 
-    <TextView
-        android:text="@string/addproduct_txtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/addproduct_txtName" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="XXX"
         android:ems="10"
         android:id="@+id/addproduct_etName"
         android:layout_alignBaseline="@+id/addproduct_txtName"
         android:layout_alignBottom="@+id/addproduct_txtName"
         android:layout_toRightOf="@+id/addproduct_txtName"
         android:layout_toEndOf="@+id/addproduct_txtName"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:hint="Indtast produkt" />
+
+    <TextView
+        android:text="@string/addproduct_txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addproduct_txtName"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addproduct_NumberPicker"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/addproduct_txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buyproduct_txtNumber"
-        android:layout_marginTop="146dp"
-        android:layout_below="@+id/addproduct_etName"
-        android:layout_toLeftOf="@+id/addproduct_etName"
-        android:layout_toStartOf="@+id/addproduct_etName"
-        android:layout_marginRight="18dp"
-        android:layout_marginEnd="18dp" />
-
-    <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addproduct_numberpicker"
-        android:layout_alignBaseline="@+id/buyproduct_txtNumber"
-        android:layout_alignBottom="@+id/buyproduct_txtNumber"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/addproduct_txtNumber"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
