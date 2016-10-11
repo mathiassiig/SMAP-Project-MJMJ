@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bindToService();
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -79,6 +80,13 @@ public class LoginActivity extends AppCompatActivity{
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(dbService.INTENT_USER_AUTHENTICATION));
+    }
+
+    private void bindToService()
+    {
+        Intent i = new Intent(LoginActivity.this, DatabaseService.class);
+        bindService(i, dbServiceConnection, Context.BIND_AUTO_CREATE);
+        //dbService.post_NewUser(new User("fuckYou", "fuckYouToo", null));
     }
     //https://developer.android.com/training/basics/network-ops/connecting.html
     private  boolean checkInternetConnection(){
@@ -204,9 +212,6 @@ public class LoginActivity extends AppCompatActivity{
 
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
-
-            Intent i = new Intent(LoginActivity.this, DatabaseService.class);
-            boolean bob = bindService(i, dbServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
@@ -375,8 +380,8 @@ public class LoginActivity extends AppCompatActivity{
             try {
                 if (success) {
                     if (isBound) {
-                        //dbService.checkPassWithApartmentName(mEmail, mPassword);
-                        dbService.checkPassWithApartmentName("mathiasSiig", "abeabeabe");
+                        //dbService.get_CheckPassWithApartmentName(mEmail, mPassword);
+                        dbService.get_CheckPassWithApartmentName("mathiasSiig", "abeabeabe");
                         finish();
                     }
                 }
@@ -396,7 +401,6 @@ public class LoginActivity extends AppCompatActivity{
             LocalBinder binder = (LocalBinder) service;
             dbService = binder.getService();
             dbService.setContext(getApplicationContext());
-            dbService.checkPassWithUsername("mathiasSiig", "abeabeabe");
             isBound = true;
         }
 
