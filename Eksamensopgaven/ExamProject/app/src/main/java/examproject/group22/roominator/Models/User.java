@@ -17,6 +17,7 @@ public class User implements Serializable {
     public String password;
     public Bitmap image;
     public ArrayList<GroceryItem> boughtByUser;
+    public int ApartmentID;
     public int id;
 
     public User(String name, String password, Bitmap image) {

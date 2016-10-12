@@ -50,8 +50,9 @@ public class ResponseParser
                 int id = object.getInt("Id");
                 if(withPass)
                     pass = object.getString("Pass");
-                byte[] bArray= object.getString("avatar").toString().getBytes();
+                int apartmentId = object.getInt("ApartmentID");
                 User u = new User(name, pass, null);
+                u.ApartmentID = apartmentId;
                 u.id = id;
                 usersArray.add(u);
             }
