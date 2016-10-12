@@ -64,13 +64,20 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-
+        Log.v("OverviewActivity", "OverviewActivity onCreate");
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         Intent i = getIntent();
         int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
         SetupData(apartmentId, i);
         startNotificationService(apartmentId);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.v("OverviewActivity", "OverviewActivity onResume");
     }
     
 
@@ -129,6 +136,10 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     private void FilterGroceries()
     {
+        for(User u: currentApartment.users)
+        {
+            u.boughtByUser = new ArrayList<>();
+        }
         for (GroceryItem g: currentApartment.groceries)
         {
             int buyerid = g.buyerID;
@@ -139,8 +150,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             else
             {
                 User u = GetUserByID(buyerid);
-                if(u.boughtByUser == null)
-                    u.boughtByUser = new ArrayList<>();
                 u.boughtByUser.add(g);
             }
         }
@@ -178,7 +187,8 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
-        detailIntent.putExtra("groceries", currentApartment.users.get(position).boughtByUser);
+        ArrayList<GroceryItem> grocieres = currentApartment.users.get(position).boughtByUser;
+        detailIntent.putExtra("groceries", grocieres);
         startActivity(detailIntent);
     }
 
