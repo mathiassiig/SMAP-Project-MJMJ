@@ -49,6 +49,7 @@ public class DatabaseService{
     public static String TABLE_GROCERIES = "GroceryItems";
 
     public static String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
+    public static String INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE = "groceriesApartmentService";
     public static String INTENT_USER_AUTHENTICATION = "userAuthentication";
     public static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
     public static String INTENT_USER = "userIntent";
@@ -80,7 +81,7 @@ public class DatabaseService{
 
 
     //https://developer.android.com/training/volley/simple.html
-    public void get_Apartment(int apartment_id)
+    public void get_Apartment(int apartment_id, final boolean forService)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS+"/"+apartment_id;
@@ -94,7 +95,7 @@ public class DatabaseService{
                 {
                     Apartment a = parser.parseApartmentWithGroceries(response);
                     saveGroceriesToPref(a.groceries);
-                    sendApartmentWithGroceries(a);
+                    sendApartmentWithGroceries(a, forService);
                 }
                 catch (ParseException e)
                 {
@@ -112,9 +113,11 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendApartmentWithGroceries(Apartment a)
+    private void sendApartmentWithGroceries(Apartment a, boolean forService)
     {
         Intent intent = new Intent(INTENT_ALL_GROCERIES_IN_APARTMENT);
+        if(forService)
+            intent = new Intent(INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE);
         Bundle bundle = new Bundle();
         bundle.putSerializable("apartment", a);
         intent.putExtras(bundle);

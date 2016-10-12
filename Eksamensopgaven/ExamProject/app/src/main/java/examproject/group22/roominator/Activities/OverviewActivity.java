@@ -171,7 +171,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     {
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
-        db.get_Apartment(apartmentID);
+        db.get_Apartment(apartmentID, false);
 
     }
 

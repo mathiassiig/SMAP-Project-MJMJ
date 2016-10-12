@@ -37,7 +37,7 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         Log.v("Debug","NotificationService is created");
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE));
         super.onCreate();
     }
 
@@ -87,7 +87,7 @@ public class NotificationService extends Service {
             @Override
             public void run()
             {
-                DatabaseService.getInstance(getApplicationContext()).get_Apartment(apartment_id);
+                DatabaseService.getInstance(getApplicationContext()).get_Apartment(apartment_id, true);
                 setUpAlarm();
             }
         };
