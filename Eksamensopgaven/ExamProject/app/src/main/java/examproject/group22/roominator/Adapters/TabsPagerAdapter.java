@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
-import examproject.group22.roominator.Fragments.ProfileFragment;
-import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;

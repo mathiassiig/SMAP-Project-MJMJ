@@ -25,10 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ApartmentLogIn"
-            android:label="@string/title_activity_add_product"
-            android:theme="@style/AppTheme.NoActionBar"
-        />
+        <activity android:name=".Activities.ApartmentLogIn"/>
 		<!--
 		<service
             android:name=".DatabaseService"

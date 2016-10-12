@@ -53,12 +53,12 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
+       String stringpref =  pref.getAll().toString();
         Log.v("Debug", String.valueOf(pref.getBoolean("isloggedin",false)));
         if(pref.getBoolean("isloggedin",false)) {
-            User u = new User(pref.getString("name",""),pref.getString("password",""),null);
-            Intent isloggedin = new Intent(LoginActivity.this, OverviewActivity.class);
-            isloggedin.putExtra("user",u);
+            Intent isloggedin = new Intent(LoginActivity.this, ApartmentLogIn.class);
             startActivity(isloggedin);
+            finish();
         }
         super.onResume();
     }
@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity
                 prefEditor.putString("name",u.name);
                 prefEditor.putString("password", u.password);
                 prefEditor.putBoolean("isloggedin", true);
+                prefEditor.apply();
                 startActivity(loggedInIntent);
                 finish();
             }

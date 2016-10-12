@@ -25,7 +25,7 @@ import examproject.group22.roominator.Models.User;
 
 public class ResponseParser
 {
-    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S");
+    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public ArrayList<User> parseUsers(String response, boolean withPass) throws JSONException {
         return getUsersFromJson(new JSONArray(response), withPass);
