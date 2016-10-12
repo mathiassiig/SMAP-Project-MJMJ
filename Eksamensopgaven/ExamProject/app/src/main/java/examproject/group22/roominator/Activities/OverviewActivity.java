@@ -46,13 +46,15 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     private static final int REQUEST_IMG_ACTIVITY = 100;
     private static final int REQUEST_PERMISSION_CAM = 200;
+    private static final int NEW_GROCERY_REQUEST = 9001;
     public Apartment currentApartment;
     public ArrayList<GroceryItem> unBoughts;
     public User currentUser;
     public DatabaseService db;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
@@ -103,10 +105,11 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         return null;
     }
 
+    PagerAdapter pagerAdapter;
     private void SetUpGui()
     {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, unBoughts, currentApartment.users);
+        pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, unBoughts, currentApartment.users);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -162,7 +165,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         Intent addIntent = new Intent(OverviewActivity.this, AddProductActivity.class);
         addIntent.putExtra("ApartmentID", currentApartment.id);
         Toast.makeText(this, "Add clicked",Toast.LENGTH_LONG).show();
-        startActivity(addIntent);
+        startActivityForResult(addIntent, NEW_GROCERY_REQUEST);
     }
 
 
@@ -204,6 +207,12 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
     @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             /*case REQUEST_IMG_ACTIVITY:
@@ -215,8 +224,13 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
                 } else {
                     Toast.makeText(this, R.string.toastCancel, Toast.LENGTH_SHORT).show();
                 }
-
                 break;*/
+            case NEW_GROCERY_REQUEST:
+                if(resultCode==AddProductActivity.RESULT_ADDED)
+                {
+                    this.recreate();
+                }
+                break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
