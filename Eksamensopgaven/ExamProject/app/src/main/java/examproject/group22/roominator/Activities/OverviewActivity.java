@@ -1,9 +1,13 @@
 package examproject.group22.roominator.Activities;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -11,6 +15,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -25,8 +30,10 @@ import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.NotifikationService;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
+import examproject.group22.roominator.NotifikationService.LocalBinder;
 
 // KILDER:
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
@@ -43,6 +50,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public User currentUser;
     public DatabaseService db;
 
+    public NotifikationService notificationService;
+    boolean isBound = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,13 +63,28 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         SetupData();
+        Intent i = new Intent(OverviewActivity.this,NotifikationService.class);
+        bindService(i,serviceConnection,0);
+        startNotificationService();
     }
-
+    public void startNotificationService(){
+        Intent notificationService = new Intent(OverviewActivity.this, NotifikationService.class);
+        startService(notificationService);
+    }
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
+
+            /// gemmer til sharedpreferences
+            SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
+            SharedPreferences.Editor prefEditor = sharedPref.edit();
+            for (GroceryItem g:a.groceries) {
+                Log.v("Debug","grocery " + g.id +"has been saved to sharedpref");
+                prefEditor.putString(Integer.toString(g.id),Integer.toString(g.buyerID));
+            }
+            ///
             currentApartment = a;
             unBoughts = new ArrayList<>();
             FilterGroceries();
@@ -185,4 +210,19 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     {
         super.onDestroy();
     }
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service)
+        {
+            LocalBinder binder = (LocalBinder) service;
+            notificationService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 }
