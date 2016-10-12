@@ -1,16 +1,11 @@
 package examproject.group22.roominator.Activities;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -27,7 +22,6 @@ import examproject.group22.roominator.Fragments.DeleteProductFragment;
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
-import examproject.group22.roominator.Fragments.ProfileFragment;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
@@ -41,11 +35,8 @@ import examproject.group22.roominator.Adapters.TabsPagerAdapter;
 public class OverviewActivity extends AppCompatActivity implements UsersFragment.UserItemClickListener,
         ProductListFragment.GroceryItemClickListener,
         DeleteUserFragment.DeleteUserDialogListener,
-        DeleteProductFragment.DeleteProductDialogListener,
-        ProfileFragment.OnImageClickListener {
-
-    private static final int REQUEST_IMG_ACTIVITY = 100;
-    private static final int REQUEST_PERMISSION_CAM = 200;
+        DeleteProductFragment.DeleteProductDialogListener{
+    
     private static final int NEW_GROCERY_REQUEST = 9001;
     public Apartment currentApartment;
     public ArrayList<GroceryItem> unBoughts;
@@ -140,11 +131,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
     @Override
-    public void onImageClick(View view) {
-        takePicture();
-    }
-
-    @Override
     public void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent buyIntent = new Intent(OverviewActivity.this, BuyProductActivity.class);
 
@@ -157,7 +143,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onGroceryItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         DialogFragment dialog= new DeleteProductFragment();
         dialog.show(getSupportFragmentManager(),"DeleteProductDialogFragment");
-        Toast.makeText(this, "Grocery long clicked",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -173,7 +158,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onUserDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         //TODO Implement
-        Toast.makeText(this, R.string.overview_UserDeleted, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -186,7 +171,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onProductDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         //TODO Implement
-        Toast.makeText(this, R.string.overview_UserDeleted, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.dialog_product_deleted, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -195,47 +180,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         // TODO Implement
     }
 
-
-    public void takePicture(){
-        Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (ContextCompat.checkSelfPermission(OverviewActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(OverviewActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION_CAM);
-        } else {
-            startActivityForResult(camIntent, REQUEST_IMG_ACTIVITY);
-        }
-    }
-
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            /*case REQUEST_IMG_ACTIVITY:
-                if(resultCode == RESULT_OK){
-                    Bundle extras = data.getExtras();
-                    imageBitmap = (Bitmap) extras.get("data");
-                    imgView.setImageBitmap(imageBitmap);
-                    Toast.makeText(this, R.string.toastSave, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, R.string.toastCancel, Toast.LENGTH_SHORT).show();
-                }
-                break;*/
-            case NEW_GROCERY_REQUEST:
-                if(resultCode==AddProductActivity.RESULT_ADDED)
-                {
-                    this.recreate();
-                }
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
-        }
-    }
-
-
 }

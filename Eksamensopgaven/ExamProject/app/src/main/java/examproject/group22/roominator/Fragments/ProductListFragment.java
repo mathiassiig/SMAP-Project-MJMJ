@@ -45,6 +45,9 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     private String mParam2;
     public Apartment currentApartment;
 
+    FloatingActionButton fab;
+    ListView listView;
+
 
     private GroceryItemClickListener  mListener;
 
@@ -87,19 +90,18 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btnFloatingActionAddProduct);
+        fab = (FloatingActionButton) view.findViewById(R.id.btnFloatingActionAddProduct);
         fab.setOnClickListener(this);
 
-        ListView listView = (ListView) view.findViewById(R.id.ProductListView);
-
+        listView = (ListView) view.findViewById(R.id.ProductListView);
 
         Bundle b = getArguments();
         ArrayList<GroceryItem> unboughts = (ArrayList<GroceryItem>)b.getSerializable("unboughts");
 
-
         G_adapter = new GroceryItemAdapter(getContext(), unboughts);
         listView.setAdapter(G_adapter);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 
         return view;
     }

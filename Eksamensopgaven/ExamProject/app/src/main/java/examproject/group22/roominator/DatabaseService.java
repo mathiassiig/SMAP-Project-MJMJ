@@ -2,6 +2,7 @@ package examproject.group22.roominator;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
@@ -27,7 +28,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
@@ -86,6 +92,7 @@ public class DatabaseService{
                 try
                 {
                     Apartment a = parser.parseApartmentWithGroceries(response);
+                    saveGroceriesToPref(a.groceries);
                     sendApartmentWithGroceries(a);
                 }
                 catch (ParseException e)
@@ -360,6 +367,21 @@ public class DatabaseService{
     public void setContext(Context c)
     {
         current_context = c;
+    }
+
+    public void saveGroceriesToPref(List<GroceryItem> groceries){
+        try {
+            SharedPreferences sharedPref = current_context.getSharedPreferences("Groceries", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            for (GroceryItem g : groceries) {
+                String id = Integer.toString(g.id);
+                String boughtStamp = g.boughtStamp.toString();
+                editor.putString(id, boughtStamp);
+                editor.apply();
+            }
+        }catch (Exception e){
+            Log.v("Debug",e.toString());
+        }
     }
 
     /*

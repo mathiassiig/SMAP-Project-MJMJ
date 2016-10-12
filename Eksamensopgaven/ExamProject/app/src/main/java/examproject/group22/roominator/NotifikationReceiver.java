@@ -3,6 +3,7 @@ package examproject.group22.roominator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 public class NotifikationReceiver extends BroadcastReceiver {
     public NotifikationReceiver() {
@@ -10,8 +11,8 @@ public class NotifikationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        throw new UnsupportedOperationException("Not yet implemented");
+        Log.v("Debug", "Recieved Pending intent");
+        Intent i = new Intent(context,NotifikationService.class);
+        context.startService(i);
     }
 }

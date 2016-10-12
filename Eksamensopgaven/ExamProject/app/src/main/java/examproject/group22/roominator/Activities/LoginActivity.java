@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -33,6 +34,8 @@ import examproject.group22.roominator.R;
  */
 public class LoginActivity extends AppCompatActivity
 {
+    SharedPreferences pref;
+    SharedPreferences.Editor prefEditor;
     EditText txtUsername;
     EditText txtPassword;
     DatabaseService db;
@@ -40,10 +43,24 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        pref = LoginActivity.this.getPreferences(MODE_PRIVATE);
+        prefEditor = pref.edit();
         txtUsername = (EditText) findViewById(R.id.txtUsername);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_USER_AUTHENTICATION));
+    }
+
+    @Override
+    protected void onResume() {
+        Log.v("Debug", String.valueOf(pref.getBoolean("isloggedin",false)));
+        if(pref.getBoolean("isloggedin",false)) {
+            User u = new User(pref.getString("name",""),pref.getString("password",""),null);
+            Intent isloggedin = new Intent(LoginActivity.this, OverviewActivity.class);
+            isloggedin.putExtra("user",u);
+            startActivity(isloggedin);
+        }
+        super.onResume();
     }
 
     private  boolean checkInternetConnection(){
@@ -85,6 +102,9 @@ public class LoginActivity extends AppCompatActivity
             {
                 Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
                 loggedInIntent.putExtra("User", u);
+                prefEditor.putString("name",u.name);
+                prefEditor.putString("password", u.password);
+                prefEditor.putBoolean("isloggedin", true);
                 startActivity(loggedInIntent);
                 finish();
             }
