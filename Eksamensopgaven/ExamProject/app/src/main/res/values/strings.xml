@@ -58,23 +58,7 @@
     <string name="signUp_password">Password</string>
     <string name="signUp_create_button">Create</string>
 
-    <string-array name="product_names">
-        <item>Skraldeposer</item>
-        <item>Toiletpapir</item>
-        <item>Toiletsæbe</item>
-        <item>Sæbe</item>
-        <item>nytnyt</item>
-        <item>nytnyt</item>
-    </string-array>
-    <string-array name="product_number">
-        <item>1</item>
-        <item>1</item>
-        <item>3</item>
-        <item>3</item>
-        <item>5</item>
-        <item>5</item>
-    </string-array>
-    <string name="apartment_name">Name</string>
+    <string name="apartment_name">Apartment</string>
     <string name="addproduct_txtNumber">Pieces</string>
     <string name="menu_action_logout">Logout</string>
     <string name="username">Username</string>

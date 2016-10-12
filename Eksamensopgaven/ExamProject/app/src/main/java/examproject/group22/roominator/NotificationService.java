@@ -99,7 +99,7 @@ public class NotificationService extends Service {
     {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.shoppingicon).
-                        setContentTitle("Shoppinglist Update"). //TODO: EXTERNALIZE
+                        setContentTitle("Shoppinglist update"). //TODO: EXTERNALIZE
                         setContentText("Someone has made changes in the shoppinglist"); //TODO: EXTERNALIZE
 
         Intent resultIntent = new Intent(this, LoginActivity.class);
