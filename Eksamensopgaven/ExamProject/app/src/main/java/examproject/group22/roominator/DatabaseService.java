@@ -51,6 +51,7 @@ public class DatabaseService{
     public static String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
     public static String INTENT_USER_AUTHENTICATION = "userAuthentication";
     public static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
+    public static String INTENT_USER = "userIntent";
 
     private Context current_context;
     public  ResponseParser parser;
@@ -170,6 +171,42 @@ public class DatabaseService{
             intent.putExtra("apartmentID", 0);
         }
         intent.putExtra("apartmentOK", passWordOk);
+        LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
+    }
+
+    public void get_user(final int id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_USERS+"/"+id;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            User u = parser.parseOneUser(response, false);
+                            sendUserAnswer(u);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Log.v("DatabaseHelper", "Couldn't fetch: " + error.getMessage());
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void sendUserAnswer(User u)
+    {
+        Intent intent = new Intent(INTENT_USER);
+        intent.putExtra("User", u);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
