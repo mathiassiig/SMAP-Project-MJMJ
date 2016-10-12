@@ -78,4 +78,5 @@
     <string name="addproduct_txtNumber">Pieces</string>
 
     <string name="menu_action_logout">Logout</string>
+    <string name="username">Username</string>
 </resources>
