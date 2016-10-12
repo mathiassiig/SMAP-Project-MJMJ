@@ -73,7 +73,7 @@ public class ApartmentLogIn extends AppCompatActivity {
         //If not, add him to apartment... somehow :'(
     }
 
-    public void onClicLogInApartment(View view){
+    public void onClickLogInApartment(View view){
         String username = name.getText().toString();
         String upassword = password.getText().toString();
         if(username.equals(""))

@@ -50,14 +50,21 @@ public class BuyProductActivity extends AppCompatActivity {
         });
     }
 
-    private void BuyCurrent(GroceryItem i, User buyer)
-    {
-        Timestamp bought = new Timestamp(new Date().getTime());
-        i.buyerID = buyer.id;
-        i.boughtStamp = bought;
-        EditText et = (EditText)findViewById(R.id.buyproduct_etPrice);
-        i.price = Integer.parseInt(et.getText().toString());
-        DatabaseService.getInstance(getApplicationContext()).put_UpdateGrocery(i);
+    private void BuyCurrent(GroceryItem i, User buyer) {
+        if (editTextPrice.getText().toString().trim().length() != 0) {
+            Timestamp bought = new Timestamp(new Date().getTime());
+            i.buyerID = buyer.id;
+            i.boughtStamp = bought;
+            //EditText et = (EditText) findViewById(R.id.buyproduct_etPrice);
+            i.price = Integer.parseInt(editTextPrice.getText().toString());
+            DatabaseService.getInstance(getApplicationContext()).put_UpdateGrocery(i);
+            finish();
+        }
+        else
+        {
+            Toast.makeText(this, "Indtast pris", Toast.LENGTH_LONG).show(); //TODO: Externalize
+
+        }
     }
 
 
