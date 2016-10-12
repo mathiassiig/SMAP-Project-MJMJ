@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.os.IBinder;
 import android.provider.ContactsContract;
@@ -26,6 +27,9 @@ import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 public class ApartmentLogIn extends AppCompatActivity {
+    SharedPreferences pref;
+    SharedPreferences.Editor prefEditor;
+
 
     EditText name;
     EditText password;
@@ -37,12 +41,24 @@ public class ApartmentLogIn extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_log_in);
+
+        pref = ApartmentLogIn.this.getPreferences(MODE_PRIVATE);
+        prefEditor = pref.edit();
+
         name = (EditText)findViewById(R.id.apartment_name_txt);
         password = (EditText)findViewById(R.id.apartment_password_txt);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
         FetchUser();
 
+    }
+
+    @Override
+    protected void onResume() {
+        if(pref.getBoolean("isloggedin",false)) {
+            LogIn(pref.getInt("aId",0));
+        }
+        super.onResume();
     }
 
     public void FetchUser()
@@ -90,6 +106,9 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     public void LogIn(int apartment_id)
     {
+        prefEditor.putInt("aId",apartment_id);
+        prefEditor.putBoolean("isloggedin",true);
+        prefEditor.apply();
         Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
         loggedInIntent.putExtra("User", currentUser);
