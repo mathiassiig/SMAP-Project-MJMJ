@@ -156,15 +156,14 @@ public class ResponseParser
             int UserID = 0;
             try
             {
-                UserID = currentGrocery.getInt("UserID");
+                UserID = currentGrocery.getInt("UserId");
             }
             catch(Exception ex)
             {
 
             }
             GroceryItem grocery = new GroceryItem(g_id, g_name, g_price, g_creation, ApartmentID);
-            if(UserID != 0)
-                grocery.buyerID = UserID;
+            grocery.buyerID = UserID;
             if(g_bought != null)
                 grocery.boughtStamp = g_bought;
             groceryItemArrayList.add(grocery);

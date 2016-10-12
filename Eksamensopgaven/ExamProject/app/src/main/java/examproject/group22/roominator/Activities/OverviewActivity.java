@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -22,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.logging.Filter;
 
 import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Fragments.DeleteProductFragment;
@@ -71,20 +69,38 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
             currentApartment = a;
             unBoughts = new ArrayList<>();
-            FilterUnboughts();
+            FilterGroceries();
             SetUpGui();
         }
     };
 
-    private void FilterUnboughts()
+    private void FilterGroceries()
     {
         for (GroceryItem g: currentApartment.groceries)
         {
-            if(g.boughtStamp == null)
+            int buyerid = g.buyerID;
+            if(buyerid == 0)
             {
                 unBoughts.add(g);
             }
+            else
+            {
+                User u = GetUserByID(buyerid);
+                if(u.boughtByUser == null)
+                    u.boughtByUser = new ArrayList<>();
+                u.boughtByUser.add(g);
+            }
         }
+    }
+
+    private User GetUserByID(int ID)
+    {
+        for(User u : currentApartment.users)
+        {
+            if(u.id == ID)
+                return u;
+        }
+        return null;
     }
 
     private void SetUpGui()
@@ -110,6 +126,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
+        detailIntent.putExtra("groceries", currentApartment.users.get(position).boughtByUser);
         startActivity(detailIntent);
     }
 
