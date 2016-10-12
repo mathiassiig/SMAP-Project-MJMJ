@@ -32,6 +32,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity android:name=".Activities.SignUpActivity" />
         <activity
             android:name=".Activities.AddProductActivity"
