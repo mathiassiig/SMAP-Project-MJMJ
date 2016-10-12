@@ -62,13 +62,16 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
-        SetupData();
-        startNotificationService();
+        Intent i = getIntent();
+        int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
+        SetupData(apartmentId, i);
+        startNotificationService(apartmentId);
     }
-    public void startNotificationService(){
+    public void startNotificationService(int apartmentId){
         Intent notificationService = new Intent(OverviewActivity.this, NotificationService.class);
+        notificationService.putExtra("apartmentID", apartmentId);
         startService(notificationService);
-        Log.v("Debug","Overview has started NotifacationService");
+        Log.v("Debug","Overview has started notification service");
     }
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
@@ -131,13 +134,11 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
 
-    public void SetupData()
+    public void SetupData(int apartmentID, Intent i)
     {
-        Intent i = getIntent();
-        int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
-        db.get_Apartment(apartmentId);
+        db.get_Apartment(apartmentID);
 
     }
 
