@@ -1,6 +1,7 @@
 package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,12 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 
         txtName.setText(user.name);
-        imgUser.setImageResource(R.drawable.img_placeholder);
+
+        if(user.image !=null) {
+            imgUser.setImageBitmap(user.image);
+        }else{
+            imgUser.setImageResource(R.drawable.img_placeholder);
+        }
 
         return convertView;
     }

@@ -43,8 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
         Intent createIntent = new Intent(SignUpActivity.this, OverviewActivity.class);
         String n = name.getText().toString();
         String p = password.getText().toString();
-        byte[] img = convertImgToByteArray(avatar); //TODO: Den skal være et billede her og først konverteres senere
-        User u = new User(n, p, null);
+        Bitmap img = avatar.getDrawingCache(); //TODO: Den skal være et billede her og først konverteres senere
+        User u = new User(n, p, img);
         createIntent.putExtra("newUser",u);
         startActivity(createIntent);
     }

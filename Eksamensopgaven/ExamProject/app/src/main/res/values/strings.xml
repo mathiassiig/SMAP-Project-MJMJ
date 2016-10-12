@@ -76,4 +76,6 @@
     </string-array>
     <string name="apartment_name">Name</string>
     <string name="addproduct_txtNumber">Pieces</string>
+
+    <string name="menu_action_logout">Logout</string>
 </resources>

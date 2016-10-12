@@ -3,7 +3,7 @@
     <string name="app_name">Roomienator</string>
     <string name="action_sign_in">Log ind</string>
     <string name="action_sign_in_short">Log ind</string>
-    <string name="action_sign_up">Opret ny bruger</string>
+    <string name="action_sign_up">Opret bruger</string>
     <string name="addproduct_txtName">Produkt:</string>
     <string name="addproduct_txtNumber">Antal:</string>
     <string name="addproduct_txtPrice">Pris:</string>
@@ -40,4 +40,6 @@
     <string name="title_activity_add_product">Tilføj produkt</string>
     <string name="title_activity_buy_product">Køb produkt</string>
     <string name="title_activity_overview">Oversigt</string>
+    <string name="username">Brugernavn</string>
+    <string name="menu_action_logout">Log ud</string>
 </resources>
