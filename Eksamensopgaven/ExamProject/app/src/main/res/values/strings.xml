@@ -3,7 +3,6 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="username">Username</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Login</string>
@@ -31,7 +30,7 @@
     <!-- Strings related to customUser -->
     <string name="customUser_txtName">Name</string>
     <string name="customUser_txtTotal">Total</string>
-    <string name="action_sign_up">Create  user</string>
+    <string name="action_sign_up">Create new user</string>
 
     <!-- Strings related to overviewActivity -->
     <string name="overview_btnShoppinglist">Shopping list</string>
@@ -78,5 +77,5 @@
     <string name="apartment_name">Name</string>
     <string name="addproduct_txtNumber">Pieces</string>
 
-    <string name="menu_action_logout">Log ud</string>
+    <string name="menu_action_logout">Logout</string>
 </resources>

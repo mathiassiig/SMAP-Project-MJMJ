@@ -41,4 +41,5 @@
     <string name="title_activity_buy_product">Køb produkt</string>
     <string name="title_activity_overview">Oversigt</string>
     <string name="username">Brugernavn</string>
+    <string name="menu_action_logout">Log ud</string>
 </resources>
