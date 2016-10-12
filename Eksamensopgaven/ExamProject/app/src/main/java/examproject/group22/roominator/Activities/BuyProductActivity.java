@@ -11,6 +11,10 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
@@ -48,7 +52,12 @@ public class BuyProductActivity extends AppCompatActivity {
 
     private void BuyCurrent(GroceryItem i, User buyer)
     {
-
+        Timestamp bought = new Timestamp(new Date().getTime());
+        i.buyerID = buyer.id;
+        i.boughtStamp = bought;
+        EditText et = (EditText)findViewById(R.id.buyproduct_etPrice);
+        i.price = Integer.parseInt(et.getText().toString());
+        DatabaseService.getInstance(getApplicationContext()).put_UpdateGrocery(i);
     }
 
 
