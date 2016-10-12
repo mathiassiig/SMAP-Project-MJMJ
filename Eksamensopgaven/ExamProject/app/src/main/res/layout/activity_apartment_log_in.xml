@@ -11,18 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="examproject.group22.roominator.Activities.ApartmentLogIn">
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/singUpApartment_button"
-        android:onClick="onClicLogInApartment"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        app:srcCompat="@drawable/check_icon" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +18,7 @@
         android:hint="@string/apartment_name"
         android:ems="10"
         android:id="@+id/apartment_name_txt"
-        android:layout_above="@+id/apartment_password_txt"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -41,7 +29,17 @@
         android:ems="10"
         android:hint="@string/signUp_password"
         android:id="@+id/apartment_password_txt"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/apartment_name_txt"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/action_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLoginApartment"
+        android:onClick="onClickLogInApartment"
+        android:layout_below="@+id/apartment_password_txt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
 </RelativeLayout>
