@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Adapters.DetailListAdapter;
@@ -63,6 +65,7 @@ public class DetailFragment extends Fragment {
         return fragment;
     }
 
+    TextView total;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +86,20 @@ public class DetailFragment extends Fragment {
         ArrayList<GroceryItem> groceries = (ArrayList<GroceryItem>)b.getSerializable("groceries");
         detailListAdapter = new DetailListAdapter(getContext(), groceries);
         listView.setAdapter(detailListAdapter);
+        int total = CalculateTotal(groceries);
+        TextView txtTotal = (TextView) view.findViewById(R.id.detail_total);
+        txtTotal.setText(Integer.toString(total));
         return view;
+    }
+
+    public int CalculateTotal(ArrayList<GroceryItem> groceries)
+    {
+        int total = 0;
+        for(GroceryItem g : groceries)
+        {
+            total += g.price;
+        }
+        return total;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
