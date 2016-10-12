@@ -58,7 +58,7 @@ public class BuyProductActivity extends AppCompatActivity {
             //EditText et = (EditText) findViewById(R.id.buyproduct_etPrice);
             i.price = Integer.parseInt(editTextPrice.getText().toString());
             DatabaseService.getInstance(getApplicationContext()).put_UpdateGrocery(i);
-            //finish();
+            finish();
         }
         else
         {
