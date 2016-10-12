@@ -56,7 +56,7 @@ public class ApartmentLogIn extends AppCompatActivity {
     @Override
     protected void onResume() {
         if(pref.getAll()!=null) {
-            LogIn(pref.getInt("aId",0));
+            String apId = pref.getString("aId","");
 
         }
         super.onResume();
