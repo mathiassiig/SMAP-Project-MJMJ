@@ -12,7 +12,7 @@ public class NotifikationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.v("Debug", "Recieved Pending intent");
-        Intent i = new Intent(context,NotifikationService.class);
+        Intent i = new Intent(context,NotificationService.class);
         context.startService(i);
     }
 }

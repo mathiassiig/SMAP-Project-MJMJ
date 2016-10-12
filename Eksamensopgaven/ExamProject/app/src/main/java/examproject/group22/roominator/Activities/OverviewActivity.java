@@ -30,10 +30,10 @@ import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
-import examproject.group22.roominator.NotifikationService;
+import examproject.group22.roominator.NotificationService;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
-import examproject.group22.roominator.NotifikationService.LocalBinder;
+import examproject.group22.roominator.NotificationService.LocalBinder;
 
 // KILDER:
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
@@ -50,7 +50,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public User currentUser;
     public DatabaseService db;
 
-    public NotifikationService notificationService;
+    public NotificationService notificationService;
     boolean isBound = false;
 
     @Override
@@ -63,13 +63,12 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         SetupData();
-        Intent i = new Intent(OverviewActivity.this,NotifikationService.class);
-        bindService(i,serviceConnection,0);
         startNotificationService();
     }
     public void startNotificationService(){
-        Intent notificationService = new Intent(OverviewActivity.this, NotifikationService.class);
+        Intent notificationService = new Intent(OverviewActivity.this, NotificationService.class);
         startService(notificationService);
+        Log.v("Debug","Overview has started NotifacationService");
     }
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
@@ -81,9 +80,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = sharedPref.edit();
             for (GroceryItem g:a.groceries) {
-                Log.v("Debug","grocery " + g.id +"has been saved to sharedpref");
-                prefEditor.putString(Integer.toString(g.id),Integer.toString(g.buyerID));
+                prefEditor.putInt(Integer.toString(g.id),g.buyerID);
             }
+            prefEditor.apply();
             ///
             currentApartment = a;
             unBoughts = new ArrayList<>();
@@ -211,7 +210,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         super.onDestroy();
     }
 
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+   /* private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service)
         {
@@ -224,5 +223,5 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         public void onServiceDisconnected(ComponentName name) {
             isBound = false;
         }
-    };
+    };*/
 }
