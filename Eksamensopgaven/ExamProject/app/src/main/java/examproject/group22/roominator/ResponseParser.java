@@ -68,7 +68,15 @@ public class ResponseParser
         int id = object.getInt("Id");
         if (withPass)
             pass = object.getString("Pass");
-        int apartmentId = object.getInt("ApartmentID");
+        int apartmentId = 0;
+        try
+        {
+            apartmentId = object.getInt("ApartmentID");
+        }
+        catch(Exception ex)
+        {
+
+        }
         u = new User(name, pass, null);
         u.ApartmentID = apartmentId;
         u.id = id;
