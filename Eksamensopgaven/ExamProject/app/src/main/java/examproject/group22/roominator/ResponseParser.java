@@ -45,16 +45,7 @@ public class ResponseParser
             for (int i = 0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
-                String name = object.getString("Name");
-                String pass = "";
-                int id = object.getInt("Id");
-                if(withPass)
-                    pass = object.getString("Pass");
-                int apartmentId = object.getInt("ApartmentID");
-                User u = new User(name, pass, null);
-                u.ApartmentID = apartmentId;
-                u.id = id;
-                usersArray.add(u);
+                usersArray.add(parseOneUser(object, withPass));
             }
         }
         catch(JSONException e)
@@ -62,6 +53,26 @@ public class ResponseParser
             e.printStackTrace();
         }
         return usersArray;
+    }
+
+    public User parseOneUser(String response, boolean withPass) throws JSONException
+    {
+        return parseOneUser(new JSONObject(response), withPass);
+    }
+
+    private User parseOneUser(JSONObject object, boolean withPass) throws JSONException
+    {
+        User u = null;
+        String name = object.getString("Name");
+        String pass = "";
+        int id = object.getInt("Id");
+        if (withPass)
+            pass = object.getString("Pass");
+        int apartmentId = object.getInt("ApartmentID");
+        u = new User(name, pass, null);
+        u.ApartmentID = apartmentId;
+        u.id = id;
+        return u;
     }
 
     public Apartment ParseSingleApartmentNoGroceries(JSONObject object)
