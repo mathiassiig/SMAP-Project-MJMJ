@@ -19,6 +19,7 @@ namespace RoomienatorWeb.Models
         {
         }
 
+
         public System.Data.Entity.DbSet<RoomienatorWeb.Models.Apartment> Apartments { get; set; }
 
         public System.Data.Entity.DbSet<RoomienatorWeb.Models.GroceryItem> GroceryItems { get; set; }

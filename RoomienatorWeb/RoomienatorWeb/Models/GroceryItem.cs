@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace RoomienatorWeb.Models
 {
@@ -17,9 +18,11 @@ namespace RoomienatorWeb.Models
         public DateTime Bought { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        [JsonIgnore]
+        public virtual User User { get; set; }
 
         public int ApartmentID { get; set; }
-        public Apartment Apartment { get; set; }
+        [JsonIgnore]
+        public virtual Apartment Apartment { get; set; }
     }
 }
