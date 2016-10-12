@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Roomienator</string>
+    <string name="action_sign_in">Log ind</string>
+    <string name="action_sign_in_short">Log ind</string>
+    <string name="action_sign_up">Opret ny bruger</string>
+    <string name="addproduct_txtName">Produkt:</string>
+    <string name="addproduct_txtNumber">Antal:</string>
+    <string name="addproduct_txtPrice">Pris:</string>
+    <string name="apartment_name">Navn</string>
+    <string name="buyproduct_etPrice">Indtast pris</string>
+    <string name="buyproduct_txtName">Produkt:</string>
+    <string name="buyproduct_txtPrice">Pris:</string>
+    <string name="customUser_txtName">Navn</string>
+    <string name="customUser_txtTotal">Total</string>
+    <string name="dialog_product_btnCancel">Annuller</string>
+    <string name="dialog_product_btnOK">OK</string>
+    <string name="dialog_product_deleted">Produktet er slettet</string>
+    <string name="dialog_product_message">Vil du slette produktet</string>
+    <string name="dialog_user_btnCancel">Annuller</string>
+    <string name="dialog_user_btnOK">OK</string>
+    <string name="dialog_user_deleted">Brugeren er slettet</string>
+    <string name="dialog_user_message">Brugerens data vil blive slettet permenent</string>
+    <string name="dialog_user_title">Vil du slette brugeren?</string>
+    <string name="error_field_required">Feltet skal udfylder</string>
+    <string name="error_incorrect_password">Forkert password</string>
+    <string name="error_invalid_email">Email findes ikke</string>
+    <string name="error_invalid_password">Password er for kort</string>
+    <string name="hello_blank_fragment">Hej</string>
+    <string name="overview_btnShoppinglist">Indkøbsliste</string>
+    <string name="overview_btnUserList">Oversigt</string>
+    <string name="overview_btnUserProfile">Profil</string>
+    <string name="profile_lbName">Navn:</string>
+    <string name="title_activity_shopping_list">Indkøbsliste</string>
+    <string name="signUp_password">Password</string>
+    <string name="signUp_create_button">Opret</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_email">Email</string>
+    <string name="permission_rationale">\"Kontaktoplysninger er nødvendige for at finde email\"</string>
+    <string name="title_activity_add_product">Tilføj produkt</string>
+    <string name="title_activity_buy_product">Køb produkt</string>
+    <string name="title_activity_overview">Oversigt</string>
+</resources>
