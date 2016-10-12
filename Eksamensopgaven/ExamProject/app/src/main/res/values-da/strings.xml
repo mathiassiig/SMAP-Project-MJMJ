@@ -16,13 +16,13 @@
     <string name="dialog_product_btnCancel">Annuller</string>
     <string name="dialog_product_btnOK">OK</string>
     <string name="dialog_product_deleted">Produktet er slettet</string>
-    <string name="dialog_product_message">Vil du slette produktet</string>
+    <string name="dialog_product_message">Vil du slette produktet?</string>
     <string name="dialog_user_btnCancel">Annuller</string>
     <string name="dialog_user_btnOK">OK</string>
     <string name="dialog_user_deleted">Brugeren er slettet</string>
     <string name="dialog_user_message">Brugerens data vil blive slettet permenent</string>
     <string name="dialog_user_title">Vil du slette brugeren?</string>
-    <string name="error_field_required">Feltet skal udfylder</string>
+    <string name="error_field_required">Feltet skal udfyldes</string>
     <string name="error_incorrect_password">Forkert password</string>
     <string name="error_invalid_email">Email findes ikke</string>
     <string name="error_invalid_password">Password er for kort</string>
