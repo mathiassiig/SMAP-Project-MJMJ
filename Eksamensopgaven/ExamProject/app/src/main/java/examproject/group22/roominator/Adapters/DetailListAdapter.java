@@ -9,10 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import examproject.group22.roominator.DetailListProvider;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
 
 
@@ -20,60 +25,31 @@ import examproject.group22.roominator.R;
  * Created by Maria Dam on 10-10-2016.
  */
 
-public class DetailListAdapter extends ArrayAdapter{
-    List list = new ArrayList();
-
-    public DetailListAdapter(Context context, int resource){
-        super(context, resource);
+public class DetailListAdapter extends ArrayAdapter<GroceryItem>
+{
+    ArrayList<GroceryItem> groceryItems;
+    public DetailListAdapter(Context context, ArrayList<GroceryItem> groceryItems)
+    {
+        super(context, 0, groceryItems);
+        this.groceryItems = groceryItems;
     }
 
-    static class DataHandler{
-        TextView productname;
-        TextView productprice;
-    }
-
-    @Override
-    public void add(Object object) {
-        super.add(object);
-        list.add(object);
-    }
-
-    @Override
-    public int getCount() {
-        return this.list.size();
-    }
-
-    @Nullable
-    @Override
-    public Object getItem(int position) {
-        return list.get(position);
-    }
-
+    DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View row;
-        row = convertView;
-        DetailListAdapter.DataHandler handler;
-
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater)this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row=inflater.inflate(R.layout.custom_details,parent,false);
-            handler = new DetailListAdapter.DataHandler();
-            handler.productname = (TextView) row.findViewById(R.id.detail_lbproduct);
-            handler.productprice = (TextView) row.findViewById(R.id.detail_lbPrice);
-            //handler.productprice = (TextView) row.findViewById(R.id.TextviewProductnumber);
-            row.setTag(handler);
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        final GroceryItem grocery = getItem(position);
+        if(convertView == null)
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_details, parent, false);
+        if(grocery != null) {
+            TextView txtName = (TextView) convertView.findViewById(R.id.detail_name);
+            TextView txtPrice = (TextView) convertView.findViewById(R.id.detail_price);
+            TextView txtDate = (TextView) convertView.findViewById(R.id.detail_buyDate);
+            txtName.setText(grocery.name);
+            txtPrice.setText(Integer.toString(grocery.price));
+            txtDate.setText(dateOnly.format(grocery.boughtStamp));
         }
-        else{
-            handler = (DetailListAdapter.DataHandler) row.getTag();
-        }
-
-        DetailListProvider dataprovider;
-        dataprovider =(DetailListProvider) this.getItem(position);
-        handler.productname.setText(dataprovider.getProductName());
-        handler.productprice.setText(dataprovider.getProductPrice());
-
-        return row;
+        return convertView;
     }
 }

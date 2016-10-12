@@ -25,7 +25,7 @@ import examproject.group22.roominator.Models.User;
 
 public class ResponseParser
 {
-    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S");
 
     public ArrayList<User> parseUsers(String response, boolean withPass) throws JSONException {
         return getUsersFromJson(new JSONArray(response), withPass);
@@ -129,8 +129,9 @@ public class ResponseParser
     }
 
     private Timestamp GetTimestampFromString(String string) throws ParseException {
-        String replaced = string.replace('T',' ');
-        java.sql.Date date = new java.sql.Date((TIME_FORMAT.parse(replaced)).getTime());
+        //String replaced = string.replace('T',' ');
+        java.util.Date d = TIME_FORMAT.parse(string);
+        java.sql.Date date = new java.sql.Date(d.getTime());
         return new Timestamp(date.getTime());
     }
 
@@ -142,29 +143,16 @@ public class ResponseParser
             int g_id = currentGrocery.getInt("Id");
             String g_name = currentGrocery.getString("Name");
             int g_price = currentGrocery.getInt("Price");
-            Timestamp g_creation = GetTimestampFromString(currentGrocery.getString("Creation"));
-            Timestamp g_bought = null;
-            try
-            {
-                g_bought = GetTimestampFromString(currentGrocery.getString("Bought"));
-            }
-            catch(Exception ex)
-            {
-
-            }
             int ApartmentID = currentGrocery.getInt("ApartmentID");
-            int UserID = 0;
-            try
-            {
-                UserID = currentGrocery.getInt("UserID");
-            }
-            catch(Exception ex)
-            {
 
-            }
+            Timestamp g_creation = null;
+            Timestamp g_bought = null;
+            try { g_creation = GetTimestampFromString(currentGrocery.getString("Creation")); } catch(Exception ex) {}
+            try { g_bought = GetTimestampFromString(currentGrocery.getString("Bought")); }     catch(Exception ex) {}
+            int UserID = 0;
+            try { UserID = currentGrocery.getInt("UserId"); } catch(Exception ex) {}
             GroceryItem grocery = new GroceryItem(g_id, g_name, g_price, g_creation, ApartmentID);
-            if(UserID != 0)
-                grocery.buyerID = UserID;
+            grocery.buyerID = UserID;
             if(g_bought != null)
                 grocery.boughtStamp = g_bought;
             groceryItemArrayList.add(grocery);

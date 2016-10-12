@@ -243,6 +243,48 @@ public class DatabaseService{
         queue.add(req);
     }
 
+    public void delete_user(final int user_id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_USERS+"/"+user_id;
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+
+            }
+        });
+        queue.add(req);
+    }
+
+    public void delete_grocery(final int grocery_id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_GROCERIES+"/"+grocery_id;
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+
+            }
+        });
+        queue.add(req);
+    }
+
     public void post_NewUser(final User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
