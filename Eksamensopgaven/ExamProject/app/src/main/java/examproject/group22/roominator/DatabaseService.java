@@ -349,6 +349,30 @@ public class DatabaseService{
         queue.add(req);
     }
 
+    public void put_userToApartment(final User u, final int apartmentID)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_USERS+"/"+u.id;
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Id", Integer.toString(u.id));
+        params.put("Name", u.name);
+        params.put("ApartmentID", Integer.toString(apartmentID));
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        //TODO: ja det gik fint du hej
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+
+            }
+        });
+    }
+
     public void post_NewGrocery(final String name, final Timestamp creation, final int apartmentID)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
