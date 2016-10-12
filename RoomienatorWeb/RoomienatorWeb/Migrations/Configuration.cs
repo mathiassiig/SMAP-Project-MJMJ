@@ -56,7 +56,6 @@ namespace RoomienatorWeb.Migrations
             u3.Apartment = one;
             u4.Apartment = one;
             u5.Apartment = one;
-            context.Users.AddOrUpdate(u1, u2, u3, u4, u5);
         }
     }
 }
