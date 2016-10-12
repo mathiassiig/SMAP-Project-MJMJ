@@ -30,7 +30,7 @@
     <!-- Strings related to customUser -->
     <string name="customUser_txtName">Name</string>
     <string name="customUser_txtTotal">Total</string>
-    <string name="action_sign_up">Create new user</string>
+    <string name="action_sign_up">Create user</string>
 
     <!-- Strings related to overviewActivity -->
     <string name="overview_btnShoppinglist">Shopping list</string>
