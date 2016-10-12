@@ -72,8 +72,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         SetupData(apartmentId, i);
         startNotificationService(apartmentId);
     }
-	
-    public void startNotificationService(int apartmentId){
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
