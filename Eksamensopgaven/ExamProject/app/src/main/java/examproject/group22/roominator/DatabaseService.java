@@ -49,8 +49,10 @@ public class DatabaseService{
     public static String TABLE_GROCERIES = "GroceryItems";
 
     public static String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
+    public static String INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE = "groceriesApartmentService";
     public static String INTENT_USER_AUTHENTICATION = "userAuthentication";
     public static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
+    public static String INTENT_USER = "userIntent";
 
     private Context current_context;
     public  ResponseParser parser;
@@ -79,7 +81,7 @@ public class DatabaseService{
 
 
     //https://developer.android.com/training/volley/simple.html
-    public void get_Apartment(int apartment_id)
+    public void get_Apartment(int apartment_id, final boolean forService)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS+"/"+apartment_id;
@@ -93,7 +95,7 @@ public class DatabaseService{
                 {
                     Apartment a = parser.parseApartmentWithGroceries(response);
                     saveGroceriesToPref(a.groceries);
-                    sendApartmentWithGroceries(a);
+                    sendApartmentWithGroceries(a, forService);
                 }
                 catch (ParseException e)
                 {
@@ -111,9 +113,11 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendApartmentWithGroceries(Apartment a)
+    private void sendApartmentWithGroceries(Apartment a, boolean forService)
     {
         Intent intent = new Intent(INTENT_ALL_GROCERIES_IN_APARTMENT);
+        if(forService)
+            intent = new Intent(INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE);
         Bundle bundle = new Bundle();
         bundle.putSerializable("apartment", a);
         intent.putExtras(bundle);
@@ -170,6 +174,42 @@ public class DatabaseService{
             intent.putExtra("apartmentID", 0);
         }
         intent.putExtra("apartmentOK", passWordOk);
+        LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
+    }
+
+    public void get_user(final int id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_USERS+"/"+id;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            User u = parser.parseOneUser(response, false);
+                            sendUserAnswer(u);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Log.v("DatabaseHelper", "Couldn't fetch: " + error.getMessage());
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void sendUserAnswer(User u)
+    {
+        Intent intent = new Intent(INTENT_USER);
+        intent.putExtra("User", u);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 

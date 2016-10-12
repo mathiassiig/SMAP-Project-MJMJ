@@ -55,8 +55,9 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if(pref.getBoolean("isloggedin",false)) {
-            LogIn(pref.getInt("aId",0));
+        if(pref.getAll()!=null) {
+            String apId = pref.getString("aId","");
+
         }
         super.onResume();
     }
@@ -107,7 +108,6 @@ public class ApartmentLogIn extends AppCompatActivity {
     public void LogIn(int apartment_id)
     {
         prefEditor.putInt("aId",apartment_id);
-        prefEditor.putBoolean("isloggedin",true);
         prefEditor.apply();
         Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);

@@ -1,13 +1,18 @@
 package examproject.group22.roominator;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,14 +45,7 @@ public class ResponseParser
             for (int i = 0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
-                String name = object.getString("Name");
-                String pass = "";
-                int id = object.getInt("Id");
-                if(withPass)
-                    pass = object.getString("Pass");
-                User u = new User(name, pass, null);
-                u.id = id;
-                usersArray.add(u);
+                usersArray.add(parseOneUser(object, withPass));
             }
         }
         catch(JSONException e)
@@ -55,6 +53,26 @@ public class ResponseParser
             e.printStackTrace();
         }
         return usersArray;
+    }
+
+    public User parseOneUser(String response, boolean withPass) throws JSONException
+    {
+        return parseOneUser(new JSONObject(response), withPass);
+    }
+
+    private User parseOneUser(JSONObject object, boolean withPass) throws JSONException
+    {
+        User u = null;
+        String name = object.getString("Name");
+        String pass = "";
+        int id = object.getInt("Id");
+        if (withPass)
+            pass = object.getString("Pass");
+        int apartmentId = object.getInt("ApartmentID");
+        u = new User(name, pass, null);
+        u.ApartmentID = apartmentId;
+        u.id = id;
+        return u;
     }
 
     public Apartment ParseSingleApartmentNoGroceries(JSONObject object)
@@ -127,6 +145,25 @@ public class ResponseParser
         }
         return a;
     }
+
+
+    // http://stackoverflow.com/questions/20700181/convert-imageview-in-bytes-android
+    private byte[] convertBitmapToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream BAPS = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, BAPS);
+        byte[] byteArray = BAPS.toByteArray();
+        return  byteArray;
+    }
+
+    // http://stackoverflow.com/questions/11613594/android-how-to-convert-byte-array-to-bitmap
+    private Bitmap convertByteArrayToBitmap(Blob bytes) throws SQLException {
+        byte[] image = bytes.getBytes(0, (int) bytes.length()); //Convert blob to bytearray
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length, options); //Convert bytearray to bitmap
+        bytes.free();
+        return bitmap;
+    }
+
 
     private Timestamp GetTimestampFromString(String string) throws ParseException {
         //String replaced = string.replace('T',' ');
