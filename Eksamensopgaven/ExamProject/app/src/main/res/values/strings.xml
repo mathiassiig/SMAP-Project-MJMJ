@@ -4,8 +4,8 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Log ind</string>
-    <string name="action_sign_in_short">Log ind</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Login</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -19,47 +19,44 @@
     <string name="title_activity_overview">OverviewActivity</string>
 
     <!-- Strings related to addProduct -->
-    <string name="addproduct_txtName">Produkt:</string>
-    <string name="addproduct_txtNumber">Antal:</string>
-    <string name="addproduct_txtPrice">Pris:</string>
+    <string name="addproduct_txtName">Product:</string>
+    <string name="addproduct_txtPrice">Price:</string>
 
     <!-- Strings related to buyProduct -->
-    <string name="buyproduct_txtName">Produkt:</string>
-    <string name="buyproduct_txtNumber">Antal:</string>
-    <string name="buyproduct_txtPrice">Pris:</string>
-    <string name="buyproduct_btnTotal">Udregn beløb</string>
-    <string name="buyproduct_txt_Total">Total</string>
+    <string name="buyproduct_txtName">Product:</string>
+    <string name="buyproduct_txtPrice">Price:</string>
+    <string name="buyproduct_etPrice">Insert price</string>
 
     <!-- Strings related to customUser -->
-    <string name="customUser_txtName">Navn</string>
+    <string name="customUser_txtName">Name</string>
     <string name="customUser_txtTotal">Total</string>
-    <string name="action_sign_up">Opret ny bruger</string>
+    <string name="action_sign_up">Create new user</string>
 
     <!-- Strings related to overviewActivity -->
-    <string name="overview_btnShoppinglist">Indkøbsliste</string>
-    <string name="overview_btnUserList">Oversigt</string>
-    <string name="overview_btnUserProfile">Profil</string>
+    <string name="overview_btnShoppinglist">Shopping list</string>
+    <string name="overview_btnUserList">Overview</string>
+    <string name="overview_btnUserProfile">Profile</string>
 
     <!-- Strings related to deleteUserFragment -->
-    <string name="dialog_user_title">Vil du slette brugeren?</string>
-    <string name="dialog_user_message">Brugerens data vil blive slettet permanent.</string>
-    <string name="dialog_user_btnCancel">Annuller</string>
+    <string name="dialog_user_title">Do you want to delete user?</string>
+    <string name="dialog_user_message">The users data will be deleted permanently</string>
+    <string name="dialog_user_btnCancel">Cancel</string>
     <string name="dialog_user_btnOK">OK</string>
-    <string name="dialog_user_deleted">Brugeren er slettet</string>
+    <string name="dialog_user_deleted">The user is deleted</string>
 
     <!-- Strings related to deleteProductFragment -->
-    <string name="dialog_product_message">Vil du slette varen?</string>
-    <string name="dialog_product_btnCancel">Annuller</string>
+    <string name="dialog_product_message">Do you want to delete the product?</string>
+    <string name="dialog_product_btnCancel">Cancel</string>
     <string name="dialog_product_btnOK">OK</string>
-    <string name="dialog_product_deleted">Varen er slettet</string>
+    <string name="dialog_product_deleted">The product is deleted</string>
 
     <!-- Strings related to ProfileFragment -->
-    <string name="profile_lbName">"Navn: "</string>
+    <string name="profile_lbName">Name:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signUp_password">Password</string>
-    <string name="signUp_create_button">Opret</string>
+    <string name="signUp_create_button">Create</string>
 
     <string-array name="product_names">
         <item>Skraldeposer</item>
@@ -77,6 +74,8 @@
         <item>5</item>
         <item>5</item>
     </string-array>
-    <string name="apartment_name">Navn</string>
+    <string name="apartment_name">Name</string>
+    <string name="addproduct_txtNumber">Pieces</string>
+
     <string name="menu_action_logout">Log ud</string>
 </resources>

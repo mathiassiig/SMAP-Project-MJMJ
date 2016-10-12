@@ -12,7 +12,7 @@ namespace RoomienatorWeb.Models
         public string Pass { get; set; }
         public byte[] Avatar { get; set; }
 
-        public Nullable<int> ApartmentID { get; set; }
+        public int? ApartmentID { get; set; }
         [JsonIgnore]
         public virtual Apartment Apartment { get; set; }
     }

@@ -54,27 +54,14 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onResume() {
        String stringpref =  pref.getAll().toString();
-        Log.v("Debug", String.valueOf(pref.getBoolean("isloggedin",false)));
-        if(pref.getBoolean("isloggedin",false)) {
-            Intent isloggedin = new Intent(LoginActivity.this, ApartmentLogIn.class);
-            startActivity(isloggedin);
-            finish();
+        //Log.v("Debug", String.valueOf(pref.getBoolean("isloggedin",false)));
+        if(pref.getBoolean("isloggedin",false))
+        {
+            String tryusername = pref.getString("name", "default");
+            String trypassword = pref.getString("password", "default");
+            tryLoginLogic(tryusername, trypassword);
         }
         super.onResume();
-    }
-
-    private  boolean checkInternetConnection(){
-        boolean isconnected;
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            isconnected = true;
-            return isconnected;
-        } else {
-            isconnected=false;
-            return isconnected;
-        }
     }
 
     public void tryLogin(View view)
@@ -86,7 +73,12 @@ public class LoginActivity extends AppCompatActivity
         else if(password.equals(""))
             LoginError("Password must be at least 1 character"); //TODO: Externalize
         else
-            db.get_checkPassWithUsername(username, password);
+            tryLoginLogic(username, password);
+    }
+
+    private void tryLoginLogic(String username, String password)
+    {
+        db.get_checkPassWithUsername(username, password);
     }
 
     public void LoginError(String error)

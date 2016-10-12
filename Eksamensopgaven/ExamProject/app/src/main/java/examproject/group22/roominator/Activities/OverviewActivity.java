@@ -1,10 +1,14 @@
 package examproject.group22.roominator.Activities;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,6 +19,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -30,8 +35,10 @@ import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.NotificationService;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
+import examproject.group22.roominator.NotificationService.LocalBinder;
 
 // KILDER:
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
@@ -47,7 +54,10 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public ArrayList<GroceryItem> unBoughts;
     public User currentUser;
     public DatabaseService db;
-    private Button btnLogout;
+
+
+    public NotificationService notificationService;
+    boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,16 +68,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         SetupData();
-
-        /*btnLogout = (Button) findViewById(R.id.action_logout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                //Intent logoutIntent = new Intent(OverviewActivity.this, LoginActivity.class);
-                //startActivity(logoutIntent);
-            }
-        });*/
+        startNotificationService();
     }
 
     @Override
@@ -82,9 +83,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
         int id = item.getItemId();
 
-        if(id==R.id.action_logout){
+        if (id == R.id.action_logout) {
 
-            SharedPreferences preferences = getSharedPreferences("LoginPrefs",Context.MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
             editor.commit();
@@ -96,11 +97,25 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         return super.onOptionsItemSelected(item);
     }
 
+    public void startNotificationService(){
+        Intent notificationService = new Intent(OverviewActivity.this, NotificationService.class);
+        startService(notificationService);
+        Log.v("Debug","Overview has started NotifacationService");
+    }
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
+
+            /// gemmer til sharedpreferences
+            SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
+            SharedPreferences.Editor prefEditor = sharedPref.edit();
+            for (GroceryItem g:a.groceries) {
+                prefEditor.putInt(Integer.toString(g.id),g.buyerID);
+            }
+            prefEditor.apply();
+            ///
             currentApartment = a;
             unBoughts = new ArrayList<>();
             FilterGroceries();
@@ -226,4 +241,19 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     {
         super.onDestroy();
     }
+
+   /* private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service)
+        {
+            LocalBinder binder = (LocalBinder) service;
+            notificationService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };*/
 }
