@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -11,8 +12,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,6 +47,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public ArrayList<GroceryItem> unBoughts;
     public User currentUser;
     public DatabaseService db;
+    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,10 +55,45 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         SetupData();
+
+        /*btnLogout = (Button) findViewById(R.id.action_logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //Intent logoutIntent = new Intent(OverviewActivity.this, LoginActivity.class);
+                //startActivity(logoutIntent);
+            }
+        });*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_overview, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.action_logout){
+
+            SharedPreferences preferences = getSharedPreferences("LoginPrefs",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+
+            Intent logoutIntent = new Intent(OverviewActivity.this, LoginActivity.class);
+            startActivity(logoutIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
