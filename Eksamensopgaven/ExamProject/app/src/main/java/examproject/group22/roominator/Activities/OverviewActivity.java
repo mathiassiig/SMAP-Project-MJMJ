@@ -21,6 +21,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.logging.Filter;
+
 import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Fragments.DeleteProductFragment;
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
@@ -28,6 +31,7 @@ import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Fragments.ProfileFragment;
 import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
@@ -45,6 +49,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     private static final int REQUEST_IMG_ACTIVITY = 100;
     private static final int REQUEST_PERMISSION_CAM = 200;
     public Apartment currentApartment;
+    public ArrayList<GroceryItem> unBoughts;
     public User currentUser;
     public DatabaseService db;
 
@@ -65,14 +70,27 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
             currentApartment = a;
+            unBoughts = new ArrayList<>();
+            FilterUnboughts();
             SetUpGui();
         }
     };
 
+    private void FilterUnboughts()
+    {
+        for (GroceryItem g: currentApartment.groceries)
+        {
+            if(g.boughtStamp == null)
+            {
+                unBoughts.add(g);
+            }
+        }
+    }
+
     private void SetUpGui()
     {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, currentApartment);
+        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, unBoughts, currentApartment.users);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -109,12 +127,10 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onGroceryItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent buyIntent = new Intent(OverviewActivity.this, BuyProductActivity.class);
-        //String messageproduct = Products[position];
-        //int messagenumber = Integer.parseInt(Number[position]);
-        buyIntent.putExtra("productnumber", position);
-        Toast.makeText(this, "Grocery clicked",Toast.LENGTH_LONG).show();
-        startActivity(buyIntent);
 
+        buyIntent.putExtra("groceryItem", unBoughts.get(position));
+        buyIntent.putExtra("potentialBuyer", currentUser);
+        startActivity(buyIntent);
     }
 
     @Override
@@ -127,6 +143,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onFABClick(View view) {
         Intent addIntent = new Intent(OverviewActivity.this, AddProductActivity.class);
+        addIntent.putExtra("ApartmentID", currentApartment.id);
         Toast.makeText(this, "Add clicked",Toast.LENGTH_LONG).show();
         startActivity(addIntent);
     }

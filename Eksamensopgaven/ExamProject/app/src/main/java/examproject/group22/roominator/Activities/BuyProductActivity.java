@@ -11,6 +11,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 public class BuyProductActivity extends AppCompatActivity {
@@ -31,27 +33,22 @@ public class BuyProductActivity extends AppCompatActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-
-        if(bundle.getString("productname")!= null)
-        {
-            TextviewProductName.setText("Produkt: " + bundle.getString("productname"));
-        }else{
-            Toast.makeText(this, "Send data med fra liste",Toast.LENGTH_SHORT).show();}
-
+        final GroceryItem i = (GroceryItem)bundle.getSerializable("groceryItem");
+        final User u = (User)bundle.getSerializable("potentialBuyer");
+        TextviewProductName.setText(i.name);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_buy);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RemoveFromDB();
+                BuyCurrent(i, u);
             }
         });
     }
 
-    private void RemoveFromDB() {
-        Toast.makeText(this, "Remove from DB", Toast.LENGTH_LONG).show();
-        //   Intent addIntent = new Intent(BuyProductActivity.this, OverviewActivity.class);
-        //   startActivity(addIntent);
+    private void BuyCurrent(GroceryItem i, User buyer)
+    {
+
     }
 
 

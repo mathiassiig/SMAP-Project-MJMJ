@@ -94,10 +94,10 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
 
 
         Bundle b = getArguments();
-        Apartment apartment = (Apartment)b.getSerializable("apartment");
+        ArrayList<GroceryItem> unboughts = (ArrayList<GroceryItem>)b.getSerializable("unboughts");
 
 
-        G_adapter = new GroceryItemAdapter(getContext(), apartment.groceries);
+        G_adapter = new GroceryItemAdapter(getContext(), unboughts);
         listView.setAdapter(G_adapter);
         listView.setOnItemClickListener(this);
 

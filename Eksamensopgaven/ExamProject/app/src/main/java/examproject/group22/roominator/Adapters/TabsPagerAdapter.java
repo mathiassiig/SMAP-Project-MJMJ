@@ -6,10 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
 import examproject.group22.roominator.Fragments.ProfileFragment;
 import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 /**
@@ -23,11 +28,13 @@ import examproject.group22.roominator.R;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
-    Apartment currentApartment;
-    public TabsPagerAdapter(FragmentManager fragmentManager, Context context, Apartment a){
+    ArrayList<GroceryItem> unboughts;
+    ArrayList<User> users;
+    public TabsPagerAdapter(FragmentManager fragmentManager, Context context, ArrayList<GroceryItem> unboughts, ArrayList<User> users){
         super(fragmentManager);
         this.context = context;
-        currentApartment = a;
+        this.unboughts = unboughts;
+        this.users = users;
     }
 
     @Override
@@ -41,13 +48,13 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 ProductListFragment plf = new ProductListFragment();
                 Bundle b1 = new Bundle();
-                b1.putSerializable("apartment", currentApartment);
+                b1.putSerializable("unboughts", unboughts);
                 plf.setArguments(b1);
                 return plf;
             case 1:
                 UsersFragment uf = new UsersFragment();
                 Bundle b2 = new Bundle();
-                b2.putSerializable("apartment", currentApartment);
+                b2.putSerializable("users", users);
                 uf.setArguments(b2);
                 return uf;
             default:

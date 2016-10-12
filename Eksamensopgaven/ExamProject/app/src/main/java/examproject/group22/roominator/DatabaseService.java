@@ -22,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -260,20 +260,21 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void post_NewGrocery(final GroceryItem i)
+    public void post_NewGrocery(final String name, final Timestamp creation, final int apartmentID)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES;
         Map<String,String> params = new HashMap<String, String>();
-        params.put("Name", i.name);
-        params.put("Creation", parser.TIME_FORMAT.format(i.creationStamp));
-        params.put("ApartmentID", Integer.toString(i.apartmentID));
+        params.put("Name", name);
+        params.put("Creation", parser.TIME_FORMAT.format(creation));
+        params.put("ApartmentID", Integer.toString(apartmentID));
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response)
                     {
                         //TODO: ja det gik fint du hej
+                        //Opdater Overview?
                     }
                 }, new Response.ErrorListener() {
                     @Override

@@ -85,11 +85,11 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
         Bundle b = getArguments();
-        Apartment apartment = (Apartment)b.getSerializable("apartment");
+        ArrayList<User> users = (ArrayList<User> )b.getSerializable("users");
 
 
         listView = (ListView) view.findViewById(R.id.overviewList);
-        userAdapter = new UserInfoAdapter(this.getContext(),apartment.users);
+        userAdapter = new UserInfoAdapter(this.getContext(),users);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);

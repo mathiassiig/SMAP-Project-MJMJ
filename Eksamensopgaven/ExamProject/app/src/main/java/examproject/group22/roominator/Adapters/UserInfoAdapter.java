@@ -45,29 +45,6 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
 
         return convertView;
     }
-    /*
-   public UserInfoAdapter(Context context, String[] names)
-   {
-       super(context, 0, names);
-   }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
-        if(convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_users, parent, false);
-
-        String name = getItem(position);
-
-        TextView txtName= (TextView) convertView.findViewById(R.id.customUser_txtName);
-        ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
-
-        txtName.setText(name);
-        imgUser.setImageResource(R.drawable.img_placeholder);
-
-        return convertView;
-    }*/
 
 
 }

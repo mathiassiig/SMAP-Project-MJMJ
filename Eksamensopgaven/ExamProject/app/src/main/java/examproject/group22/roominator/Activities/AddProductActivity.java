@@ -11,11 +11,17 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import examproject.group22.roominator.DatabaseService;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
 
 public class AddProductActivity extends AppCompatActivity {
 
     private EditText EditTextProduct;
+    public int ApartmentID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,8 @@ public class AddProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Intent i = getIntent();
+        ApartmentID = i.getIntExtra("ApartmentID", 0);
 
         EditTextProduct = (EditText)findViewById(R.id.addproduct_etName);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
@@ -35,13 +43,15 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void saveProductToDB() {
-        if (EditTextProduct.getText().toString().trim().length() != 0) {
-            Toast.makeText(this, "Save to DB", Toast.LENGTH_LONG).show();
-            //   Intent addIntent = new Intent(AddProductActivity.this, OverviewActivity.class);
-            //   startActivity(addIntent);
+        if (EditTextProduct.getText().toString().trim().length() != 0)
+        {
+            String name = EditTextProduct.getText().toString();
+            Timestamp creation = new Timestamp(new Date().getTime());
+            DatabaseService.getInstance(getApplicationContext()).post_NewGrocery(name, creation, ApartmentID);
         }
-        else{
-            Toast.makeText(this, "Udfyld produkt", Toast.LENGTH_LONG).show();
+        else
+        {
+            Toast.makeText(this, "Udfyld produkt", Toast.LENGTH_LONG).show(); //TODO: Externalize
 
         }
     }
