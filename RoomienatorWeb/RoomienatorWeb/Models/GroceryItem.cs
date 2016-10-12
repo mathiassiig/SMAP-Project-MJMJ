@@ -14,10 +14,10 @@ namespace RoomienatorWeb.Models
         public string Name { get; set; }
         public int Price { get; set; }
 
-        public DateTime Creation { get; set; }
-        public DateTime Bought { get; set; }
+        public DateTime? Creation { get; set; }
+        public DateTime? Bought { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         [JsonIgnore]
         public virtual User User { get; set; }
 

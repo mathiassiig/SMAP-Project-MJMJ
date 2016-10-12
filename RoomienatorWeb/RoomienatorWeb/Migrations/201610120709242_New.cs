@@ -3,7 +3,7 @@ namespace RoomienatorWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class test2 : DbMigration
+    public partial class New : DbMigration
     {
         public override void Up()
         {
@@ -24,14 +24,14 @@ namespace RoomienatorWeb.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Price = c.Int(nullable: false),
-                        Creation = c.DateTime(nullable: false),
-                        Bought = c.DateTime(nullable: false),
-                        UserId = c.Int(nullable: false),
+                        Creation = c.DateTime(),
+                        Bought = c.DateTime(),
+                        UserId = c.Int(),
                         ApartmentID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Apartments", t => t.ApartmentID, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId)
                 .Index(t => t.ApartmentID);
             

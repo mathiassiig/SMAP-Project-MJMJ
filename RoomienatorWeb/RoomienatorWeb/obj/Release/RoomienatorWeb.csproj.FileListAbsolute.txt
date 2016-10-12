@@ -56,5 +56,5 @@ C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\bin\S
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Release\RoomienatorWeb.csprojResolveAssemblyReference.cache
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Release\RoomienatorWeb.dll
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Release\RoomienatorWeb.pdb
-C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Release\RoomienatorWeb.Migrations.test2.resources
 C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Release\RoomienatorWeb.csproj.GenerateResource.Cache
+C:\Users\Mathias\Documents\SMAP-Project-MJMJ\RoomienatorWeb\RoomienatorWeb\obj\Release\RoomienatorWeb.Migrations.New.resources
