@@ -333,9 +333,13 @@ public class DatabaseService{
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+i.id;
         Map<String,String> params = new HashMap<String, String>();
+        params.put("Id", Integer.toString(i.id));
+        params.put("Name", i.name);
         params.put("Price", Integer.toString(i.price));
+        params.put("Creation", parser.TIME_FORMAT.format(i.creationStamp));
         params.put("Bought", parser.TIME_FORMAT.format(i.boughtStamp));
         params.put("UserId", Integer.toString(i.buyerID));
+        params.put("ApartmentID", Integer.toString(i.apartmentID));
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
