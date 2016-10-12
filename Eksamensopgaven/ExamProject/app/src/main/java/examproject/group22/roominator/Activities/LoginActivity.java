@@ -34,6 +34,8 @@ import examproject.group22.roominator.R;
  */
 public class LoginActivity extends AppCompatActivity
 {
+
+    public static final int SIGUN_REQUEST_CODE = 1;
     SharedPreferences pref;
     SharedPreferences.Editor prefEditor;
     EditText txtUsername;
@@ -53,10 +55,11 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-       String stringpref =  pref.getAll().toString();
-        //Log.v("Debug", String.valueOf(pref.getBoolean("isloggedin",false)));
-        if(pref.getBoolean("isloggedin",false))
+        if(pref.getAll()!=null)
         {
+            txtPassword.setText(pref.getString("password","default").toString());
+            txtUsername.setText(pref.getString("name", "default").toString());
+
             String tryusername = pref.getString("name", "default");
             String trypassword = pref.getString("password", "default");
             tryLoginLogic(tryusername, trypassword);
@@ -96,7 +99,9 @@ public class LoginActivity extends AppCompatActivity
                 loggedInIntent.putExtra("User", u);
                 prefEditor.putString("name",u.name);
                 prefEditor.putString("password", u.password);
-                prefEditor.putBoolean("isloggedin", true);
+
+
+                //prefEditor.putBoolean("isloggedin", true);
                 prefEditor.apply();
                 startActivity(loggedInIntent);
                 finish();
@@ -105,5 +110,21 @@ public class LoginActivity extends AppCompatActivity
                 LoginError("Username and password did not match, perhaps the user doesn't exist.");
         }
     };
+    public void signUp(View view){
+        Intent signUpIntent = new Intent(LoginActivity.this, SignUpActivity.class);
+        signUpIntent.putExtra("name",txtUsername.getText());
+        signUpIntent.putExtra("pass",txtPassword.getText());
+        startActivityForResult(signUpIntent,SIGUN_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == SIGUN_REQUEST_CODE){
+            if(resultCode==RESULT_OK) {
+                tryLoginLogic(data.getStringExtra("name"), data.getStringExtra("password"));
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
 

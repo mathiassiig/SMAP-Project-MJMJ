@@ -53,5 +53,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/btnLogin"
         android:layout_alignStart="@+id/btnLogin"
-        android:id="@+id/btnSignup" />
+        android:id="@+id/btnSignup"
+        android:onClick="signUp"/>
 </RelativeLayout>
