@@ -35,21 +35,19 @@ public class DetailListAdapter extends ArrayAdapter<GroceryItem>
     }
 
     DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
-    @NonNull
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         final GroceryItem grocery = getItem(position);
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_details, parent, false);
-        if(grocery != null) {
-            TextView txtName = (TextView) convertView.findViewById(R.id.detail_name);
-            TextView txtPrice = (TextView) convertView.findViewById(R.id.detail_price);
-            TextView txtDate = (TextView) convertView.findViewById(R.id.detail_buyDate);
-            txtName.setText(grocery.name);
-            txtPrice.setText(Integer.toString(grocery.price));
-            txtDate.setText(dateOnly.format(grocery.boughtStamp));
-        }
+        TextView txtName = (TextView) convertView.findViewById(R.id.detail_name);
+        TextView txtPrice = (TextView) convertView.findViewById(R.id.detail_price);
+        TextView txtDate = (TextView) convertView.findViewById(R.id.detail_buyDate);
+        txtName.setText(grocery.name);
+        txtPrice.setText(Integer.toString(grocery.price));
+        txtDate.setText(dateOnly.format(grocery.boughtStamp));
         return convertView;
     }
 }
