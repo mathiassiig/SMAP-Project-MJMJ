@@ -168,13 +168,12 @@ public class DatabaseService{
     private void sendApartmentAuthenticationAnswer(Apartment apartment, boolean passWordOk)
     {
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
-        if(apartment != null) {
-            intent.putExtra("apartmentID", apartment.id);
-        }
-        else
+        int apartmentID = 0;
+        if(apartment != null)
         {
-            intent.putExtra("apartmentID", 0);
+            apartmentID = apartment.id;
         }
+        intent.putExtra("apartmentID", apartmentID);
         intent.putExtra("apartmentOK", passWordOk);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
