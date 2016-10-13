@@ -1,29 +1,21 @@
 package examproject.group22.roominator.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import examproject.group22.roominator.Activities.BuyProductActivity;
-import examproject.group22.roominator.Activities.OverviewActivity;
 import examproject.group22.roominator.Adapters.GroceryItemAdapter;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.Adapters.ShoppingListAdapter;
-import examproject.group22.roominator.ShoppingListProvider;
 
 
 /**

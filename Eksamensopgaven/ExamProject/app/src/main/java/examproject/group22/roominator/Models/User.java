@@ -9,25 +9,25 @@ import java.util.ArrayList;
  * Created by jeppemalmberg on 06/10/2016.
  */
 
-public class UserModel implements Serializable {
+public class User implements Serializable {
 
     public String name;
     public String password;
     public Bitmap image;
-    public ArrayList<GroceryItemModel> boughtByUser;
+    public ArrayList<GroceryItem> boughtByUser;
     public int ApartmentID;
     public int id;
 
-    public UserModel(String name, String password, Bitmap image) {
+    public User(String name, String password, Bitmap image) {
         this.name = name;
         this.password = password;
         this.image = image;
     }
 
-    public static int Total(ArrayList<GroceryItemModel> groceries)
+    public static int Total(ArrayList<GroceryItem> groceries)
     {
         int total = 0;
-        for(GroceryItemModel g : groceries)
+        for(GroceryItem g : groceries)
         {
             total += g.price;
         }

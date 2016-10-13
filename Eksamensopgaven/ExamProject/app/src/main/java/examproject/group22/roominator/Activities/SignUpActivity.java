@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import examproject.group22.roominator.DatabaseService;
-import examproject.group22.roominator.Models.UserModel;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
             String n = name.getText().toString();
             String p = password.getText().toString();
             Bitmap img = photo;
-            UserModel u = new UserModel(n, p, img);
+            User u = new User(n, p, img);
             db.try_AddingNewUser(u);
 
     }

@@ -7,15 +7,15 @@ import java.util.ArrayList;
  * Created by Mathias on 08-Oct-16.
  */
 
-public class ApartmentModel implements Serializable{
+public class Apartment implements Serializable{
 
     public int id;
     public String name;
     public String password;
-    public ArrayList<GroceryItemModel> groceries;
-    public ArrayList<UserModel> users;
+    public ArrayList<GroceryItem> groceries;
+    public ArrayList<User> users;
 
-    public ApartmentModel(String name, String password)
+    public Apartment(String name, String password)
     {
         this.name = name;
         this.password = password;

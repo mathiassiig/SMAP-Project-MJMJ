@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import examproject.group22.roominator.DatabaseService;
-import examproject.group22.roominator.Models.UserModel;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 //import examproject.group22.roominator.DatabaseService.LocalBinder;
 
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private void save_to_sp(UserModel u)
+    private void save_to_sp(User u)
     {
         prefEditor.putString("name",u.name);
         prefEditor.putString("password", u.password);
@@ -89,11 +89,11 @@ public class LoginActivity extends AppCompatActivity
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            UserModel u = (UserModel)intent.getSerializableExtra("UserModel");
+            User u = (User)intent.getSerializableExtra("User");
             if(u != null)
             {
                 Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLoginActivity.class);
-                loggedInIntent.putExtra("UserModel", u);
+                loggedInIntent.putExtra("User", u);
                 //save_to_sp(u);
                 startActivity(loggedInIntent);
                 finish();

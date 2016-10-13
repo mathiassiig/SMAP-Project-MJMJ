@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * Created by Mathias on 08-Oct-16.
  */
 
-public class GroceryItemModel implements Serializable
+public class GroceryItem implements Serializable
 {
     public int id;
     public String name;
@@ -20,7 +20,7 @@ public class GroceryItemModel implements Serializable
     public int buyerID;
     public int apartmentID;
 
-    public GroceryItemModel(int id, String name, int price, Timestamp creationStamp, int apartmentId)
+    public GroceryItem(int id, String name, int price, Timestamp creationStamp, int apartmentId)
     {
         this.id = id;
         this.name = name;

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Fragments.DetailFragment;
-import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
 
 public class DetailActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener {
@@ -19,7 +19,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent i = getIntent();
-        ArrayList<GroceryItemModel> items = (ArrayList<GroceryItemModel>)i.getSerializableExtra("groceries");
+        ArrayList<GroceryItem> items = (ArrayList<GroceryItem>)i.getSerializableExtra("groceries");
         if(items == null)
             items = new ArrayList<>();
 

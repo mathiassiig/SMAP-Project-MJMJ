@@ -13,8 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Adapters.DetailListAdapter;
-import examproject.group22.roominator.Models.GroceryItemModel;
-import examproject.group22.roominator.Models.UserModel;
+import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 /**
@@ -78,10 +78,10 @@ public class DetailFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.detailList);
 
         Bundle b = getArguments();
-        ArrayList<GroceryItemModel> groceries = (ArrayList<GroceryItemModel>)b.getSerializable("groceries");
+        ArrayList<GroceryItem> groceries = (ArrayList<GroceryItem>)b.getSerializable("groceries");
         detailListAdapter = new DetailListAdapter(getContext(), groceries);
         listView.setAdapter(detailListAdapter);
-        int total = UserModel.Total(groceries);
+        int total = User.Total(groceries);
         TextView txtTotal = (TextView) view.findViewById(R.id.detail_total);
         txtTotal.setText(Integer.toString(total));
         return view;

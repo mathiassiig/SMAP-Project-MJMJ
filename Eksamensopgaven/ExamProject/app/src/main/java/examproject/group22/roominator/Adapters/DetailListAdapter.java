@@ -11,7 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
 
 
@@ -19,10 +19,10 @@ import examproject.group22.roominator.R;
  * Created by Maria Dam on 10-10-2016.
  */
 
-public class DetailListAdapter extends ArrayAdapter<GroceryItemModel>
+public class DetailListAdapter extends ArrayAdapter<GroceryItem>
 {
-    ArrayList<GroceryItemModel> groceryItems;
-    public DetailListAdapter(Context context, ArrayList<GroceryItemModel> groceryItems)
+    ArrayList<GroceryItem> groceryItems;
+    public DetailListAdapter(Context context, ArrayList<GroceryItem> groceryItems)
     {
         super(context, 0, groceryItems);
         this.groceryItems = groceryItems;
@@ -33,7 +33,7 @@ public class DetailListAdapter extends ArrayAdapter<GroceryItemModel>
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        final GroceryItemModel grocery = getItem(position);
+        final GroceryItem grocery = getItem(position);
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_details, parent, false);
         TextView txtName = (TextView) convertView.findViewById(R.id.detail_name);
