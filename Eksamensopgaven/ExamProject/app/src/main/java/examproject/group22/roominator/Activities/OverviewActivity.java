@@ -133,6 +133,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             setTitle(currentApartment.name + " - " + currentUser.name);
             SetUpGui();
             UpdateUserFragment(currentApartment.users);
+            UpdateGroceriesFragment(unBoughts);
         }
     };
     public static final String INTENT_UPDATE_USERS_FRAGMENT = "updateUsersFragment";

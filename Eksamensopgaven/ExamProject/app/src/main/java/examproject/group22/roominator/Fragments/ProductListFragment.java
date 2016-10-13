@@ -1,9 +1,13 @@
 package examproject.group22.roominator.Fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +16,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import examproject.group22.roominator.Activities.OverviewActivity;
 import examproject.group22.roominator.Adapters.GroceryItemAdapter;
+import examproject.group22.roominator.Adapters.UserInfoAdapter;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 
@@ -35,7 +42,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public Apartment currentApartment;
+    public ArrayList<GroceryItem> groceries = new ArrayList<>();
 
     FloatingActionButton fab;
     ListView listView;
@@ -46,6 +53,31 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     public ProductListFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReciever,new IntentFilter(OverviewActivity.INTENT_UPDATE_GROCERIES_FRAGMENT));
+    }
+
+    @Override
+    public void onPause()
+    {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReciever);
+        super.onPause();
+    }
+
+    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            groceries.clear();
+            ArrayList<GroceryItem> allGroceries = (ArrayList<GroceryItem>) intent.getSerializableExtra("groceries");
+            groceries.addAll(allGroceries);
+            ((GroceryItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
+    };
 
     /**
      * Use this factory method to create a new instance of
@@ -87,10 +119,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
 
         listView = (ListView) view.findViewById(R.id.ProductListView);
 
-        //Bundle b = getArguments();
-        //ArrayList<GroceryItem> unboughts = (ArrayList<GroceryItem>)b.getSerializable("unboughts");
-
-        G_adapter = new GroceryItemAdapter(getContext(), new ArrayList<GroceryItem>());
+        G_adapter = new GroceryItemAdapter(getContext(), groceries);
         listView.setAdapter(G_adapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);

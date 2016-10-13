@@ -122,18 +122,10 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
 
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-        ArrayList<Integer> totals = new ArrayList<>();
-
-        for(User u : users)
-        {
-            int total = User.Total(u.boughtByUser);
-            totals.add(total);
-        }
-
-
         txtview_Total = (TextView)view.findViewById(R.id.customUser_txtTotal);
         listView = (ListView) view.findViewById(R.id.overviewList);
-        userAdapter = new UserInfoAdapter(this.getContext(),users);
+
+        userAdapter = new UserInfoAdapter(getContext(),users);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
