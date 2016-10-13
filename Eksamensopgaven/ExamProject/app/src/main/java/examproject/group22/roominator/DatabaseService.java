@@ -58,15 +58,6 @@ public class DatabaseService{
 
     private Context current_context;
     public  ResponseParser parser;
-    //private final IBinder binder = new LocalBinder();
-
-    /*
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Log.v("Debug", "onCreate service called");
-        return super.onStartCommand(intent, flags, startId);
-    }*/
 
     private static DatabaseService instance;
     protected DatabaseService(Context c)

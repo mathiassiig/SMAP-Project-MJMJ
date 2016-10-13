@@ -95,10 +95,10 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
 
         listView = (ListView) view.findViewById(R.id.ProductListView);
 
-        Bundle b = getArguments();
-        ArrayList<GroceryItem> unboughts = (ArrayList<GroceryItem>)b.getSerializable("unboughts");
+        //Bundle b = getArguments();
+        //ArrayList<GroceryItem> unboughts = (ArrayList<GroceryItem>)b.getSerializable("unboughts");
 
-        G_adapter = new GroceryItemAdapter(getContext(), unboughts);
+        G_adapter = new GroceryItemAdapter(getContext(), new ArrayList<GroceryItem>());
         listView.setAdapter(G_adapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);

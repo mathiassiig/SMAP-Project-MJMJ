@@ -53,7 +53,8 @@ public class NotificationService extends Service {
         Log.v("Debug","NotificationService has started");
         checkDataBase();
         apartment_id = intent.getIntExtra("apartmentID", 0);
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
+        //return super.onStartCommand(intent, flags, startId);
     }
 
     public void setUpAlarm() {
@@ -71,14 +72,14 @@ public class NotificationService extends Service {
     {
         Log.v("Service","Comparing results");
         sharedPref = NotificationService.this.getSharedPreferences("Groceries", MODE_PRIVATE);
-        for (GroceryItem g : groceries) {
+        /*for (GroceryItem g : groceries) {
             int buyer = sharedPref.getInt(Integer.toString(g.id),-1);
             if(buyer==-1 || buyer != g.buyerID)
             {
                 notifyUser();
                 break;
             }
-        }
+        }*/
     }
 
     public void checkDataBase() {
