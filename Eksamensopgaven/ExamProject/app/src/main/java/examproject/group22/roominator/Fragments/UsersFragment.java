@@ -133,7 +133,7 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
 
         txtview_Total = (TextView)view.findViewById(R.id.customUser_txtTotal);
         listView = (ListView) view.findViewById(R.id.overviewList);
-        userAdapter = new UserInfoAdapter(this.getContext(),users, totals);
+        userAdapter = new UserInfoAdapter(this.getContext(),users);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
