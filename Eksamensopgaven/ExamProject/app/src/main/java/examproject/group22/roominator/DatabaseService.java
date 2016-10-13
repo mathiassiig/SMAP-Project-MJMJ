@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import examproject.group22.roominator.Activities.OverviewActivity;
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
@@ -271,7 +272,7 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        Send_GUI_UpdateRequest();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -430,8 +431,7 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
-                        //Opdater Overview?
+                        Send_GUI_UpdateRequest();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -441,6 +441,12 @@ public class DatabaseService{
                     }
         });
         queue.add(req);
+    }
+
+    private void Send_GUI_UpdateRequest()
+    {
+        Intent intent = new Intent(OverviewActivity.INTENT_UPDATE_ALL_DATA);
+        LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
     public void put_UpdateGrocery(final GroceryItem i)
@@ -491,33 +497,5 @@ public class DatabaseService{
             Log.v("Debug",e.toString());
         }
     }
-
-    /*
-    @Override
-    public void onCreate()
-    {
-        parser = new ResponseParser();
-        Log.v("Debug", "onCreate service called");
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.v("Debug", "onDestroy service called");
-        super.onDestroy();
-    }
-
-
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return binder;
-    }
-    // taget fra timens eksempel
-    public class LocalBinder extends Binder {
-        public DatabaseService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return DatabaseService.this;
-        }
-    }*/
 
 }

@@ -52,6 +52,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     int groceryPos;
     int userPos;
 
+    public static final String INTENT_UPDATE_ALL_DATA = "updateDataInOverview";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +62,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         Log.v("OverviewActivity", "OverviewActivity onCreate");
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver,new IntentFilter(INTENT_UPDATE_ALL_DATA));
         Intent i = getIntent();
         int apartmentId = i.getIntExtra("apartmentID", 0); //ikke skide fedt hvis den her er 0 :-)
         currentApartmentID = apartmentId;
@@ -114,6 +116,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         startService(notificationService);
         Log.v("Debug","Overview has started notification service");
     }
+
     private BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -134,6 +137,14 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             setTitle(currentApartment.name + " - " + currentUser.name);
             UpdateUserFragment(currentApartment.users);
             UpdateGroceriesFragment(unBoughts);
+        }
+    };
+
+    private BroadcastReceiver updateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive (Context context, Intent intent)
+        {
+            UpdateAllData(currentApartmentID);
         }
     };
     public static final String INTENT_UPDATE_USERS_FRAGMENT = "updateUsersFragment";
