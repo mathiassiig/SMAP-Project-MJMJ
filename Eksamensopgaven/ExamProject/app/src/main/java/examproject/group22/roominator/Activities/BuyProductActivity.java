@@ -29,7 +29,6 @@ public class BuyProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy_product);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         TextviewProductName = (TextView) findViewById(R.id.buyproduct_txtName);
         editTextPrice = (EditText) findViewById(R.id.buyproduct_etPrice);
 

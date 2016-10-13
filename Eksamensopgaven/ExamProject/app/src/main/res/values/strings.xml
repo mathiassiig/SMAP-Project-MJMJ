@@ -13,10 +13,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_shopping_list">ShoppingListActivity</string>
-    <string name="title_activity_add_product">AddProductActivity</string>
-    <string name="title_activity_buy_product">BuyProductActivity</string>
-    <string name="title_activity_overview">OverviewActivity</string>
+    <string name="title_activity_shopping_list">Shopping List</string>
+    <string name="title_activity_add_product">Add Product</string>
+    <string name="title_activity_buy_product">Buy Product</string>
+    <string name="title_activity_overview">Overview</string>
 
     <!-- Strings related to addProduct -->
     <string name="addproduct_txtName">Product:</string>
