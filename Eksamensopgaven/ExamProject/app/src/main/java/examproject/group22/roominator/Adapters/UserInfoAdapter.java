@@ -26,11 +26,10 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
 
     public ArrayList<User> users;
     ArrayList<Integer> totals;
-    public UserInfoAdapter(Context context, ArrayList<User> users, ArrayList<Integer> totals)
+    public UserInfoAdapter(Context context, ArrayList<User> users)
     {
         super(context, 0, users);
         this.users = users;
-        this.totals = totals;
     }
 
     @Override
@@ -45,7 +44,7 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 
         txtName.setText(user.name);
-        txtTotal.setText("Betalt: " + totals.get(position).toString());
+        txtTotal.setText("Betalt: " + User.Total(user.boughtByUser)); //TODO: Externalize
 
         if(user.image !=null) {
             imgUser.setImageBitmap(user.image);
