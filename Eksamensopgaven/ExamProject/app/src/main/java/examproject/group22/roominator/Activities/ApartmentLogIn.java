@@ -35,6 +35,7 @@ public class ApartmentLogIn extends AppCompatActivity {
     EditText password;
     DatabaseService db;
     User currentUser;
+    int aId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,16 +50,13 @@ public class ApartmentLogIn extends AppCompatActivity {
         password = (EditText)findViewById(R.id.apartment_password_txt);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
+        LocalBroadcastManager.getInstance(this).registerReceiver(userReciever,new IntentFilter(DatabaseService.INTENT_USER));
         FetchUser();
 
     }
 
     @Override
     protected void onResume() {
-        if(pref.getAll()!=null) {
-            String apId = pref.getString("aId","");
-
-        }
         super.onResume();
     }
 
@@ -82,6 +80,7 @@ public class ApartmentLogIn extends AppCompatActivity {
             LoginError("Password must be at least 1 character");
         else
             db.get_CheckPassWithApartmentName(name.getText().toString(), password.getText().toString());
+
     }
 
     public void LoginError(String error)
@@ -93,17 +92,35 @@ public class ApartmentLogIn extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            int id = intent.getIntExtra("apartmentID", 0);
+            aId = intent.getIntExtra("apartmentID", 0);
             boolean passwordOK = intent.getBooleanExtra("apartmentOK", false);
-            if(id == 0) //the apartment doesn't exist
+            if(aId == 0) //the apartment doesn't exist
                 makePopMessage();
             else if(passwordOK == false)
                 LoginError("That apartment exists, but the password is wrong!"); //TODO: Externalize
             else {
-                LogIn(id);
+                FetchUser();
+               int d =  currentUser.id;
+                db.get_user(currentUser.id);
             }
         }
     };
+   private BroadcastReceiver userReciever = new BroadcastReceiver() {
+       @Override
+       public void onReceive(Context context, Intent intent) {
+              try {
+                  User u = (User) intent.getSerializableExtra("User");
+                  if (u.ApartmentID != 0) {
+                      LogIn(u.ApartmentID);
+                  }else{
+                    db.put_userToApartment(u,aId);
+                      LogIn(aId);
+                  }
+              }catch (Exception e){
+                 Log.v("Debug",e.toString());
+              }
+       }
+   };
 
     public void LogIn(int apartment_id)
     {

@@ -55,11 +55,8 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        if(pref.getAll()!=null)
+        if(pref.getString("name","default") !="default")
         {
-            txtPassword.setText(pref.getString("password","default").toString());
-            txtUsername.setText(pref.getString("name", "default").toString());
-
             String tryusername = pref.getString("name", "default");
             String trypassword = pref.getString("password", "default");
             tryLoginLogic(tryusername, trypassword);
@@ -107,7 +104,7 @@ public class LoginActivity extends AppCompatActivity
                 finish();
             }
             else
-                LoginError("Username and password did not match, perhaps the user doesn't exist.");
+                LoginError("Username and password did not match, perhaps the user doesn't exist. ");
         }
     };
     public void signUp(View view){
