@@ -27,9 +27,9 @@ import examproject.group22.roominator.Fragments.DeleteProductFragment;
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
-import examproject.group22.roominator.Models.ApartmentModel;
-import examproject.group22.roominator.Models.GroceryItemModel;
-import examproject.group22.roominator.Models.UserModel;
+import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.NotificationService;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
@@ -44,16 +44,14 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         DeleteProductFragment.DeleteProductDialogListener{
     
     private static final int NEW_GROCERY_REQUEST = 9001;
-    public ApartmentModel currentApartment;
-    public ArrayList<GroceryItemModel> unBoughts;
-    public UserModel currentUser;
+    public Apartment currentApartment;
+    private int currentApartmentID;
+    public ArrayList<GroceryItem> unBoughts;
+    public User currentUser;
     public DatabaseService db;
     int groceryPos;
     int userPos;
 
-
-    public NotificationService notificationService;
-    boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,17 +63,23 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         Intent i = getIntent();
         int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
-        SetupData(apartmentId, i);
-        startNotificationService(apartmentId);
+        currentApartmentID = apartmentId;
+        User u = (User)i.getSerializableExtra("User");
+        currentUser = u;
+        startNotificationService(currentApartmentID);
     }
 
     @Override
     public void onResume()
     {
+        UpdateAllData(currentApartmentID);
         super.onResume();
-        Log.v("OverviewActivity", "OverviewActivity onResume");
     }
-    
+
+    public void UpdateAllData(int apartmentID)
+    {
+        db.get_Apartment(apartmentID, false);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -113,11 +117,12 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            ApartmentModel a = (ApartmentModel)intent.getSerializableExtra("apartment");
+            Apartment a = (Apartment)intent.getSerializableExtra("apartment");
             /// gemmer til sharedpreferences
             SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = sharedPref.edit();
-            for (GroceryItemModel g:a.groceries) {
+            for (GroceryItem g:a.groceries)
+            {
                 prefEditor.putInt(Integer.toString(g.id),g.buyerID);
             }
             prefEditor.apply();
@@ -127,16 +132,32 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             FilterGroceries();
             setTitle(currentApartment.name + " - " + currentUser.name);
             SetUpGui();
+            UpdateUserFragment(currentApartment.users);
         }
     };
+    public static final String INTENT_UPDATE_USERS_FRAGMENT = "updateUsersFragment";
+    private void UpdateUserFragment(ArrayList<User> users)
+    {
+        Intent intent = new Intent(INTENT_UPDATE_USERS_FRAGMENT);
+        intent.putExtra("users", users);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
+
+    public static final String INTENT_UPDATE_GROCERIES_FRAGMENT = "updateGroceriesFragment";
+    private void UpdateGroceriesFragment(ArrayList<GroceryItem> groceries)
+    {
+        Intent intent = new Intent(INTENT_UPDATE_GROCERIES_FRAGMENT);
+        intent.putExtra("groceries", groceries);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
 
     private void FilterGroceries()
     {
-        for(UserModel u: currentApartment.users)
+        for(User u: currentApartment.users)
         {
             u.boughtByUser = new ArrayList<>();
         }
-        for (GroceryItemModel g: currentApartment.groceries)
+        for (GroceryItem g: currentApartment.groceries)
         {
             int buyerid = g.buyerID;
             if(buyerid == 0)
@@ -145,15 +166,15 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             }
             else
             {
-                UserModel u = GetUserByID(buyerid);
+                User u = GetUserByID(buyerid);
                 u.boughtByUser.add(g);
             }
         }
     }
 
-    private UserModel GetUserByID(int ID)
+    private User GetUserByID(int ID)
     {
-        for(UserModel u : currentApartment.users)
+        for(User u : currentApartment.users)
         {
             if(u.id == ID)
                 return u;
@@ -161,29 +182,18 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         return null;
     }
 
-    PagerAdapter pagerAdapter;
     private void SetUpGui()
     {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, unBoughts, currentApartment.users);
+        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
     }
-
-
-    public void SetupData(int apartmentID, Intent i)
-    {
-        UserModel u = (UserModel)i.getSerializableExtra("UserModel");
-        currentUser = u;
-        db.get_Apartment(apartmentID, false);
-
-    }
-
     @Override
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
-        ArrayList<GroceryItemModel> grocieres = currentApartment.users.get(position).boughtByUser;
+        ArrayList<GroceryItem> grocieres = currentApartment.users.get(position).boughtByUser;
         detailIntent.putExtra("groceries", grocieres);
         startActivity(detailIntent);
     }
@@ -221,20 +231,20 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     @Override
     public void onUserDialogPositiveClick(DialogFragment dialog) {
-        // UserModel touched the dialog's positive button
+        // User touched the dialog's positive button
         db.delete_user(currentApartment.users.get(userPos).id);
         Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onUserDialogNegativeClick(DialogFragment dialog) {
-        // UserModel touched the dialog's negative button
+        // User touched the dialog's negative button
         //TODO Implement
     }
 
     @Override
     public void onProductDialogPositiveClick(DialogFragment dialog) {
-        // UserModel touched the dialog's positive button
+        // User touched the dialog's positive button
         //TODO Implement
         db.delete_grocery(unBoughts.get(groceryPos).id);
         Toast.makeText(this, R.string.dialog_product_deleted, Toast.LENGTH_LONG).show();
@@ -242,7 +252,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     @Override
     public void onProductDialogNegativeClick(DialogFragment dialog) {
-        // UserModel touched the dialog's negative button
+        // User touched the dialog's negative button
         // TODO Implement
     }
 

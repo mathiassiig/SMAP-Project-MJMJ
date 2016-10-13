@@ -1,6 +1,7 @@
 package examproject.group22.roominator;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -17,10 +18,12 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import examproject.group22.roominator.Activities.LoginActivity;
-import examproject.group22.roominator.Models.ApartmentModel;
-import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Activities.OverviewActivity;
+import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.GroceryItem;
 
 public class NotificationService extends Service {
     private static final int LOOP_TIME = 5;
@@ -50,7 +53,8 @@ public class NotificationService extends Service {
         Log.v("Debug","NotificationService has started");
         checkDataBase();
         apartment_id = intent.getIntExtra("apartmentID", 0);
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
+        //return super.onStartCommand(intent, flags, startId);
     }
 
     public void setUpAlarm() {
@@ -64,18 +68,18 @@ public class NotificationService extends Service {
         aManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
-    public void compareResults(ArrayList<GroceryItemModel> groceries)
+    public void compareResults(ArrayList<GroceryItem> groceries)
     {
         Log.v("Service","Comparing results");
         sharedPref = NotificationService.this.getSharedPreferences("Groceries", MODE_PRIVATE);
-        for (GroceryItemModel g : groceries) {
+        /*for (GroceryItem g : groceries) {
             int buyer = sharedPref.getInt(Integer.toString(g.id),-1);
             if(buyer==-1 || buyer != g.buyerID)
             {
                 notifyUser();
                 break;
             }
-        }
+        }*/
     }
 
     public void checkDataBase() {
@@ -110,8 +114,8 @@ public class NotificationService extends Service {
     public BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            ApartmentModel a = (ApartmentModel)intent.getSerializableExtra("apartment");
-            ArrayList<GroceryItemModel> groceries = a.groceries;
+            Apartment a = (Apartment)intent.getSerializableExtra("apartment");
+            ArrayList<GroceryItem> groceries = a.groceries;
             compareResults(groceries);
             Log.v("Debug","notifyService has recieved apartment from db");
         }
