@@ -207,8 +207,10 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         startActivity(buyIntent);
     }
 
+    int pos;
     @Override
     public void onGroceryItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        pos = position;
         DialogFragment dialog= new DeleteProductFragment();
         dialog.show(getSupportFragmentManager(),"DeleteProductDialogFragment");
     }
@@ -226,6 +228,8 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onUserDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         //TODO Implement
+        
+        db.delete_grocery(unBoughts.get(pos).id);
         Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
