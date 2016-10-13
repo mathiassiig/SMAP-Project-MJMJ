@@ -30,6 +30,7 @@ public class DeleteProductFragment extends DialogFragment {
 
     private DeleteProductDialogListener mListener;
 
+
     public DeleteProductFragment() {
         // Required empty public constructor
     }
