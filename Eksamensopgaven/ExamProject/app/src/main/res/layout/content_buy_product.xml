@@ -44,8 +44,8 @@
         android:hint="@string/buyproduct_etPrice"
         android:layout_alignBaseline="@+id/buyproduct_txtPrice"
         android:layout_alignBottom="@+id/buyproduct_txtPrice"
-        android:layout_toRightOf="@+id/buyproduct_txtName"
-        android:layout_toEndOf="@+id/buyproduct_txtName"
+        android:layout_toRightOf="@+id/buyproduct_txtPrice"
+        android:layout_toEndOf="@+id/buyproduct_txtPrice"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp" />
 
