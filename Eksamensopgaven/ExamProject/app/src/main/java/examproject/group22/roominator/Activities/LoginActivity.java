@@ -49,8 +49,11 @@ public class LoginActivity extends AppCompatActivity
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_USER_AUTHENTICATION));
+        load_from_sp();
         //load_from_sp();
+
     }
+
 
     private void load_from_sp()
     {
@@ -103,6 +106,7 @@ public class LoginActivity extends AppCompatActivity
             User u = (User)intent.getSerializableExtra("User");
             if(u != null)
             {
+                save_to_sp(u);
                 Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
                 loggedInIntent.putExtra("User", u);
                 //save_to_sp(u);

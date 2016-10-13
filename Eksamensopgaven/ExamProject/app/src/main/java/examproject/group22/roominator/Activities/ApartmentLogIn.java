@@ -49,12 +49,9 @@ public class ApartmentLogIn extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
         LocalBroadcastManager.getInstance(this).registerReceiver(userReciever,new IntentFilter(DatabaseService.INTENT_USER));
         FetchUser();
-    }
-
-    private void load_from_sp()
-    {
-        pref = ApartmentLogIn.this.getPreferences(MODE_PRIVATE);
-        prefEditor = pref.edit();
+        if(currentUser.ApartmentID!=0){
+            LogIn(currentUser.ApartmentID);
+        }
     }
 
     private void save_to_sp(Apartment a)
@@ -69,21 +66,17 @@ public class ApartmentLogIn extends AppCompatActivity {
         Intent i = getIntent();
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
-        //Log.v("Ah", "oh");
-        //Check if user is in apartment ?
-        //If yes, cool
-        //If not, add him to apartment... somehow :'(
     }
 
     public void onClickLogInApartment(View view){
-        String username = name.getText().toString();
-        String upassword = password.getText().toString();
-        if(username.equals(""))
+        String apartmentname = name.getText().toString();
+        String apassword = password.getText().toString();
+        if(apartmentname.equals(""))
             LoginError("Username must be at least 1 character");
-        else if(upassword.equals(""))
+        else if(apassword.equals(""))
             LoginError("Password must be at least 1 character");
         else
-            db.get_CheckPassWithApartmentName(name.getText().toString(), password.getText().toString());
+            db.get_CheckPassWithApartmentName(apartmentname, apassword);
 
     }
 

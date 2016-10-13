@@ -39,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText password;
     DatabaseService db;
     Bitmap photo;
+    User currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +67,8 @@ public class SignUpActivity extends AppCompatActivity {
             String n = name.getText().toString();
             String p = password.getText().toString();
             Bitmap img = photo;
-            User u = new User(n, p, img);
-            db.try_AddingNewUser(u);
+            currentUser = new User(n, p, img);
+            db.try_AddingNewUser(currentUser);
 
     }
 
@@ -80,6 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
             String username = intent.getStringExtra("username");
             if(!exists)
                 NewUserCreated();
+
             else
                 UserAlreadyExistsError(username);
         }
@@ -87,11 +89,18 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void NewUserCreated()
     {
+        save_to_sp(currentUser);
         Intent returnIntent = new Intent();
         returnIntent.putExtra("name", name.getText().toString());
         returnIntent.putExtra("password", password.getText().toString());
         setResult(RESULT_OK,returnIntent);
         finish();
+    }
+    private void save_to_sp(User u)
+    {
+        prefEditor.putString("name",u.name);
+        prefEditor.putString("password", u.password);
+        prefEditor.apply();
     }
 
     private void UserAlreadyExistsError(String username)
@@ -108,14 +117,4 @@ public class SignUpActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-  /* // http://stackoverflow.com/questions/20700181/convert-imageview-in-bytes-android
-    public byte[] convertImgToByteArray(ImageView imageView){
-        imageView.setDrawingCacheEnabled(true);
-        imageView.buildDrawingCache();
-        Bitmap b = imageView.getDrawingCache();
-        ByteArrayOutputStream BAPS = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.PNG,100, BAPS);
-        byte[] byteArray = BAPS.toByteArray();
-        return  byteArray;
-    }*/
 }
