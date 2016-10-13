@@ -190,7 +190,7 @@ public class DatabaseService{
                     public void onResponse(String response)
                     {
                         try {
-                            User u = parser.parseOneUser(response, false);
+                            User u = parser.parseOneUser(response);
                             sendUserAnswer(u);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -227,7 +227,7 @@ public class DatabaseService{
                     {
                         ArrayList<User> users = null;
                         try {
-                            users = parser.parseUsers(response, true);
+                            users = parser.parseUsers(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -339,7 +339,7 @@ public class DatabaseService{
                     {
                         try
                         {
-                            ArrayList<User> users = parser.parseUsers(response, false);
+                            ArrayList<User> users = parser.parseUsers(response);
                             checkIfUserExists(users, u);
                         }
                         catch (JSONException e)
@@ -421,6 +421,7 @@ public class DatabaseService{
         Map<String,String> params = new HashMap<String, String>();
         params.put("Id", Integer.toString(u.id));
         params.put("Name", u.name);
+        params.put("Pass", u.password);
         params.put("ApartmentID", Integer.toString(apartmentID));
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
