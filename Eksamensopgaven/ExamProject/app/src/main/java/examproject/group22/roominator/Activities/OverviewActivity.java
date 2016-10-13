@@ -114,7 +114,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         public void onReceive(Context context, Intent intent)
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
-
+            setTitle(a.name);
             /// gemmer til sharedpreferences
             SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = sharedPref.edit();
