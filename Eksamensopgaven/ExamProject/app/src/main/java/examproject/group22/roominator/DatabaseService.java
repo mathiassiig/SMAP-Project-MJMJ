@@ -1,17 +1,11 @@
 package examproject.group22.roominator;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Binder;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,23 +17,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
-
 
 
 public class DatabaseService{
@@ -58,15 +45,6 @@ public class DatabaseService{
 
     private Context current_context;
     public  ResponseParser parser;
-    //private final IBinder binder = new LocalBinder();
-
-    /*
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Log.v("Debug", "onCreate service called");
-        return super.onStartCommand(intent, flags, startId);
-    }*/
 
     private static DatabaseService instance;
     protected DatabaseService(Context c)

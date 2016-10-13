@@ -9,10 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import examproject.group22.roominator.DetailListProvider;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.ShoppingListProvider;
 
 /**
  * Created by Mathias on 11-10-2016.

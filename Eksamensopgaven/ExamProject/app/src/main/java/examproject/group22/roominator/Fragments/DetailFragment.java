@@ -10,17 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Adapters.DetailListAdapter;
-import examproject.group22.roominator.Adapters.GroceryItemAdapter;
-import examproject.group22.roominator.Adapters.ShoppingListAdapter;
-import examproject.group22.roominator.DetailListProvider;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.ShoppingListProvider;
 
 /**
  * A simple {@link Fragment} subclass.

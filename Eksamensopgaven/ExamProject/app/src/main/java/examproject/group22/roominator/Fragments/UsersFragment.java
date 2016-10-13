@@ -1,18 +1,27 @@
 package examproject.group22.roominator.Fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import examproject.group22.roominator.Activities.OverviewActivity;
+import examproject.group22.roominator.DatabaseService;
 import examproject.group22.roominator.Models.Apartment;
+import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.UserInfoAdapter;
@@ -42,9 +51,13 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
     private String mParam1;
     private String mParam2;
 
+    public Apartment currentApartment;
     ListAdapter userAdapter;
     ListView listView;
+    ArrayList<User> users = new ArrayList<>();
     private UserItemClickListener mListener;
+    private TextView txtview_Total;
+
 
     public UsersFragment() {
         // Required empty public constructor
@@ -77,6 +90,31 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReciever,new IntentFilter(OverviewActivity.INTENT_UPDATE_USERS_FRAGMENT));
+    }
+
+    @Override
+    public void onPause()
+    {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReciever);
+        super.onPause();
+    }
+
+    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            users.clear();
+            ArrayList<User> allusers = (ArrayList<User>) intent.getSerializableExtra("users");
+            users.addAll(allusers);
+            ((UserInfoAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
+    };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,18 +122,16 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
 
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-        Bundle b = getArguments();
-        ArrayList<User> users = (ArrayList<User> )b.getSerializable("users");
-
-
+        txtview_Total = (TextView)view.findViewById(R.id.customUser_txtTotal);
         listView = (ListView) view.findViewById(R.id.overviewList);
-        userAdapter = new UserInfoAdapter(this.getContext(),users);
+
+        userAdapter = new UserInfoAdapter(getContext(),users);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
-
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {

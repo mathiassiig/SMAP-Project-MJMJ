@@ -45,15 +45,13 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     
     private static final int NEW_GROCERY_REQUEST = 9001;
     public Apartment currentApartment;
+    private int currentApartmentID;
     public ArrayList<GroceryItem> unBoughts;
     public User currentUser;
     public DatabaseService db;
     int groceryPos;
     int userPos;
 
-
-    public NotificationService notificationService;
-    boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,17 +63,23 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         Intent i = getIntent();
         int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
-        SetupData(apartmentId, i);
-        startNotificationService(apartmentId);
+        currentApartmentID = apartmentId;
+        User u = (User)i.getSerializableExtra("User");
+        currentUser = u;
+        startNotificationService(currentApartmentID);
     }
 
     @Override
     public void onResume()
     {
+        UpdateAllData(currentApartmentID);
         super.onResume();
-        Log.v("OverviewActivity", "OverviewActivity onResume");
     }
-    
+
+    public void UpdateAllData(int apartmentID)
+    {
+        db.get_Apartment(apartmentID, false);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -114,11 +118,11 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         public void onReceive(Context context, Intent intent)
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
-            setTitle(a.name);
             /// gemmer til sharedpreferences
             SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = sharedPref.edit();
-            for (GroceryItem g:a.groceries) {
+            for (GroceryItem g:a.groceries)
+            {
                 prefEditor.putInt(Integer.toString(g.id),g.buyerID);
             }
             prefEditor.apply();
@@ -126,9 +130,27 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             currentApartment = a;
             unBoughts = new ArrayList<>();
             FilterGroceries();
+            setTitle(currentApartment.name + " - " + currentUser.name);
             SetUpGui();
+            UpdateUserFragment(currentApartment.users);
+            UpdateGroceriesFragment(unBoughts);
         }
     };
+    public static final String INTENT_UPDATE_USERS_FRAGMENT = "updateUsersFragment";
+    private void UpdateUserFragment(ArrayList<User> users)
+    {
+        Intent intent = new Intent(INTENT_UPDATE_USERS_FRAGMENT);
+        intent.putExtra("users", users);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
+
+    public static final String INTENT_UPDATE_GROCERIES_FRAGMENT = "updateGroceriesFragment";
+    private void UpdateGroceriesFragment(ArrayList<GroceryItem> groceries)
+    {
+        Intent intent = new Intent(INTENT_UPDATE_GROCERIES_FRAGMENT);
+        intent.putExtra("groceries", groceries);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
 
     private void FilterGroceries()
     {
@@ -161,25 +183,14 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         return null;
     }
 
-    PagerAdapter pagerAdapter;
     private void SetUpGui()
     {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this, unBoughts, currentApartment.users);
+        PagerAdapter pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
     }
-
-
-    public void SetupData(int apartmentID, Intent i)
-    {
-        User u = (User)i.getSerializableExtra("User");
-        currentUser = u;
-        db.get_Apartment(apartmentID, false);
-
-    }
-
     @Override
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
@@ -215,7 +226,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onFABClick(View view) {
         Intent addIntent = new Intent(OverviewActivity.this, AddProductActivity.class);
         addIntent.putExtra("ApartmentID", currentApartment.id);
-        Toast.makeText(this, "Add clicked",Toast.LENGTH_LONG).show();
         startActivityForResult(addIntent, NEW_GROCERY_REQUEST);
     }
 

@@ -24,7 +24,8 @@ import examproject.group22.roominator.R;
 //public class UserInfoAdapter extends ArrayAdapter<UserInfo> {
 public class UserInfoAdapter extends ArrayAdapter<User> {
 
-    ArrayList<User> users;
+    public ArrayList<User> users;
+    ArrayList<Integer> totals;
     public UserInfoAdapter(Context context, ArrayList<User> users)
     {
         super(context, 0, users);
@@ -39,9 +40,11 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_users, parent, false);
 
         TextView txtName= (TextView) convertView.findViewById(R.id.customUser_txtName);
+        TextView txtTotal= (TextView) convertView.findViewById(R.id.customUser_txtTotal);
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 
         txtName.setText(user.name);
+        txtTotal.setText("Betalt: " + User.Total(user.boughtByUser)); //TODO: Externalize
 
         if(user.image !=null) {
             imgUser.setImageBitmap(user.image);
@@ -51,6 +54,4 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
 
         return convertView;
     }
-
-
 }

@@ -1,22 +1,16 @@
 package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
-import examproject.group22.roominator.DetailListProvider;
 import examproject.group22.roominator.Models.GroceryItem;
 import examproject.group22.roominator.R;
 
