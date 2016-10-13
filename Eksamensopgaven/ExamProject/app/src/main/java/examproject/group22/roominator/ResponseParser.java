@@ -32,11 +32,11 @@ public class ResponseParser
 {
     public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ArrayList<User> parseUsers(String response, boolean withPass) throws JSONException {
-        return getUsersFromJson(new JSONArray(response), withPass);
+    public ArrayList<User> parseUsers(String response) throws JSONException {
+        return getUsersFromJson(new JSONArray(response));
     }
 
-    private ArrayList<User> getUsersFromJson(JSONArray users, boolean withPass)
+    private ArrayList<User> getUsersFromJson(JSONArray users)
     {
         ArrayList<User> usersArray = new ArrayList<User>();
         try
@@ -45,7 +45,7 @@ public class ResponseParser
             for (int i = 0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
-                usersArray.add(parseOneUser(object, withPass));
+                usersArray.add(parseOneUser(object));
             }
         }
         catch(JSONException e)
@@ -55,19 +55,18 @@ public class ResponseParser
         return usersArray;
     }
 
-    public User parseOneUser(String response, boolean withPass) throws JSONException
+    public User parseOneUser(String response) throws JSONException
     {
-        return parseOneUser(new JSONObject(response), withPass);
+        return parseOneUser(new JSONObject(response));
     }
 
-    private User parseOneUser(JSONObject object, boolean withPass) throws JSONException
+    private User parseOneUser(JSONObject object) throws JSONException
     {
         User u = null;
         String name = object.getString("Name");
         String pass = "";
         int id = object.getInt("Id");
-        if (withPass)
-            pass = object.getString("Pass");
+        pass = object.getString("Pass");
         int apartmentId = 0;
         try
         {
@@ -136,7 +135,7 @@ public class ResponseParser
             int apartmentID = object.getInt("Id");
 
             JSONArray users = object.getJSONArray("Users");
-            ArrayList<User> userArrayList = getUsersFromJson(users, false);
+            ArrayList<User> userArrayList = getUsersFromJson(users);
 
             JSONArray groceries = object.getJSONArray("GroceryItems");
             ArrayList<GroceryItem> groceryItemArrayList = parseGroceries(groceries);

@@ -168,13 +168,12 @@ public class DatabaseService{
     private void sendApartmentAuthenticationAnswer(Apartment apartment, boolean passWordOk)
     {
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
-        if(apartment != null) {
-            intent.putExtra("apartmentID", apartment.id);
-        }
-        else
+        int apartmentID = 0;
+        if(apartment != null)
         {
-            intent.putExtra("apartmentID", 0);
+            apartmentID = apartment.id;
         }
+        intent.putExtra("apartmentID", apartmentID);
         intent.putExtra("apartmentOK", passWordOk);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
@@ -190,7 +189,7 @@ public class DatabaseService{
                     public void onResponse(String response)
                     {
                         try {
-                            User u = parser.parseOneUser(response, false);
+                            User u = parser.parseOneUser(response);
                             sendUserAnswer(u);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -227,7 +226,7 @@ public class DatabaseService{
                     {
                         ArrayList<User> users = null;
                         try {
-                            users = parser.parseUsers(response, true);
+                            users = parser.parseUsers(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -339,7 +338,7 @@ public class DatabaseService{
                     {
                         try
                         {
-                            ArrayList<User> users = parser.parseUsers(response, false);
+                            ArrayList<User> users = parser.parseUsers(response);
                             checkIfUserExists(users, u);
                         }
                         catch (JSONException e)
@@ -421,6 +420,7 @@ public class DatabaseService{
         Map<String,String> params = new HashMap<String, String>();
         params.put("Id", Integer.toString(u.id));
         params.put("Name", u.name);
+        params.put("Pass", u.password);
         params.put("ApartmentID", Integer.toString(apartmentID));
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {

@@ -45,24 +45,35 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        pref = getSharedPreferences("LoginPrefs",MODE_PRIVATE);
-        prefEditor = pref.edit();
         txtUsername = (EditText) findViewById(R.id.txtUsername);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_USER_AUTHENTICATION));
+        //load_from_sp();
     }
 
-    @Override
-    protected void onResume() {
+    private void load_from_sp()
+    {
+        pref = getSharedPreferences("LoginPrefs",MODE_PRIVATE);
+        prefEditor = pref.edit();
         if(pref.getString("name","default") !="default")
         {
             String tryusername = pref.getString("name", "default");
             String trypassword = pref.getString("password", "default");
             tryLoginLogic(tryusername, trypassword);
         }
-        super.onResume();
     }
+
+    private void save_to_sp(User u)
+    {
+        prefEditor.putString("name",u.name);
+        prefEditor.putString("password", u.password);
+
+
+        //prefEditor.putBoolean("isloggedin", true);
+        prefEditor.apply();
+    }
+
 
     public void tryLogin(View view)
     {
@@ -94,12 +105,7 @@ public class LoginActivity extends AppCompatActivity
             {
                 Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
                 loggedInIntent.putExtra("User", u);
-                prefEditor.putString("name",u.name);
-                prefEditor.putString("password", u.password);
-
-
-                //prefEditor.putBoolean("isloggedin", true);
-                prefEditor.apply();
+                //save_to_sp(u);
                 startActivity(loggedInIntent);
                 finish();
             }

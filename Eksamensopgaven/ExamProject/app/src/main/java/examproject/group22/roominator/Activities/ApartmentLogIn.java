@@ -43,22 +43,26 @@ public class ApartmentLogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_log_in);
 
-        pref = ApartmentLogIn.this.getPreferences(MODE_PRIVATE);
-        prefEditor = pref.edit();
-
         name = (EditText)findViewById(R.id.apartment_name_txt);
         password = (EditText)findViewById(R.id.apartment_password_txt);
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
         LocalBroadcastManager.getInstance(this).registerReceiver(userReciever,new IntentFilter(DatabaseService.INTENT_USER));
         FetchUser();
-
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void load_from_sp()
+    {
+        pref = ApartmentLogIn.this.getPreferences(MODE_PRIVATE);
+        prefEditor = pref.edit();
     }
+
+    private void save_to_sp(Apartment a)
+    {
+        prefEditor.putInt("aId",a.id);
+        prefEditor.apply();
+    }
+
 
     public void FetchUser()
     {
@@ -124,8 +128,6 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     public void LogIn(int apartment_id)
     {
-        prefEditor.putInt("aId",apartment_id);
-        prefEditor.apply();
         Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
         loggedInIntent.putExtra("User", currentUser);
