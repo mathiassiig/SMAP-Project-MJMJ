@@ -1,7 +1,6 @@
 package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.UserModel;
 import examproject.group22.roominator.R;
 
 /**
@@ -22,11 +20,11 @@ import examproject.group22.roominator.R;
 //https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
 //public class UserInfoAdapter extends ArrayAdapter<UserInfo> {
-public class UserInfoAdapter extends ArrayAdapter<User> {
+public class UserInfoAdapter extends ArrayAdapter<UserModel> {
 
-    ArrayList<User> users;
+    ArrayList<UserModel> users;
     ArrayList<Integer> totals;
-    public UserInfoAdapter(Context context, ArrayList<User> users, ArrayList<Integer> totals)
+    public UserInfoAdapter(Context context, ArrayList<UserModel> users, ArrayList<Integer> totals)
     {
         super(context, 0, users);
         this.users = users;
@@ -36,7 +34,7 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        final User user = getItem(position);
+        final UserModel user = getItem(position);
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_users, parent, false);
 

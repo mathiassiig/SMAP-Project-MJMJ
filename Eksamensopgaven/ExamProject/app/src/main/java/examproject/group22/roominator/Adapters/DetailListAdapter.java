@@ -1,23 +1,17 @@
 package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
-import examproject.group22.roominator.DetailListProvider;
-import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.GroceryItemModel;
 import examproject.group22.roominator.R;
 
 
@@ -25,10 +19,10 @@ import examproject.group22.roominator.R;
  * Created by Maria Dam on 10-10-2016.
  */
 
-public class DetailListAdapter extends ArrayAdapter<GroceryItem>
+public class DetailListAdapter extends ArrayAdapter<GroceryItemModel>
 {
-    ArrayList<GroceryItem> groceryItems;
-    public DetailListAdapter(Context context, ArrayList<GroceryItem> groceryItems)
+    ArrayList<GroceryItemModel> groceryItems;
+    public DetailListAdapter(Context context, ArrayList<GroceryItemModel> groceryItems)
     {
         super(context, 0, groceryItems);
         this.groceryItems = groceryItems;
@@ -39,7 +33,7 @@ public class DetailListAdapter extends ArrayAdapter<GroceryItem>
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        final GroceryItem grocery = getItem(position);
+        final GroceryItemModel grocery = getItem(position);
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_details, parent, false);
         TextView txtName = (TextView) convertView.findViewById(R.id.detail_name);

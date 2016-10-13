@@ -17,8 +17,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import examproject.group22.roominator.DatabaseService;
-import examproject.group22.roominator.Models.Apartment;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.ApartmentModel;
+import examproject.group22.roominator.Models.UserModel;
 import examproject.group22.roominator.R;
 
 public class ApartmentLoginActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class ApartmentLoginActivity extends AppCompatActivity {
     EditText name;
     EditText password;
     DatabaseService db;
-    User currentUser;
+    UserModel currentUser;
     int aId;
 
     @Override
@@ -52,7 +52,7 @@ public class ApartmentLoginActivity extends AppCompatActivity {
         prefEditor = pref.edit();
     }
 
-    private void save_to_sp(Apartment a)
+    private void save_to_sp(ApartmentModel a)
     {
         prefEditor.putInt("aId",a.id);
         prefEditor.apply();
@@ -62,7 +62,7 @@ public class ApartmentLoginActivity extends AppCompatActivity {
     public void FetchUser()
     {
         Intent i = getIntent();
-        User u = (User)i.getSerializableExtra("User");
+        UserModel u = (UserModel)i.getSerializableExtra("UserModel");
         currentUser = u;
         //Log.v("Ah", "oh");
         //Check if user is in apartment ?
@@ -108,7 +108,7 @@ public class ApartmentLoginActivity extends AppCompatActivity {
        @Override
        public void onReceive(Context context, Intent intent) {
               try {
-                  User u = (User) intent.getSerializableExtra("User");
+                  UserModel u = (UserModel) intent.getSerializableExtra("UserModel");
                   if (u.ApartmentID != 0) {
                       LogIn(u.ApartmentID);
                   }else{
@@ -125,18 +125,18 @@ public class ApartmentLoginActivity extends AppCompatActivity {
     {
         Intent loggedInIntent = new Intent(ApartmentLoginActivity.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
-        loggedInIntent.putExtra("User", currentUser);
+        loggedInIntent.putExtra("UserModel", currentUser);
         startActivity(loggedInIntent);
         finish();
     }
 
     public void makePopMessage() {
         final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLoginActivity.this).create();
-        alertDialog.setTitle("New Apartment?"); //TODO: Externalize
-        alertDialog.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
+        alertDialog.setTitle("New ApartmentModel?"); //TODO: Externalize
+        alertDialog.setMessage("ApartmentModel not found, create a new one with this name and password?"); //TODO: Externalize
         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Create", new DialogInterface.OnClickListener(){
            public void onClick(DialogInterface dialog, int which){
-               Apartment a = new Apartment(name.getText().toString(),password.getText().toString());
+               ApartmentModel a = new ApartmentModel(name.getText().toString(),password.getText().toString());
                db.post_NewApartment(a);
            }
         });

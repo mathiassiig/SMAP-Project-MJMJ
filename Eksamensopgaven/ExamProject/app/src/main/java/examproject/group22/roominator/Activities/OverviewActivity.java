@@ -27,9 +27,9 @@ import examproject.group22.roominator.Fragments.DeleteProductFragment;
 import examproject.group22.roominator.Fragments.DeleteUserFragment;
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
-import examproject.group22.roominator.Models.Apartment;
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.ApartmentModel;
+import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.UserModel;
 import examproject.group22.roominator.NotificationService;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
@@ -44,9 +44,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         DeleteProductFragment.DeleteProductDialogListener{
     
     private static final int NEW_GROCERY_REQUEST = 9001;
-    public Apartment currentApartment;
-    public ArrayList<GroceryItem> unBoughts;
-    public User currentUser;
+    public ApartmentModel currentApartment;
+    public ArrayList<GroceryItemModel> unBoughts;
+    public UserModel currentUser;
     public DatabaseService db;
     int groceryPos;
     int userPos;
@@ -113,11 +113,11 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            Apartment a = (Apartment)intent.getSerializableExtra("apartment");
+            ApartmentModel a = (ApartmentModel)intent.getSerializableExtra("apartment");
             /// gemmer til sharedpreferences
             SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = sharedPref.edit();
-            for (GroceryItem g:a.groceries) {
+            for (GroceryItemModel g:a.groceries) {
                 prefEditor.putInt(Integer.toString(g.id),g.buyerID);
             }
             prefEditor.apply();
@@ -132,11 +132,11 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     private void FilterGroceries()
     {
-        for(User u: currentApartment.users)
+        for(UserModel u: currentApartment.users)
         {
             u.boughtByUser = new ArrayList<>();
         }
-        for (GroceryItem g: currentApartment.groceries)
+        for (GroceryItemModel g: currentApartment.groceries)
         {
             int buyerid = g.buyerID;
             if(buyerid == 0)
@@ -145,15 +145,15 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             }
             else
             {
-                User u = GetUserByID(buyerid);
+                UserModel u = GetUserByID(buyerid);
                 u.boughtByUser.add(g);
             }
         }
     }
 
-    private User GetUserByID(int ID)
+    private UserModel GetUserByID(int ID)
     {
-        for(User u : currentApartment.users)
+        for(UserModel u : currentApartment.users)
         {
             if(u.id == ID)
                 return u;
@@ -174,7 +174,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     public void SetupData(int apartmentID, Intent i)
     {
-        User u = (User)i.getSerializableExtra("User");
+        UserModel u = (UserModel)i.getSerializableExtra("UserModel");
         currentUser = u;
         db.get_Apartment(apartmentID, false);
 
@@ -183,7 +183,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent detailIntent = new Intent(OverviewActivity.this, DetailActivity.class);
-        ArrayList<GroceryItem> grocieres = currentApartment.users.get(position).boughtByUser;
+        ArrayList<GroceryItemModel> grocieres = currentApartment.users.get(position).boughtByUser;
         detailIntent.putExtra("groceries", grocieres);
         startActivity(detailIntent);
     }
@@ -221,20 +221,20 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     @Override
     public void onUserDialogPositiveClick(DialogFragment dialog) {
-        // User touched the dialog's positive button
+        // UserModel touched the dialog's positive button
         db.delete_user(currentApartment.users.get(userPos).id);
         Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onUserDialogNegativeClick(DialogFragment dialog) {
-        // User touched the dialog's negative button
+        // UserModel touched the dialog's negative button
         //TODO Implement
     }
 
     @Override
     public void onProductDialogPositiveClick(DialogFragment dialog) {
-        // User touched the dialog's positive button
+        // UserModel touched the dialog's positive button
         //TODO Implement
         db.delete_grocery(unBoughts.get(groceryPos).id);
         Toast.makeText(this, R.string.dialog_product_deleted, Toast.LENGTH_LONG).show();
@@ -242,7 +242,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     @Override
     public void onProductDialogNegativeClick(DialogFragment dialog) {
-        // User touched the dialog's negative button
+        // UserModel touched the dialog's negative button
         // TODO Implement
     }
 

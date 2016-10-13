@@ -1,7 +1,6 @@
 package examproject.group22.roominator;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -18,12 +17,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import examproject.group22.roominator.Activities.LoginActivity;
-import examproject.group22.roominator.Activities.OverviewActivity;
-import examproject.group22.roominator.Models.Apartment;
-import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.ApartmentModel;
+import examproject.group22.roominator.Models.GroceryItemModel;
 
 public class NotificationService extends Service {
     private static final int LOOP_TIME = 5;
@@ -67,11 +64,11 @@ public class NotificationService extends Service {
         aManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
-    public void compareResults(ArrayList<GroceryItem> groceries)
+    public void compareResults(ArrayList<GroceryItemModel> groceries)
     {
         Log.v("Service","Comparing results");
         sharedPref = NotificationService.this.getSharedPreferences("Groceries", MODE_PRIVATE);
-        for (GroceryItem g : groceries) {
+        for (GroceryItemModel g : groceries) {
             int buyer = sharedPref.getInt(Integer.toString(g.id),-1);
             if(buyer==-1 || buyer != g.buyerID)
             {
@@ -113,8 +110,8 @@ public class NotificationService extends Service {
     public BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Apartment a = (Apartment)intent.getSerializableExtra("apartment");
-            ArrayList<GroceryItem> groceries = a.groceries;
+            ApartmentModel a = (ApartmentModel)intent.getSerializableExtra("apartment");
+            ArrayList<GroceryItemModel> groceries = a.groceries;
             compareResults(groceries);
             Log.v("Debug","notifyService has recieved apartment from db");
         }

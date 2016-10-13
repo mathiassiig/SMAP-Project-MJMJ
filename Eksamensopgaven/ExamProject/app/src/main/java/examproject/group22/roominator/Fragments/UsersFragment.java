@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import examproject.group22.roominator.Models.Apartment;
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.ApartmentModel;
+import examproject.group22.roominator.Models.UserModel;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.UserInfoAdapter;
 
@@ -33,7 +32,7 @@ import examproject.group22.roominator.Adapters.UserInfoAdapter;
  */
 public class UsersFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    ArrayList<User> userInfo;
+    ArrayList<UserModel> userInfo;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +43,7 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
     private String mParam1;
     private String mParam2;
 
-    public Apartment currentApartment;
+    public ApartmentModel currentApartment;
     ListAdapter userAdapter;
     ListView listView;
     private UserItemClickListener mListener;
@@ -90,12 +89,12 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
         Bundle b = getArguments();
-        ArrayList<User> users = (ArrayList<User> )b.getSerializable("users");
+        ArrayList<UserModel> users = (ArrayList<UserModel> )b.getSerializable("users");
         ArrayList<Integer> totals = new ArrayList<>();
 
-        for(User u : users)
+        for(UserModel u : users)
         {
-            int total = User.Total(u.boughtByUser);
+            int total = UserModel.Total(u.boughtByUser);
             totals.add(total);
         }
 

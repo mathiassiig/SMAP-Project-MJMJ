@@ -6,13 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Fragments.UsersFragment;
 import examproject.group22.roominator.Fragments.ProductListFragment;
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.UserModel;
 import examproject.group22.roominator.R;
 
 /**
@@ -26,9 +25,9 @@ import examproject.group22.roominator.R;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
-    ArrayList<GroceryItem> unboughts;
-    ArrayList<User> users;
-    public TabsPagerAdapter(FragmentManager fragmentManager, Context context, ArrayList<GroceryItem> unboughts, ArrayList<User> users){
+    ArrayList<GroceryItemModel> unboughts;
+    ArrayList<UserModel> users;
+    public TabsPagerAdapter(FragmentManager fragmentManager, Context context, ArrayList<GroceryItemModel> unboughts, ArrayList<UserModel> users){
         super(fragmentManager);
         this.context = context;
         this.unboughts = unboughts;

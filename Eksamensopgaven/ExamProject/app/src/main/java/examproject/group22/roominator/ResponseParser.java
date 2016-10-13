@@ -2,25 +2,22 @@ package examproject.group22.roominator;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
 import java.sql.Blob;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import examproject.group22.roominator.Models.Apartment;
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.ApartmentModel;
+import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.UserModel;
 
 /**
  * Created by Mathias on 08-Oct-16.
@@ -32,13 +29,13 @@ public class ResponseParser
 {
     public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ArrayList<User> parseUsers(String response) throws JSONException {
+    public ArrayList<UserModel> parseUsers(String response) throws JSONException {
         return getUsersFromJson(new JSONArray(response));
     }
 
-    private ArrayList<User> getUsersFromJson(JSONArray users)
+    private ArrayList<UserModel> getUsersFromJson(JSONArray users)
     {
-        ArrayList<User> usersArray = new ArrayList<User>();
+        ArrayList<UserModel> usersArray = new ArrayList<UserModel>();
         try
         {
             JSONArray array = users;
@@ -55,14 +52,14 @@ public class ResponseParser
         return usersArray;
     }
 
-    public User parseOneUser(String response) throws JSONException
+    public UserModel parseOneUser(String response) throws JSONException
     {
         return parseOneUser(new JSONObject(response));
     }
 
-    private User parseOneUser(JSONObject object) throws JSONException
+    private UserModel parseOneUser(JSONObject object) throws JSONException
     {
-        User u = null;
+        UserModel u = null;
         String name = object.getString("Name");
         String pass = "";
         int id = object.getInt("Id");
@@ -76,21 +73,21 @@ public class ResponseParser
         {
 
         }
-        u = new User(name, pass, null);
+        u = new UserModel(name, pass, null);
         u.ApartmentID = apartmentId;
         u.id = id;
         return u;
     }
 
-    public Apartment ParseSingleApartmentNoGroceries(JSONObject object)
+    public ApartmentModel ParseSingleApartmentNoGroceries(JSONObject object)
     {
-        Apartment a = null;
+        ApartmentModel a = null;
         try{
             String name = object.getString("Name");
             String pass = object.getString("Pass");
             int apartmentID = object.getInt("Id");
 
-            a = new Apartment(name, pass);
+            a = new ApartmentModel(name, pass);
             a.id = apartmentID;
         }
         catch(JSONException e)
@@ -100,9 +97,9 @@ public class ResponseParser
         return a;
     }
 
-    public ArrayList<Apartment> GetAllApartmentsNoGroceries(String response)
+    public ArrayList<ApartmentModel> GetAllApartmentsNoGroceries(String response)
     {
-        ArrayList<Apartment> apartments = new ArrayList<Apartment>();
+        ArrayList<ApartmentModel> apartments = new ArrayList<ApartmentModel>();
         try{
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++)
@@ -112,7 +109,7 @@ public class ResponseParser
                 String pass = object.getString("Pass");
                 int apartmentID = object.getInt("Id");
 
-                Apartment a = new Apartment(name, pass);
+                ApartmentModel a = new ApartmentModel(name, pass);
                 a.id = apartmentID;
                 apartments.add(a);
 
@@ -125,8 +122,8 @@ public class ResponseParser
         return apartments;
     }
 
-    public Apartment parseApartmentWithGroceries(String response) throws ParseException {
-        Apartment a = null;
+    public ApartmentModel parseApartmentWithGroceries(String response) throws ParseException {
+        ApartmentModel a = null;
         try
         {
             JSONObject object = new JSONObject(response);
@@ -135,12 +132,12 @@ public class ResponseParser
             int apartmentID = object.getInt("Id");
 
             JSONArray users = object.getJSONArray("Users");
-            ArrayList<User> userArrayList = getUsersFromJson(users);
+            ArrayList<UserModel> userArrayList = getUsersFromJson(users);
 
             JSONArray groceries = object.getJSONArray("GroceryItems");
-            ArrayList<GroceryItem> groceryItemArrayList = parseGroceries(groceries);
+            ArrayList<GroceryItemModel> groceryItemArrayList = parseGroceries(groceries);
 
-            a = new Apartment(name, pass);
+            a = new ApartmentModel(name, pass);
             a.id = apartmentID;
             a.groceries = groceryItemArrayList;
             a.users = userArrayList;
@@ -179,8 +176,8 @@ public class ResponseParser
         return new Timestamp(date.getTime());
     }
 
-    private ArrayList<GroceryItem> parseGroceries(JSONArray groceries) throws JSONException, ParseException {
-        ArrayList<GroceryItem> groceryItemArrayList = new ArrayList<GroceryItem>();
+    private ArrayList<GroceryItemModel> parseGroceries(JSONArray groceries) throws JSONException, ParseException {
+        ArrayList<GroceryItemModel> groceryItemArrayList = new ArrayList<GroceryItemModel>();
         for(int g = 0; g < groceries.length(); g++)
         {
             JSONObject currentGrocery = groceries.getJSONObject(g);
@@ -195,7 +192,7 @@ public class ResponseParser
             try { g_bought = GetTimestampFromString(currentGrocery.getString("Bought")); }     catch(Exception ex) {}
             int UserID = 0;
             try { UserID = currentGrocery.getInt("UserId"); } catch(Exception ex) {}
-            GroceryItem grocery = new GroceryItem(g_id, g_name, g_price, g_creation, ApartmentID);
+            GroceryItemModel grocery = new GroceryItemModel(g_id, g_name, g_price, g_creation, ApartmentID);
             grocery.buyerID = UserID;
             if(g_bought != null)
                 grocery.boughtStamp = g_bought;

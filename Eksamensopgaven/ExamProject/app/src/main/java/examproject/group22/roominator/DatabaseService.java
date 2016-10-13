@@ -1,17 +1,11 @@
 package examproject.group22.roominator;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Binder;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,23 +17,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
-import examproject.group22.roominator.Models.Apartment;
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
-
+import examproject.group22.roominator.Models.ApartmentModel;
+import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.UserModel;
 
 
 public class DatabaseService{
@@ -95,7 +82,7 @@ public class DatabaseService{
             {
                 try
                 {
-                    Apartment a = parser.parseApartmentWithGroceries(response);
+                    ApartmentModel a = parser.parseApartmentWithGroceries(response);
                     saveGroceriesToPref(a.groceries);
                     sendApartmentWithGroceries(a, forService);
                 }
@@ -115,7 +102,7 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendApartmentWithGroceries(Apartment a, boolean forService)
+    private void sendApartmentWithGroceries(ApartmentModel a, boolean forService)
     {
         Intent intent = new Intent(INTENT_ALL_GROCERIES_IN_APARTMENT);
         if(forService)
@@ -136,12 +123,12 @@ public class DatabaseService{
                     @Override
                     public void onResponse(String response)
                     {
-                        ArrayList<Apartment> apartments = parser.GetAllApartmentsNoGroceries(response);
-                        Apartment a = null;
+                        ArrayList<ApartmentModel> apartments = parser.GetAllApartmentsNoGroceries(response);
+                        ApartmentModel a = null;
                         boolean passOK = false;
                         for(int i = 0; i < apartments.size();i++)
                         {
-                            Apartment b = apartments.get(i);
+                            ApartmentModel b = apartments.get(i);
                             if(b.name.equals(apartmentName))
                             {
                                 a = b;
@@ -165,7 +152,7 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendApartmentAuthenticationAnswer(Apartment apartment, boolean passWordOk)
+    private void sendApartmentAuthenticationAnswer(ApartmentModel apartment, boolean passWordOk)
     {
         Intent intent = new Intent(INTENT_APARTMENT_AUTHENTICATION);
         int apartmentID = 0;
@@ -189,7 +176,7 @@ public class DatabaseService{
                     public void onResponse(String response)
                     {
                         try {
-                            User u = parser.parseOneUser(response);
+                            UserModel u = parser.parseOneUser(response);
                             sendUserAnswer(u);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -207,10 +194,10 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendUserAnswer(User u)
+    private void sendUserAnswer(UserModel u)
     {
         Intent intent = new Intent(INTENT_USER);
-        intent.putExtra("User", u);
+        intent.putExtra("UserModel", u);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
@@ -224,16 +211,16 @@ public class DatabaseService{
                     @Override
                     public void onResponse(String response)
                     {
-                        ArrayList<User> users = null;
+                        ArrayList<UserModel> users = null;
                         try {
                             users = parser.parseUsers(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        User a = null;
+                        UserModel a = null;
                         for(int i = 0; i < users.size();i++)
                         {
-                            User b = users.get(i);
+                            UserModel b = users.get(i);
                             if(b.name.equals(username) && b.password.equals(password)) {
                                 a = b;
                                 break;
@@ -252,14 +239,14 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    private void sendUserAuthenticationAnswer(User u)
+    private void sendUserAuthenticationAnswer(UserModel u)
     {
         Intent intent = new Intent(INTENT_USER_AUTHENTICATION);
-        intent.putExtra("User", u);
+        intent.putExtra("UserModel", u);
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
-    public void post_NewApartment(final Apartment a)
+    public void post_NewApartment(final ApartmentModel a)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS;
@@ -271,7 +258,7 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        Apartment a = parser.ParseSingleApartmentNoGroceries(response);
+                        ApartmentModel a = parser.ParseSingleApartmentNoGroceries(response);
                         sendApartmentAuthenticationAnswer(a, true);
                     }
                 }, new Response.ErrorListener() {
@@ -326,7 +313,7 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    private void get_AllUsersToCheckIfExists(final User u)
+    private void get_AllUsersToCheckIfExists(final UserModel u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS;
@@ -338,7 +325,7 @@ public class DatabaseService{
                     {
                         try
                         {
-                            ArrayList<User> users = parser.parseUsers(response);
+                            ArrayList<UserModel> users = parser.parseUsers(response);
                             checkIfUserExists(users, u);
                         }
                         catch (JSONException e)
@@ -358,15 +345,15 @@ public class DatabaseService{
         queue.add(stringRequest);
     }
 
-    public void try_AddingNewUser(final User u)
+    public void try_AddingNewUser(final UserModel u)
     {
         get_AllUsersToCheckIfExists(u);
     }
 
-    private void checkIfUserExists(ArrayList<User> allUsers, User userToCheck)
+    private void checkIfUserExists(ArrayList<UserModel> allUsers, UserModel userToCheck)
     {
         boolean exists = false;
-        for (User u: allUsers)
+        for (UserModel u: allUsers)
         {
             if(u.name.equals(userToCheck.name))
                 exists = true;
@@ -389,7 +376,7 @@ public class DatabaseService{
         LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
     }
 
-    private void post_NewUser(final User u)
+    private void post_NewUser(final UserModel u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS;
@@ -413,7 +400,7 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void put_userToApartment(final User u, final int apartmentID)
+    public void put_userToApartment(final UserModel u, final int apartmentID)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS+"/"+u.id;
@@ -465,7 +452,7 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void put_UpdateGrocery(final GroceryItem i)
+    public void put_UpdateGrocery(final GroceryItemModel i)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+i.id;
@@ -499,11 +486,11 @@ public class DatabaseService{
         current_context = c;
     }
 
-    public void saveGroceriesToPref(List<GroceryItem> groceries){
+    public void saveGroceriesToPref(List<GroceryItemModel> groceries){
         try {
             SharedPreferences sharedPref = current_context.getSharedPreferences("Groceries", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            for (GroceryItem g : groceries) {
+            for (GroceryItemModel g : groceries) {
                 String id = Integer.toString(g.id);
                 String boughtStamp = g.boughtStamp.toString();
                 editor.putString(id, boughtStamp);

@@ -10,17 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import examproject.group22.roominator.Adapters.DetailListAdapter;
-import examproject.group22.roominator.Adapters.GroceryItemAdapter;
-import examproject.group22.roominator.Adapters.ShoppingListAdapter;
-import examproject.group22.roominator.DetailListProvider;
-import examproject.group22.roominator.Models.GroceryItem;
-import examproject.group22.roominator.Models.User;
+import examproject.group22.roominator.Models.GroceryItemModel;
+import examproject.group22.roominator.Models.UserModel;
 import examproject.group22.roominator.R;
-import examproject.group22.roominator.ShoppingListProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,10 +78,10 @@ public class DetailFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.detailList);
 
         Bundle b = getArguments();
-        ArrayList<GroceryItem> groceries = (ArrayList<GroceryItem>)b.getSerializable("groceries");
+        ArrayList<GroceryItemModel> groceries = (ArrayList<GroceryItemModel>)b.getSerializable("groceries");
         detailListAdapter = new DetailListAdapter(getContext(), groceries);
         listView.setAdapter(detailListAdapter);
-        int total = User.Total(groceries);
+        int total = UserModel.Total(groceries);
         TextView txtTotal = (TextView) view.findViewById(R.id.detail_total);
         txtTotal.setText(Integer.toString(total));
         return view;
