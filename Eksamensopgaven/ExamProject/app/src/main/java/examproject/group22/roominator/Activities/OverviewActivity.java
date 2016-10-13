@@ -62,11 +62,12 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         db = DatabaseService.getInstance(getApplicationContext());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         Intent i = getIntent();
-        int apartmentId = i.getIntExtra("apartmentID", 0); //if this is 0 well fuck
+        int apartmentId = i.getIntExtra("apartmentID", 0); //ikke skide fedt hvis den her er 0 :-)
         currentApartmentID = apartmentId;
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
         startNotificationService(currentApartmentID);
+        SetUpGui();
     }
 
     @Override
@@ -131,7 +132,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             unBoughts = new ArrayList<>();
             FilterGroceries();
             setTitle(currentApartment.name + " - " + currentUser.name);
-            SetUpGui();
             UpdateUserFragment(currentApartment.users);
             UpdateGroceriesFragment(unBoughts);
         }
