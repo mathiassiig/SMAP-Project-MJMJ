@@ -1,14 +1,10 @@
 package examproject.group22.roominator.Activities;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -22,7 +18,6 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,7 +33,6 @@ import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.NotificationService;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.Adapters.TabsPagerAdapter;
-import examproject.group22.roominator.NotificationService.LocalBinder;
 
 // KILDER:
 // Tabs: https://www.youtube.com/watch?v=zQekzaAgIlQ
@@ -54,6 +48,8 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public ArrayList<GroceryItem> unBoughts;
     public User currentUser;
     public DatabaseService db;
+    int groceryPos;
+    int userPos;
 
 
     public NotificationService notificationService;
@@ -194,6 +190,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     @Override
     public void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        userPos = position;
         DialogFragment dialog= new DeleteUserFragment();
         dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");
     }
@@ -207,10 +204,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         startActivity(buyIntent);
     }
 
-    int pos;
     @Override
     public void onGroceryItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        pos = position;
+        groceryPos = position;
         DialogFragment dialog= new DeleteProductFragment();
         dialog.show(getSupportFragmentManager(),"DeleteProductDialogFragment");
     }
@@ -227,7 +223,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
-        db.delete_user(currentApartment.users.get(pos).id);
+        db.delete_user(currentApartment.users.get(userPos).id);
         Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
@@ -241,7 +237,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onProductDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         //TODO Implement
-        db.delete_grocery(unBoughts.get(pos).id);
+        db.delete_grocery(unBoughts.get(groceryPos).id);
         Toast.makeText(this, R.string.dialog_product_deleted, Toast.LENGTH_LONG).show();
     }
 
