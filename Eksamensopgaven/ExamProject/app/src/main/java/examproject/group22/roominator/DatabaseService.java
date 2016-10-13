@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class DatabaseService{
     public static String INTENT_USER_AUTHENTICATION = "userAuthentication";
     public static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
     public static String INTENT_USER = "userIntent";
+    public static String INTENT_TRY_MAKING_NEW_USER = "tryNewUser";
 
     private Context current_context;
     public  ResponseParser parser;
@@ -325,7 +327,70 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void post_NewUser(final User u)
+    private void get_AllUsersToCheckIfExists(final User u)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_USERS;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try
+                        {
+                            ArrayList<User> users = parser.parseUsers(response, false);
+                            checkIfUserExists(users, u);
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Log.v("DatabaseHelper", "Couldn't fetch: " + error.getMessage());
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    public void try_AddingNewUser(final User u)
+    {
+        get_AllUsersToCheckIfExists(u);
+    }
+
+    private void checkIfUserExists(ArrayList<User> allUsers, User userToCheck)
+    {
+        boolean exists = false;
+        for (User u: allUsers)
+        {
+            if(u.name.equals(userToCheck.name))
+                exists = true;
+        }
+        if(exists)
+        {
+            sendNewUserMessage(userToCheck.name, exists);
+        }
+        else
+        {
+            post_NewUser(userToCheck);
+        }
+    }
+
+    private void sendNewUserMessage(String username, boolean exists)
+    {
+        Intent intent = new Intent(INTENT_TRY_MAKING_NEW_USER);
+        intent.putExtra("username", username);
+        intent.putExtra("exists", exists);
+        LocalBroadcastManager.getInstance(current_context).sendBroadcast(intent);
+    }
+
+    private void post_NewUser(final User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS;
@@ -337,7 +402,7 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        sendNewUserMessage(u.name, false);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -371,6 +436,7 @@ public class DatabaseService{
 
             }
         });
+        queue.add(req);
     }
 
     public void post_NewGrocery(final String name, final Timestamp creation, final int apartmentID)
