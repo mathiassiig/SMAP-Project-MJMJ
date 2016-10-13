@@ -3,11 +3,16 @@ package examproject.group22.roominator.Activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.os.IBinder;
+import android.provider.ContactsContract;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +26,7 @@ import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
-public class ApartmentLoginActivity extends AppCompatActivity {
+public class ApartmentLogIn extends AppCompatActivity {
     SharedPreferences pref;
     SharedPreferences.Editor prefEditor;
 
@@ -44,12 +49,9 @@ public class ApartmentLoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_APARTMENT_AUTHENTICATION));
         LocalBroadcastManager.getInstance(this).registerReceiver(userReciever,new IntentFilter(DatabaseService.INTENT_USER));
         FetchUser();
-    }
-
-    private void load_from_sp()
-    {
-        pref = ApartmentLoginActivity.this.getPreferences(MODE_PRIVATE);
-        prefEditor = pref.edit();
+        if(currentUser.ApartmentID!=0){
+            LogIn(currentUser.ApartmentID);
+        }
     }
 
     private void save_to_sp(Apartment a)
@@ -64,21 +66,17 @@ public class ApartmentLoginActivity extends AppCompatActivity {
         Intent i = getIntent();
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
-        //Log.v("Ah", "oh");
-        //Check if user is in apartment ?
-        //If yes, cool
-        //If not, add him to apartment... somehow :'(
     }
 
     public void onClickLogInApartment(View view){
-        String username = name.getText().toString();
-        String upassword = password.getText().toString();
-        if(username.equals(""))
+        String apartmentname = name.getText().toString();
+        String apassword = password.getText().toString();
+        if(apartmentname.equals(""))
             LoginError("Username must be at least 1 character");
-        else if(upassword.equals(""))
+        else if(apassword.equals(""))
             LoginError("Password must be at least 1 character");
         else
-            db.get_CheckPassWithApartmentName(name.getText().toString(), password.getText().toString());
+            db.get_CheckPassWithApartmentName(apartmentname, apassword);
 
     }
 
@@ -123,7 +121,7 @@ public class ApartmentLoginActivity extends AppCompatActivity {
 
     public void LogIn(int apartment_id)
     {
-        Intent loggedInIntent = new Intent(ApartmentLoginActivity.this, OverviewActivity.class);
+        Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
         loggedInIntent.putExtra("User", currentUser);
         startActivity(loggedInIntent);
@@ -131,7 +129,7 @@ public class ApartmentLoginActivity extends AppCompatActivity {
     }
 
     public void makePopMessage() {
-        final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLoginActivity.this).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
         alertDialog.setTitle("New Apartment?"); //TODO: Externalize
         alertDialog.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Create", new DialogInterface.OnClickListener(){
