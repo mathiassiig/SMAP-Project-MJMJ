@@ -26,13 +26,9 @@ import examproject.group22.roominator.R;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
-    ArrayList<GroceryItem> unboughts;
-    ArrayList<User> users;
-    public TabsPagerAdapter(FragmentManager fragmentManager, Context context, ArrayList<GroceryItem> unboughts, ArrayList<User> users){
+    public TabsPagerAdapter(FragmentManager fragmentManager, Context context){
         super(fragmentManager);
         this.context = context;
-        this.unboughts = unboughts;
-        this.users = users;
     }
 
     @Override
@@ -45,15 +41,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 ProductListFragment plf = new ProductListFragment();
-                Bundle b1 = new Bundle();
-                b1.putSerializable("unboughts", unboughts);
-                plf.setArguments(b1);
                 return plf;
             case 1:
                 UsersFragment uf = new UsersFragment();
-                Bundle b2 = new Bundle();
-                b2.putSerializable("users", users);
-                uf.setArguments(b2);
                 return uf;
             default:
                 return null;
