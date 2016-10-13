@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -25,4 +26,15 @@ public class User implements Serializable {
         this.password = password;
         this.image = image;
     }
+
+    public static int Total(ArrayList<GroceryItem> groceries)
+    {
+        int total = 0;
+        for(GroceryItem g : groceries)
+        {
+            total += g.price;
+        }
+        return total;
+    }
+
 }

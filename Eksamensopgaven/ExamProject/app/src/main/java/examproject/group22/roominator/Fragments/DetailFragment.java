@@ -18,6 +18,7 @@ import examproject.group22.roominator.Adapters.GroceryItemAdapter;
 import examproject.group22.roominator.Adapters.ShoppingListAdapter;
 import examproject.group22.roominator.DetailListProvider;
 import examproject.group22.roominator.Models.GroceryItem;
+import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 import examproject.group22.roominator.ShoppingListProvider;
 
@@ -86,21 +87,12 @@ public class DetailFragment extends Fragment {
         ArrayList<GroceryItem> groceries = (ArrayList<GroceryItem>)b.getSerializable("groceries");
         detailListAdapter = new DetailListAdapter(getContext(), groceries);
         listView.setAdapter(detailListAdapter);
-        int total = CalculateTotal(groceries);
+        int total = User.Total(groceries);
         TextView txtTotal = (TextView) view.findViewById(R.id.detail_total);
         txtTotal.setText(Integer.toString(total));
         return view;
     }
 
-    public int CalculateTotal(ArrayList<GroceryItem> groceries)
-    {
-        int total = 0;
-        for(GroceryItem g : groceries)
-        {
-            total += g.price;
-        }
-        return total;
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
