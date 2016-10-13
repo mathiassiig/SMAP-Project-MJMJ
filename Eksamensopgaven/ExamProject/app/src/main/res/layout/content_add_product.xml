@@ -16,7 +16,6 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/addproduct_etName"
         android:layout_alignBaseline="@+id/addproduct_txtName"
@@ -24,7 +23,8 @@
         android:layout_toRightOf="@+id/addproduct_txtName"
         android:layout_toEndOf="@+id/addproduct_txtName"
         android:layout_marginLeft="20dp"
-        android:hint="Indtast produkt" />
+        android:hint="Indtast produkt"
+        android:inputType="text|textCapSentences" />
 
     <TextView
         android:text="@string/addproduct_txtName"

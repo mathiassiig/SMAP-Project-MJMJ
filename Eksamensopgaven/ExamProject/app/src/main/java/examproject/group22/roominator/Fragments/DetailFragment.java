@@ -66,7 +66,6 @@ public class DetailFragment extends Fragment {
         return fragment;
     }
 
-    TextView total;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
