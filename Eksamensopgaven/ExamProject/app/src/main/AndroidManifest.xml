@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.ApartmentLogIn"
+            android:name=".Activities.ApartmentLoginActivity"
             android:label="Apartment Login"/>
 
 		<service

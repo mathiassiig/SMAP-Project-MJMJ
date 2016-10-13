@@ -3,16 +3,11 @@ package examproject.group22.roominator.Activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.os.IBinder;
-import android.provider.ContactsContract;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +21,7 @@ import examproject.group22.roominator.Models.Apartment;
 import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
-public class ApartmentLogIn extends AppCompatActivity {
+public class ApartmentLoginActivity extends AppCompatActivity {
     SharedPreferences pref;
     SharedPreferences.Editor prefEditor;
 
@@ -53,7 +48,7 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     private void load_from_sp()
     {
-        pref = ApartmentLogIn.this.getPreferences(MODE_PRIVATE);
+        pref = ApartmentLoginActivity.this.getPreferences(MODE_PRIVATE);
         prefEditor = pref.edit();
     }
 
@@ -128,7 +123,7 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     public void LogIn(int apartment_id)
     {
-        Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
+        Intent loggedInIntent = new Intent(ApartmentLoginActivity.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
         loggedInIntent.putExtra("User", currentUser);
         startActivity(loggedInIntent);
@@ -136,7 +131,7 @@ public class ApartmentLogIn extends AppCompatActivity {
     }
 
     public void makePopMessage() {
-        final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLoginActivity.this).create();
         alertDialog.setTitle("New Apartment?"); //TODO: Externalize
         alertDialog.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Create", new DialogInterface.OnClickListener(){
