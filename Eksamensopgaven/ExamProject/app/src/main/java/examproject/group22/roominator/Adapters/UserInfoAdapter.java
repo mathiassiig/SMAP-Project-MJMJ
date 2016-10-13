@@ -25,10 +25,12 @@ import examproject.group22.roominator.R;
 public class UserInfoAdapter extends ArrayAdapter<User> {
 
     public ArrayList<User> users;
-    public UserInfoAdapter(Context context, ArrayList<User> users)
+    ArrayList<Integer> totals;
+    public UserInfoAdapter(Context context, ArrayList<User> users, ArrayList<Integer> totals)
     {
         super(context, 0, users);
         this.users = users;
+        this.totals = totals;
     }
 
     @Override
@@ -39,9 +41,11 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_users, parent, false);
 
         TextView txtName= (TextView) convertView.findViewById(R.id.customUser_txtName);
+        TextView txtTotal= (TextView) convertView.findViewById(R.id.customUser_txtTotal);
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 
         txtName.setText(user.name);
+        txtTotal.setText("Betalt: " + totals.get(position).toString());
 
         if(user.image !=null) {
             imgUser.setImageBitmap(user.image);
@@ -51,6 +55,4 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
 
         return convertView;
     }
-
-
 }

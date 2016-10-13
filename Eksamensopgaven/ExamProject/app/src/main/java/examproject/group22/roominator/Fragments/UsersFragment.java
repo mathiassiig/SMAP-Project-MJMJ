@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -50,10 +51,13 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
     private String mParam1;
     private String mParam2;
 
+    public Apartment currentApartment;
     ListAdapter userAdapter;
     ListView listView;
     ArrayList<User> users = new ArrayList<>();
     private UserItemClickListener mListener;
+    private TextView txtview_Total;
+
 
     public UsersFragment() {
         // Required empty public constructor
@@ -118,12 +122,18 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
 
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-        //Bundle b = getArguments();
-        //ArrayList<User> users = (ArrayList<User> )b.getSerializable("users");
+        ArrayList<Integer> totals = new ArrayList<>();
+
+        for(User u : users)
+        {
+            int total = User.Total(u.boughtByUser);
+            totals.add(total);
+        }
 
 
+        txtview_Total = (TextView)view.findViewById(R.id.customUser_txtTotal);
         listView = (ListView) view.findViewById(R.id.overviewList);
-        userAdapter = new UserInfoAdapter(this.getContext(),users);
+        userAdapter = new UserInfoAdapter(this.getContext(),users, totals);
         listView.setAdapter(userAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);

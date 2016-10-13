@@ -225,7 +225,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     public void onFABClick(View view) {
         Intent addIntent = new Intent(OverviewActivity.this, AddProductActivity.class);
         addIntent.putExtra("ApartmentID", currentApartment.id);
-        Toast.makeText(this, "Add clicked",Toast.LENGTH_LONG).show();
         startActivityForResult(addIntent, NEW_GROCERY_REQUEST);
     }
 

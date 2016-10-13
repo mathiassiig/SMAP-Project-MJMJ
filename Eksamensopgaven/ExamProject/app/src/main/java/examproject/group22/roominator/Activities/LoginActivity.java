@@ -1,25 +1,14 @@
 package examproject.group22.roominator.Activities;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -103,7 +92,7 @@ public class LoginActivity extends AppCompatActivity
             User u = (User)intent.getSerializableExtra("User");
             if(u != null)
             {
-                Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
+                Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLoginActivity.class);
                 loggedInIntent.putExtra("User", u);
                 //save_to_sp(u);
                 startActivity(loggedInIntent);
