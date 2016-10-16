@@ -105,6 +105,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
             Intent logoutIntent = new Intent(OverviewActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -267,6 +268,12 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         // User touched the dialog's negative button
         // TODO Implement
     }
+
+/*    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }*/
 
     @Override
     protected void onDestroy()

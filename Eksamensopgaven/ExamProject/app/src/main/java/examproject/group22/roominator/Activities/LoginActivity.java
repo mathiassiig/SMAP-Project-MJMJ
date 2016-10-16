@@ -72,9 +72,9 @@ public class LoginActivity extends AppCompatActivity
         String username = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
         if(username.equals(""))
-            LoginError("Username must be at least 1 character"); //TODO: Externalize
+            LoginError(getString(R.string.error_login_apartmentShortUser));
         else if(password.equals(""))
-            LoginError("Password must be at least 1 character"); //TODO: Externalize
+            LoginError(getString(R.string.error_login_apartmentShortPass));
         else
             tryLoginLogic(username, password);
     }

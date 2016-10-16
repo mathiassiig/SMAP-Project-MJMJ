@@ -20,8 +20,7 @@
         android:id="@+id/apartment_name_txt"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="g22" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
@@ -32,8 +31,7 @@
         android:id="@+id/apartment_password_txt"
         android:layout_below="@+id/apartment_name_txt"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="g22" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/action_sign_in"

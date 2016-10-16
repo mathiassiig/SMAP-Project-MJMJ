@@ -42,4 +42,11 @@
     <string name="title_activity_overview">Oversigt</string>
     <string name="menu_action_logout">Log ud</string>
     <string name="username">Brugernavn</string>
+    <string name="users_total">Betalt:</string>
+    <string name="addproduct_txtWarning_addProduct">Hvilket produkt vil du tilføje?</string>
+    <string name="apartment_notFound">Lejlighed findes ikke. Opret en ny med det indtastede brugernavn og password?</string>
+    <string name="error_login_apartmentPass">Lejligheden findes, men passwordet er forkert!</string>
+    <string name="error_login_apartmentShortPass">Password skal være mindst 1 tegn</string>
+    <string name="error_login_apartmentShortUser">Brugernavn skal være mindst 1 tegn</string>
+    <string name="new_apartment">Ny lejlighed?</string>
 </resources>

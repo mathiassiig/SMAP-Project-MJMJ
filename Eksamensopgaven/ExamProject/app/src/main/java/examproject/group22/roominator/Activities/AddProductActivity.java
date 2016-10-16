@@ -52,9 +52,18 @@ public class AddProductActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(this, "Udfyld produkt", Toast.LENGTH_LONG).show(); //TODO: Externalize
+            Toast.makeText(this, R.string.addproduct_txtWarning_addProduct, Toast.LENGTH_LONG).show();
 
         }
+
+
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
 
 }

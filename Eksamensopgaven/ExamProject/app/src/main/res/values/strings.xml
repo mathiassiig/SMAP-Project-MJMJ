@@ -10,6 +10,11 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_login_apartmentPass">That apartment exists, but the password is wrong!</string>
+    <string name="error_login_apartmentShortUser">Username must be at least 1 character</string>
+    <string name="error_login_apartmentShortPass">Password must be at least 1 character</string>
+    <string name="new_apartment">New Apartment?</string>
+    <string name="apartment_notFound">Apartment not found. Create a new one with this name and password?</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -21,6 +26,7 @@
     <!-- Strings related to addProduct -->
     <string name="addproduct_txtName">Product:</string>
     <string name="addproduct_txtPrice">Price:</string>
+    <string name="addproduct_txtWarning_addProduct">What product do you want to add?</string>
 
     <!-- Strings related to buyProduct -->
     <string name="buyproduct_txtName">Product:</string>
@@ -52,6 +58,9 @@
 
     <!-- Strings related to ProfileFragment -->
     <string name="profile_lbName">Name:</string>
+
+    <!-- Strings related to UsersInfoAdapter -->
+    <string name="users_total">Paid:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

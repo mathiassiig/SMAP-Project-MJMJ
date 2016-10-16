@@ -1,6 +1,7 @@
 package examproject.group22.roominator.Adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
         ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 
         txtName.setText(user.name);
-        txtTotal.setText("Betalt: " + User.Total(user.boughtByUser)); //TODO: Externalize
+        txtTotal.setText(getContext().getString(R.string.users_total) + " " + User.Total(user.boughtByUser));
 
         if(user.image !=null) {
             imgUser.setImageBitmap(user.image);

@@ -72,9 +72,9 @@ public class ApartmentLogIn extends AppCompatActivity {
         String apartmentname = name.getText().toString();
         String apassword = password.getText().toString();
         if(apartmentname.equals(""))
-            LoginError("Username must be at least 1 character");
+            LoginError(getString(R.string.error_login_apartmentShortUser));
         else if(apassword.equals(""))
-            LoginError("Password must be at least 1 character");
+            LoginError(getString(R.string.error_login_apartmentShortPass));
         else
             db.get_CheckPassWithApartmentName(apartmentname, apassword);
 
@@ -94,7 +94,7 @@ public class ApartmentLogIn extends AppCompatActivity {
             if(aId == 0) //the apartment doesn't exist
                 makePopMessage();
             else if(passwordOK == false)
-                LoginError("That apartment exists, but the password is wrong!"); //TODO: Externalize
+                LoginError(getString(R.string.error_login_apartmentPass));
             else {
                 FetchUser();
                int d =  currentUser.id;
@@ -130,8 +130,8 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     public void makePopMessage() {
         final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
-        alertDialog.setTitle("New Apartment?"); //TODO: Externalize
-        alertDialog.setMessage("Apartment not found, create a new one with this name and password?"); //TODO: Externalize
+        alertDialog.setTitle(getString(R.string.new_apartment));
+        alertDialog.setMessage(getString(R.string.apartment_notFound));
         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Create", new DialogInterface.OnClickListener(){
            public void onClick(DialogInterface dialog, int which){
                Apartment a = new Apartment(name.getText().toString(),password.getText().toString());
