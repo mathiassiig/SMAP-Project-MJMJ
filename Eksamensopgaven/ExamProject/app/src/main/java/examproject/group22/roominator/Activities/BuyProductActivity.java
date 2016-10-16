@@ -52,14 +52,13 @@ public class BuyProductActivity extends AppCompatActivity {
             Timestamp bought = new Timestamp(new Date().getTime());
             i.buyerID = buyer.id;
             i.boughtStamp = bought;
-            //EditText et = (EditText) findViewById(R.id.buyproduct_etPrice);
             i.price = Integer.parseInt(editTextPrice.getText().toString());
             DatabaseService.getInstance(getApplicationContext()).put_UpdateGrocery(i);
             finish();
         }
         else
         {
-            Toast.makeText(this, "Indtast pris", Toast.LENGTH_LONG).show(); //TODO: Externalize
+            Toast.makeText(this, R.string.buyproduct_etPrice, Toast.LENGTH_LONG).show();
 
         }
     }
