@@ -266,8 +266,6 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
 
     @Override
     public void onProductDialogPositiveClick(DialogFragment dialog) {
-        // User touched the dialog's positive button
-        //TODO Implement
         db.delete_grocery(unBoughts.get(groceryPos).id);
         Toast.makeText(this, R.string.dialog_product_deleted, Toast.LENGTH_LONG).show();
     }

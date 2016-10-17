@@ -61,14 +61,14 @@ public class ApartmentLogIn extends AppCompatActivity {
     }
 
 
-    public void FetchUser()
+    private void FetchUser()
     {
         Intent i = getIntent();
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
     }
 
-    public void onClickLogInApartment(View view){
+    private void onClickLogInApartment(View view){
         String apartmentname = name.getText().toString();
         String apassword = password.getText().toString();
         if(apartmentname.equals(""))
@@ -80,7 +80,7 @@ public class ApartmentLogIn extends AppCompatActivity {
 
     }
 
-    public void LoginError(String error)
+    private void LoginError(String error)
     {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
@@ -119,7 +119,7 @@ public class ApartmentLogIn extends AppCompatActivity {
        }
    };
 
-    public void LogIn(int apartment_id)
+    private void LogIn(int apartment_id)
     {
         Intent loggedInIntent = new Intent(ApartmentLogIn.this, OverviewActivity.class);
         loggedInIntent.putExtra("apartmentID", apartment_id);
@@ -128,7 +128,7 @@ public class ApartmentLogIn extends AppCompatActivity {
         finish();
     }
 
-    public void makePopMessage() {
+    private void makePopMessage() {
         final AlertDialog alertDialog = new AlertDialog.Builder(ApartmentLogIn.this).create();
         alertDialog.setTitle(getString(R.string.new_apartment));
         alertDialog.setMessage(getString(R.string.apartment_notFound));

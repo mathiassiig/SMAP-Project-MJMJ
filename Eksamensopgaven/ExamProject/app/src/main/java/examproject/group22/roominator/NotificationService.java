@@ -101,8 +101,8 @@ public class NotificationService extends Service {
     {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.shoppingicon).
-                        setContentTitle("Shoppinglist update"). //TODO: EXTERNALIZE
-                        setContentText("Someone has made changes in the shoppinglist"); //TODO: EXTERNALIZE
+                        setContentTitle(getResources().getString(R.string.notification_title)).
+                        setContentText(getResources().getString(R.string.notification_content));
 
         Intent resultIntent = new Intent(this, LoginActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity( this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT );

@@ -19,12 +19,10 @@ import examproject.group22.roominator.R;
  * create an instance of this fragment.
  */
 public class DeleteProductFragment extends DialogFragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -32,18 +30,8 @@ public class DeleteProductFragment extends DialogFragment {
 
 
     public DeleteProductFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeleteProductFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DeleteProductFragment newInstance(String param1, String param2) {
         DeleteProductFragment fragment = new DeleteProductFragment();
         Bundle args = new Bundle();
@@ -80,7 +68,6 @@ public class DeleteProductFragment extends DialogFragment {
         return builder.create();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(DialogFragment dialog) {
         if (mListener != null) {
             mListener.onProductDialogNegativeClick(dialog);

@@ -443,7 +443,7 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        //TODO: Do something?
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -503,7 +503,7 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        Send_GUI_UpdateRequest();
                     }
                 }, new Response.ErrorListener() {
                     @Override
