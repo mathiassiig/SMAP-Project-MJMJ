@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity
                 save_to_sp(u);
                 Intent loggedInIntent = new Intent(LoginActivity.this, ApartmentLogIn.class);
                 loggedInIntent.putExtra("User", u);
-                //save_to_sp(u);
                 startActivity(loggedInIntent);
                 finish();
             }
