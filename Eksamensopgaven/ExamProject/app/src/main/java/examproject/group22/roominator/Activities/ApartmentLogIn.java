@@ -27,8 +27,6 @@ import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 public class ApartmentLogIn extends AppCompatActivity {
-    SharedPreferences pref;
-    private SharedPreferences.Editor prefEditor;
 
 
     private EditText name;
@@ -52,12 +50,6 @@ public class ApartmentLogIn extends AppCompatActivity {
         if(currentUser.ApartmentID!=0){
             LogIn(currentUser.ApartmentID);
         }
-    }
-
-    private void save_to_sp(Apartment a)
-    {
-        prefEditor.putInt("aId",a.id);
-        prefEditor.apply();
     }
 
 
