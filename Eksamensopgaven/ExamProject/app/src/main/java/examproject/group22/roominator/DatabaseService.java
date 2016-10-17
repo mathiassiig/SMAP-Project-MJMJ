@@ -265,13 +265,16 @@ public class DatabaseService{
 
     public void delete_user(User u)
     {
-        for(int i = 0; i < u.boughtByUser.size(); i++)
-        {
-            boolean Last = false;
-            if(i == u.boughtByUser.size()-1)
-                Last = true;
-            delete_grocery(u.boughtByUser.get(i).id, Last, u);
+        if(u.boughtByUser.size() >= 1) {
+            for (int i = 0; i < u.boughtByUser.size(); i++) {
+                boolean Last = false;
+                if (i == u.boughtByUser.size() - 1)
+                    Last = true;
+                delete_grocery(u.boughtByUser.get(i).id, Last, u);
+            }
         }
+        else
+            delete_user_itself(u);
     }
 
     private void delete_user_itself(User u)
