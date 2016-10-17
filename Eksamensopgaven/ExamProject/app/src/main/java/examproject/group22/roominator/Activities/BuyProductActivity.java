@@ -20,7 +20,6 @@ import examproject.group22.roominator.R;
 public class BuyProductActivity extends AppCompatActivity {
 
 
-    private TextView TextviewProductName;
     private EditText editTextPrice;
 
     @Override
@@ -29,14 +28,14 @@ public class BuyProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy_product);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TextviewProductName = (TextView) findViewById(R.id.buyproduct_txtName);
+        TextView textviewProductName = (TextView) findViewById(R.id.buyproduct_txtName);
         editTextPrice = (EditText) findViewById(R.id.buyproduct_etPrice);
 
 
         Bundle bundle = getIntent().getExtras();
         final GroceryItem i = (GroceryItem)bundle.getSerializable("groceryItem");
         final User u = (User)bundle.getSerializable("potentialBuyer");
-        TextviewProductName.setText(i.name);
+        textviewProductName.setText(i.name);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_buy);
         fab.setOnClickListener(new View.OnClickListener() {

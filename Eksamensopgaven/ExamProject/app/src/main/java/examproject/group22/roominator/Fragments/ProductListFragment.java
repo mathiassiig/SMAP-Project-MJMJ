@@ -38,8 +38,6 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
     public ArrayList<GroceryItem> groceries = new ArrayList<>();
 
     FloatingActionButton fab;
@@ -89,10 +87,6 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
