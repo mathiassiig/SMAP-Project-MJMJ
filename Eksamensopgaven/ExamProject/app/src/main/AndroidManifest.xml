@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.LoginActivity"
-            android:label="User Login"
+            android:label="@string/loginActivity"
             android:noHistory="true">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".Activities.ApartmentLogIn"
-            android:label="Apartment Login"
+            android:label="@string/loginApartmentActivity"
             android:noHistory="true"/>
 
 		<service
@@ -41,7 +41,7 @@
             android:exported="true"></receiver>
 
         <activity android:name=".Activities.SignUpActivity"
-            android:label="Sign Up"/>/>
+            android:label="@string/SignUpActivity"/>/>
         <activity
             android:name=".Activities.AddProductActivity"
             android:label="@string/title_activity_add_product"
@@ -50,8 +50,8 @@
             android:name=".Activities.BuyProductActivity"
             android:label="@string/title_activity_buy_product"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.DetailActivity" />
-        <activity android:name=".Activities.OverviewActivity"></activity>
+        <activity android:name=".Activities.DetailActivity"/>
+        <activity android:name=".Activities.OverviewActivity"/>
 
 
 

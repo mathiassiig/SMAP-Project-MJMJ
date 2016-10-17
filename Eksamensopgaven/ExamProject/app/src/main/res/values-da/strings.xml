@@ -49,4 +49,9 @@
     <string name="error_login_apartmentShortPass">Password skal være mindst 1 tegn</string>
     <string name="error_login_apartmentShortUser">Brugernavn skal være mindst 1 tegn</string>
     <string name="new_apartment">Ny lejlighed?</string>
+    <string name="AddActivity">Tilføj produkt</string>
+    <string name="BuyActivity">Køb produkt</string>
+    <string name="SignUpActivity">Opret bruger</string>
+    <string name="loginActivity">Bruger - login</string>
+    <string name="loginApartmentActivity">Lejlighed Login</string>
 </resources>

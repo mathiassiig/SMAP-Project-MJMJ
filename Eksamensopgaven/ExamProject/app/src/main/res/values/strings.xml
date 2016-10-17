@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">Roomienator</string>
 
+    <!-- Strings related to Activities -->
+    <string name="loginActivity">User login</string>
+    <string name="loginApartmentActivity">Apartment login</string>
+    <string name="SignUpActivity">Create user</string>
+    <string name="AddActivity">Add product</string>
+    <string name="BuyActivity">Buy product</string>
+
+
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -44,7 +53,7 @@
     <string name="overview_btnUserProfile">Profile</string>
 
     <!-- Strings related to deleteUserFragment -->
-    <string name="dialog_user_title">Do you want to remove user?</string>
+    <string name="dialog_user_title">Do you want to remove the user from the apartment?</string>
     <string name="dialog_user_message">The users data will be deleted permanently</string>
     <string name="dialog_user_btnCancel">Cancel</string>
     <string name="dialog_user_btnOK">OK</string>
