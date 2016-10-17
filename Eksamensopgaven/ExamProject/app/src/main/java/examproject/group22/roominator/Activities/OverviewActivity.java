@@ -270,7 +270,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
 
-   @Override
+    @Override
     public void onBackPressed()
     {
 
@@ -279,7 +279,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
     @Override
-    protected void onDestroy()
+    public void onDestroy()
     {
         super.onDestroy();
     }
