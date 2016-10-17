@@ -135,6 +135,7 @@ public class ApartmentLogIn extends AppCompatActivity {
                 alertDialog.cancel();
             }
         });
-        alertDialog.show();
+        if(!isFinishing())
+            alertDialog.show();
     }
 }
