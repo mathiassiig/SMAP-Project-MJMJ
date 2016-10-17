@@ -34,7 +34,7 @@
 
     <!-- Strings related to addProduct -->
     <string name="addproduct_txtName">Product:</string>
-    <string name="addproduct_txtPrice">Price:</string>
+    <string name="addproduct_txtPrice">Insert product</string>
     <string name="addproduct_txtWarning_addProduct">What product do you want to add?</string>
 
     <!-- Strings related to buyProduct -->

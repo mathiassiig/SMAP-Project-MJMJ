@@ -6,7 +6,7 @@
     <string name="action_sign_up">Opret bruger</string>
     <string name="addproduct_txtName">Produkt:</string>
     <string name="addproduct_txtNumber">Antal:</string>
-    <string name="addproduct_txtPrice">Pris:</string>
+    <string name="addproduct_txtPrice">Indtast produkt</string>
     <string name="apartment_name">Lejlighed</string>
     <string name="buyproduct_etPrice">Indtast pris</string>
     <string name="buyproduct_txtName">Produkt:</string>
@@ -52,6 +52,6 @@
     <string name="AddActivity">Tilføj produkt</string>
     <string name="BuyActivity">Køb produkt</string>
     <string name="SignUpActivity">Opret bruger</string>
-    <string name="loginActivity">Bruger - login</string>
+    <string name="loginActivity">Bruger - Login</string>
     <string name="loginApartmentActivity">Lejlighed Login</string>
 </resources>

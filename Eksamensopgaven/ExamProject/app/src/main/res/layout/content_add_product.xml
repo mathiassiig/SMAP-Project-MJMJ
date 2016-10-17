@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/addproduct_txtName"
         android:layout_toEndOf="@+id/addproduct_txtName"
         android:layout_marginLeft="20dp"
-        android:hint="Indtast produkt"
+        android:hint="@string/addproduct_txtPrice"
         android:inputType="text|textCapSentences" />
 
     <TextView
