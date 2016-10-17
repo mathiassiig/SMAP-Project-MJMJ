@@ -22,7 +22,7 @@
         android:layout_toRightOf="@+id/addproduct_txtName"
         android:layout_toEndOf="@+id/addproduct_txtName"
         android:layout_marginLeft="20dp"
-        android:hint="@string/addproduct_txtPrice"
+        android:hint="@string/addproduct_txtHint"
         android:inputType="text|textCapSentences" />
 
     <TextView

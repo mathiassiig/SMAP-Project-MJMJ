@@ -4,7 +4,7 @@
     <string name="action_sign_in">Log ind</string>
     <string name="action_sign_up">Opret bruger</string>
     <string name="addproduct_txtName">Produkt:</string>
-    <string name="addproduct_txtPrice">Indtast produkt</string>
+    <string name="addproduct_txtHint">Produktnavn</string>
     <string name="apartment_name">Lejlighed</string>
     <string name="buyproduct_etPrice">Indtast pris</string>
     <string name="buyproduct_txtName">Produkt:</string>
