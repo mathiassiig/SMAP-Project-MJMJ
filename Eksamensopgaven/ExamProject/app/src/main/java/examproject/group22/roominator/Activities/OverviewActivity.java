@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -250,10 +251,9 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     }
 
     @Override
-    public void onUserDialogNegativeClick(DialogFragment dialog) {
-        // User touched the dialog's negative button
-        //TODO Implement
-    }
+    public void onUserDialogNegativeClick(DialogFragment dialog) {}
+    @Override
+    public void onProductDialogNegativeClick(DialogFragment dialog) {}
 
     @Override
     public void onProductDialogPositiveClick(DialogFragment dialog) {
@@ -263,36 +263,19 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         Toast.makeText(this, R.string.dialog_product_deleted, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onProductDialogNegativeClick(DialogFragment dialog) {
-        // User touched the dialog's negative button
-        // TODO Implement
-    }
 
-/*    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+   @Override
+    public void onBackPressed()
+    {
+
         this.finish();
-    }*/
+        super.onBackPressed();
+    }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
     }
-
-   /* private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service)
-        {
-            LocalBinder binder = (LocalBinder) service;
-            notificationService = binder.getService();
-            isBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
-        }
-    };*/
+    
 }

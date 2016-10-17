@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.LoginActivity"
-            android:label="User Login">
+            android:label="User Login"
+            android:noHistory="true">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,7 +27,8 @@
         </activity>
         <activity
             android:name=".Activities.ApartmentLogIn"
-            android:label="Apartment Login"/>
+            android:label="Apartment Login"
+            android:noHistory="true"/>
 
 		<service
             android:name=".NotificationService"
