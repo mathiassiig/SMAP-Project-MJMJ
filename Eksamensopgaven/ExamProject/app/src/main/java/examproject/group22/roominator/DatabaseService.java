@@ -75,7 +75,6 @@ public class DatabaseService{
                 try
                 {
                     Apartment a = parser.parseApartmentWithGroceries(response);
-                    saveGroceriesToPref(a.groceries);
                     sendApartmentWithGroceries(a, forService);
                 }
                 catch (ParseException e)
@@ -263,10 +262,47 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void delete_user(final int user_id)
+    public void delete_user(User u)
+    {
+        if(u.boughtByUser.size() >= 1) {
+            for (int i = 0; i < u.boughtByUser.size(); i++) {
+                boolean Last = false;
+                if (i == u.boughtByUser.size() - 1)
+                    Last = true;
+                delete_grocery(u.boughtByUser.get(i).id, Last, u);
+            }
+        }
+        else
+            delete_user_itself(u);
+    }
+
+    private void delete_user_itself(User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
-        String url = HOST_API+TABLE_USERS+"/"+user_id;
+        String url = HOST_API+TABLE_USERS+"/"+u.id;
+        Map<String,String> params = new HashMap<String, String>();
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        Send_GUI_UpdateRequest();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                String hello = error.getMessage();
+                Log.v("Hello", hello);
+            }
+        });
+        queue.add(req);
+    }
+
+    public void delete_grocery(final int grocery_id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_GROCERIES+"/"+grocery_id;
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -284,7 +320,7 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void delete_grocery(final int grocery_id)
+    public void delete_grocery(final int grocery_id, final boolean LastBought, final User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+grocery_id;
@@ -293,7 +329,8 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        if(LastBought)
+                            delete_user_itself(u);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -481,21 +518,6 @@ public class DatabaseService{
     public void setContext(Context c)
     {
         current_context = c;
-    }
-
-    public void saveGroceriesToPref(List<GroceryItem> groceries){
-        try {
-            SharedPreferences sharedPref = current_context.getSharedPreferences("Groceries", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            for (GroceryItem g : groceries) {
-                String id = Integer.toString(g.id);
-                String boughtStamp = g.boughtStamp.toString();
-                editor.putString(id, boughtStamp);
-                editor.apply();
-            }
-        }catch (Exception e){
-            Log.v("Debug",e.toString());
-        }
     }
 
 }

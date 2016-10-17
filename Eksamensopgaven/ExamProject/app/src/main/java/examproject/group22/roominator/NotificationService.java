@@ -72,14 +72,15 @@ public class NotificationService extends Service {
     {
         Log.v("Service","Comparing results");
         sharedPref = NotificationService.this.getSharedPreferences("Groceries", MODE_PRIVATE);
-        /*for (GroceryItem g : groceries) {
-            int buyer = sharedPref.getInt(Integer.toString(g.id),-1);
+        for (GroceryItem g : groceries) {
+            String key = Integer.toString(g.id);
+                int buyer = sharedPref.getInt(key,-1);
             if(buyer==-1 || buyer != g.buyerID)
             {
                 notifyUser();
                 break;
             }
-        }*/
+        }
     }
 
     public void checkDataBase() {
@@ -106,6 +107,7 @@ public class NotificationService extends Service {
         Intent resultIntent = new Intent(this, LoginActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity( this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT );
         mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setAutoCancel(true);
         int mNotificationId = 1;
         NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotifyMgr.notify(mNotificationId, mBuilder.build());

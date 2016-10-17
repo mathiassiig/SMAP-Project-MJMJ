@@ -54,4 +54,10 @@
     <string name="SignUpActivity">Opret bruger</string>
     <string name="loginActivity">Bruger - Login</string>
     <string name="loginApartmentActivity">Lejlighed Login</string>
+    <string name="AddActivity">Tilføj produkt</string>
+    <string name="BuyActivity">Køb produkt</string>
+    <string name="SignUpActivity">Lav bruger</string>
+    <string name="dialog_user_cannot_delete">Du kan ikke slette dig selv</string>
+    <string name="loginActivity">Bruger login</string>
+    <string name="loginApartmentActivity">Lejlighed login</string>
 </resources>

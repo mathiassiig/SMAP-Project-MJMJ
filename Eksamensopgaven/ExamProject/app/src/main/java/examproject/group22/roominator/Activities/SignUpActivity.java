@@ -91,6 +91,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
     private void save_to_sp(User u)
     {
+        if(prefEditor == null)
+        {
+            pref = getSharedPreferences("LoginPrefs",MODE_PRIVATE);
+            prefEditor = pref.edit();
+        }
         prefEditor.putString("name",u.name);
         prefEditor.putString("password", u.password);
         prefEditor.apply();

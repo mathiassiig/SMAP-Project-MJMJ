@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.IntentCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -124,14 +123,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         public void onReceive(Context context, Intent intent)
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
-            /// gemmer til sharedpreferences
-            SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
-            SharedPreferences.Editor prefEditor = sharedPref.edit();
-            for (GroceryItem g:a.groceries)
-            {
-                prefEditor.putInt(Integer.toString(g.id),g.buyerID);
-            }
-            prefEditor.apply();
+            SaveToSP(a);
             ///
             currentApartment = a;
             unBoughts = new ArrayList<>();
@@ -141,6 +133,18 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             UpdateGroceriesFragment(unBoughts);
         }
     };
+
+    private void SaveToSP(Apartment a)
+    {
+        SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.clear();
+        for (GroceryItem g:a.groceries)
+        {
+            prefEditor.putInt(Integer.toString(g.id),g.buyerID);
+        }
+        prefEditor.apply();
+    }
 
     private BroadcastReceiver updateReceiver = new BroadcastReceiver() {
         @Override
@@ -215,8 +219,13 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         userPos = position;
-        DialogFragment dialog= new DeleteUserFragment();
-        dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");
+        User u = currentApartment.users.get(userPos);
+        if(u.id == currentUser.id)
+            Toast.makeText(this, R.string.dialog_user_cannot_delete, Toast.LENGTH_LONG).show();
+        else {
+            DialogFragment dialog = new DeleteUserFragment();
+            dialog.show(getSupportFragmentManager(), "DeleteUserDialogFragment");
+        }
     }
 
     @Override
@@ -246,7 +255,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
-        db.delete_user(currentApartment.users.get(userPos).id);
+        db.delete_user(currentApartment.users.get(userPos));
         Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
@@ -277,5 +286,5 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     {
         super.onDestroy();
     }
-    
+
 }
