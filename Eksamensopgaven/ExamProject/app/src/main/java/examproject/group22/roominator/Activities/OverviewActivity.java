@@ -44,13 +44,13 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         DeleteProductFragment.DeleteProductDialogListener{
     
     private static final int NEW_GROCERY_REQUEST = 9001;
-    public Apartment currentApartment;
+    private Apartment currentApartment;
     private int currentApartmentID;
-    public ArrayList<GroceryItem> unBoughts;
-    public User currentUser;
-    public DatabaseService db;
-    int groceryPos;
-    int userPos;
+    private ArrayList<GroceryItem> unBoughts;
+    private User currentUser;
+    private DatabaseService db;
+    private int groceryPos;
+    private int userPos;
 
     public static final String INTENT_UPDATE_ALL_DATA = "updateDataInOverview";
 
@@ -64,8 +64,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_ALL_GROCERIES_IN_APARTMENT));
         LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver,new IntentFilter(INTENT_UPDATE_ALL_DATA));
         Intent i = getIntent();
-        int apartmentId = i.getIntExtra("apartmentID", 0); //ikke skide fedt hvis den her er 0 :-)
-        currentApartmentID = apartmentId;
+        currentApartmentID = i.getIntExtra("apartmentID", 0);
         User u = (User)i.getSerializableExtra("User");
         currentUser = u;
         startNotificationService(currentApartmentID);
@@ -79,7 +78,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         super.onResume();
     }
 
-    public void UpdateAllData(int apartmentID)
+    private void UpdateAllData(int apartmentID)
     {
         db.get_Apartment(apartmentID, false);
     }
@@ -111,14 +110,14 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         return super.onOptionsItemSelected(item);
     }
 
-    public void startNotificationService(int apartmentId){
+    private void startNotificationService(int apartmentId){
         Intent notificationService = new Intent(OverviewActivity.this, NotificationService.class);
         notificationService.putExtra("apartmentID", apartmentId);
         startService(notificationService);
         Log.v("Debug","Overview has started notification service");
     }
 
-    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {
@@ -146,7 +145,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         prefEditor.apply();
     }
 
-    private BroadcastReceiver updateReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive (Context context, Intent intent)
         {

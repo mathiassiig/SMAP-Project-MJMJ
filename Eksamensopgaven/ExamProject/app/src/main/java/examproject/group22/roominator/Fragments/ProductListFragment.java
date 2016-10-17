@@ -38,10 +38,10 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public ArrayList<GroceryItem> groceries = new ArrayList<>();
+    private final ArrayList<GroceryItem> groceries = new ArrayList<>();
 
-    FloatingActionButton fab;
-    ListView listView;
+    private FloatingActionButton fab;
+    private ListView listView;
 
 
     private GroceryItemClickListener  mListener;
@@ -64,7 +64,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
         super.onPause();
     }
 
-    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {
@@ -90,7 +90,7 @@ public class ProductListFragment extends Fragment implements AdapterView.OnItemC
 
     }
 
-    GroceryItemAdapter G_adapter;
+    private GroceryItemAdapter G_adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

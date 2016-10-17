@@ -28,14 +28,14 @@ import examproject.group22.roominator.R;
 
 public class ApartmentLogIn extends AppCompatActivity {
     SharedPreferences pref;
-    SharedPreferences.Editor prefEditor;
+    private SharedPreferences.Editor prefEditor;
 
 
-    EditText name;
-    EditText password;
-    DatabaseService db;
-    User currentUser;
-    int aId;
+    private EditText name;
+    private EditText password;
+    private DatabaseService db;
+    private User currentUser;
+    private int aId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,8 +64,7 @@ public class ApartmentLogIn extends AppCompatActivity {
     private void FetchUser()
     {
         Intent i = getIntent();
-        User u = (User)i.getSerializableExtra("User");
-        currentUser = u;
+        currentUser = (User)i.getSerializableExtra("User");
     }
 
     private void onClickLogInApartment(View view){
@@ -85,7 +84,7 @@ public class ApartmentLogIn extends AppCompatActivity {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
-    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {
@@ -93,7 +92,7 @@ public class ApartmentLogIn extends AppCompatActivity {
             boolean passwordOK = intent.getBooleanExtra("apartmentOK", false);
             if(aId == 0) //the apartment doesn't exist
                 makePopMessage();
-            else if(passwordOK == false)
+            else if(!passwordOK)
                 LoginError(getString(R.string.error_login_apartmentPass));
             else {
                 FetchUser();
@@ -102,7 +101,7 @@ public class ApartmentLogIn extends AppCompatActivity {
             }
         }
     };
-   private BroadcastReceiver userReciever = new BroadcastReceiver() {
+   private final BroadcastReceiver userReciever = new BroadcastReceiver() {
        @Override
        public void onReceive(Context context, Intent intent) {
               try {

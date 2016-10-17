@@ -25,7 +25,7 @@ import examproject.group22.roominator.R;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-    Context context;
+    private final Context context;
     public TabsPagerAdapter(FragmentManager fragmentManager, Context context){
         super(fragmentManager);
         this.context = context;
@@ -40,11 +40,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position){
         switch (position){
             case 0:
-                ProductListFragment plf = new ProductListFragment();
-                return plf;
+                return new ProductListFragment();
             case 1:
-                UsersFragment uf = new UsersFragment();
-                return uf;
+                return new UsersFragment();
             default:
                 return null;
         }

@@ -18,7 +18,7 @@ import examproject.group22.roominator.R;
 
 public class GroceryItemAdapter extends ArrayAdapter<GroceryItem>
 {
-    ArrayList<GroceryItem> groceryItems;
+    private final ArrayList<GroceryItem> groceryItems;
     public GroceryItemAdapter(Context context, ArrayList<GroceryItem> groceryItems)
     {
         super(context, 0, groceryItems);

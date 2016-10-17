@@ -40,11 +40,6 @@ public class DeleteProductFragment extends DialogFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_product_message)
@@ -97,7 +92,7 @@ public class DeleteProductFragment extends DialogFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface DeleteProductDialogListener {
-        public void onProductDialogPositiveClick(DialogFragment dialog);
-        public void onProductDialogNegativeClick(DialogFragment dialog);
+        void onProductDialogPositiveClick(DialogFragment dialog);
+        void onProductDialogNegativeClick(DialogFragment dialog);
     }
 }

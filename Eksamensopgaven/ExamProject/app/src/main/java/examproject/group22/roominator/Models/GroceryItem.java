@@ -12,13 +12,13 @@ import java.sql.Timestamp;
 
 public class GroceryItem implements Serializable
 {
-    public int id;
-    public String name;
+    public final int id;
+    public final String name;
     public int price;
-    public Timestamp creationStamp;
+    public final Timestamp creationStamp;
     public Timestamp boughtStamp;
     public int buyerID;
-    public int apartmentID;
+    public final int apartmentID;
 
     public GroceryItem(int id, String name, int price, Timestamp creationStamp, int apartmentId)
     {

@@ -39,9 +39,9 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
     private static final String ARG_PARAM2 = "param2";
 
     public Apartment currentApartment;
-    ListAdapter userAdapter;
-    ListView listView;
-    ArrayList<User> users = new ArrayList<>();
+    private ListAdapter userAdapter;
+    private ListView listView;
+    private final ArrayList<User> users = new ArrayList<>();
     private UserItemClickListener mListener;
     private TextView txtview_Total;
 
@@ -78,7 +78,7 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
         super.onPause();
     }
 
-    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {

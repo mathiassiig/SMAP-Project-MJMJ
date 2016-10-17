@@ -23,7 +23,7 @@ public class DetailFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
 
-    DetailListAdapter detailListAdapter;
+    private DetailListAdapter detailListAdapter;
 
     private OnFragmentInteractionListener mListener;
 

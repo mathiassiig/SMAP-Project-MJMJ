@@ -21,14 +21,14 @@ import examproject.group22.roominator.R;
 
 public class DetailListAdapter extends ArrayAdapter<GroceryItem>
 {
-    ArrayList<GroceryItem> groceryItems;
+    private final ArrayList<GroceryItem> groceryItems;
     public DetailListAdapter(Context context, ArrayList<GroceryItem> groceryItems)
     {
         super(context, 0, groceryItems);
         this.groceryItems = groceryItems;
     }
 
-    DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
+    private final DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)

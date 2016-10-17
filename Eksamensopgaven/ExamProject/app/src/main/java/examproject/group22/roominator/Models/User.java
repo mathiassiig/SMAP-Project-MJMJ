@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
 
-    public String name;
-    public String password;
-    public Bitmap image;
+    public final String name;
+    public final String password;
+    public final Bitmap image;
     public ArrayList<GroceryItem> boughtByUser;
     public int ApartmentID;
     public int id;

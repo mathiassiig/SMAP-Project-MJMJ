@@ -25,7 +25,7 @@ import examproject.group22.roominator.R;
 //public class UserInfoAdapter extends ArrayAdapter<UserInfo> {
 public class UserInfoAdapter extends ArrayAdapter<User> {
 
-    public ArrayList<User> users;
+    private final ArrayList<User> users;
     ArrayList<Integer> totals;
     public UserInfoAdapter(Context context, ArrayList<User> users)
     {

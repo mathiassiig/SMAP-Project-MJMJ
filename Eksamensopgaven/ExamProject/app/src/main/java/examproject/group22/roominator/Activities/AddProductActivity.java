@@ -17,9 +17,9 @@ import examproject.group22.roominator.R;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    public static final int RESULT_ADDED = 1;
+    private static final int RESULT_ADDED = 1;
     private EditText EditTextProduct;
-    public int ApartmentID;
+    private int ApartmentID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class AddProductActivity extends AppCompatActivity {
             Timestamp creation = new Timestamp(new Date().getTime());
             DatabaseService.getInstance(getApplicationContext()).post_NewGrocery(name, creation, ApartmentID);
             Intent returnIntent = new Intent();
-            setResult(this.RESULT_ADDED,returnIntent);
+            setResult(RESULT_ADDED,returnIntent);
             finish();
         }
         else

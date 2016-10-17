@@ -24,12 +24,12 @@ import examproject.group22.roominator.R;
 public class LoginActivity extends AppCompatActivity
 {
 
-    public static final int SIGUN_REQUEST_CODE = 1;
-    SharedPreferences pref;
-    SharedPreferences.Editor prefEditor;
-    EditText txtUsername;
-    EditText txtPassword;
-    DatabaseService db;
+    private static final int SIGUN_REQUEST_CODE = 1;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor prefEditor;
+    private EditText txtUsername;
+    private EditText txtPassword;
+    private DatabaseService db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +84,12 @@ public class LoginActivity extends AppCompatActivity
         db.get_checkPassWithUsername(username, password);
     }
 
-    public void LoginError(String error)
+    private void LoginError(String error)
     {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
-    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             User u = (User)intent.getSerializableExtra("User");

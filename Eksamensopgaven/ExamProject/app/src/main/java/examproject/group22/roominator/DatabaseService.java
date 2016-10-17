@@ -32,23 +32,23 @@ import examproject.group22.roominator.Models.User;
 
 public class DatabaseService{
 
-    public static String HOST_API = "http://roomienatorweb3.azurewebsites.net/api/";
-    public static String TABLE_APARTMENTS = "Apartments";
-    public static String TABLE_USERS = "Users";
-    public static String TABLE_GROCERIES = "GroceryItems";
+    private static final String HOST_API = "http://roomienatorweb3.azurewebsites.net/api/";
+    private static final String TABLE_APARTMENTS = "Apartments";
+    private static final String TABLE_USERS = "Users";
+    private static final String TABLE_GROCERIES = "GroceryItems";
 
-    public static String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
-    public static String INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE = "groceriesApartmentService";
-    public static String INTENT_USER_AUTHENTICATION = "userAuthentication";
-    public static String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
-    public static String INTENT_USER = "userIntent";
-    public static String INTENT_TRY_MAKING_NEW_USER = "tryNewUser";
+    public static final String INTENT_ALL_GROCERIES_IN_APARTMENT = "groceriesApartment";
+    public static final String INTENT_ALL_GROCERIES_IN_APARTMENT_SERVICE = "groceriesApartmentService";
+    public static final String INTENT_USER_AUTHENTICATION = "userAuthentication";
+    public static final String INTENT_APARTMENT_AUTHENTICATION = "apartmentAuthentication";
+    public static final String INTENT_USER = "userIntent";
+    public static final String INTENT_TRY_MAKING_NEW_USER = "tryNewUser";
 
     private Context current_context;
-    public  ResponseParser parser;
+    private final ResponseParser parser;
 
     private static DatabaseService instance;
-    protected DatabaseService(Context c)
+    private DatabaseService(Context c)
     {
         parser = new ResponseParser();
         current_context = c;
@@ -320,7 +320,7 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void delete_grocery(final int grocery_id, final boolean LastBought, final User u)
+    private void delete_grocery(final int grocery_id, final boolean LastBought, final User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+grocery_id;

@@ -27,7 +27,7 @@ import examproject.group22.roominator.Models.User;
 
 public class ResponseParser
 {
-    public SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public ArrayList<User> parseUsers(String response) throws JSONException {
         return getUsersFromJson(new JSONArray(response));
@@ -38,10 +38,9 @@ public class ResponseParser
         ArrayList<User> usersArray = new ArrayList<User>();
         try
         {
-            JSONArray array = users;
-            for (int i = 0; i < array.length(); i++)
+            for (int i = 0; i < users.length(); i++)
             {
-                JSONObject object = array.getJSONObject(i);
+                JSONObject object = users.getJSONObject(i);
                 usersArray.add(parseOneUser(object));
             }
         }
@@ -148,24 +147,6 @@ public class ResponseParser
             e.printStackTrace();
         }
         return a;
-    }
-
-
-    // http://stackoverflow.com/questions/20700181/convert-imageview-in-bytes-android
-    private byte[] convertBitmapToByteArray(Bitmap bitmap){
-        ByteArrayOutputStream BAPS = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, BAPS);
-        byte[] byteArray = BAPS.toByteArray();
-        return  byteArray;
-    }
-
-    // http://stackoverflow.com/questions/11613594/android-how-to-convert-byte-array-to-bitmap
-    private Bitmap convertByteArrayToBitmap(Blob bytes) throws SQLException {
-        byte[] image = bytes.getBytes(0, (int) bytes.length()); //Convert blob to bytearray
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length, options); //Convert bytearray to bitmap
-        bytes.free();
-        return bitmap;
     }
 
 

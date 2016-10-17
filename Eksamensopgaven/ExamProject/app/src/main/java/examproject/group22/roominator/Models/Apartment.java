@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Apartment implements Serializable{
 
     public int id;
-    public String name;
-    public String password;
+    public final String name;
+    public final String password;
     public ArrayList<GroceryItem> groceries;
     public ArrayList<User> users;
 

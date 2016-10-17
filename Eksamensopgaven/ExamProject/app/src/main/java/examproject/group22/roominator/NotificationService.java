@@ -31,8 +31,8 @@ public class NotificationService extends Service {
 
     private final IBinder binder = new LocalBinder();
 
-    SharedPreferences sharedPref;
-    public int apartment_id;
+    private SharedPreferences sharedPref;
+    private int apartment_id;
 
     @Override
     public void onCreate() {
@@ -57,7 +57,7 @@ public class NotificationService extends Service {
         //return super.onStartCommand(intent, flags, startId);
     }
 
-    public void setUpAlarm() {
+    private void setUpAlarm() {
         AlarmManager aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(getBaseContext(), NotificationReceiver.class);
         intent.putExtra("apartmentID", apartment_id);
@@ -68,7 +68,7 @@ public class NotificationService extends Service {
         aManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
-    public void compareResults(ArrayList<GroceryItem> groceries)
+    private void compareResults(ArrayList<GroceryItem> groceries)
     {
         Log.v("Service","Comparing results");
         sharedPref = NotificationService.this.getSharedPreferences("Groceries", MODE_PRIVATE);
@@ -83,7 +83,7 @@ public class NotificationService extends Service {
         }
     }
 
-    public void checkDataBase() {
+    private void checkDataBase() {
         Log.v("Debug","Checker data for changes");
         Thread t = new Thread() {
             @Override
@@ -97,7 +97,7 @@ public class NotificationService extends Service {
     }
 
     //https://developer.android.com/training/notify-user/build-notification.html#action
-    public void notifyUser()
+    private void notifyUser()
     {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.shoppingicon).
@@ -113,7 +113,7 @@ public class NotificationService extends Service {
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 
-    public BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
@@ -130,7 +130,7 @@ public class NotificationService extends Service {
 
     //https://www.youtube.com/watch?v=0c4jRCm353c
     //https://developer.android.com/guide/components/bound-services.html
-    public class LocalBinder extends Binder {
+    private class LocalBinder extends Binder {
        public NotificationService getService() {
             // Return this instance of weatherService so clients can call public methods
             return NotificationService.this;

@@ -21,18 +21,18 @@ import examproject.group22.roominator.Models.User;
 import examproject.group22.roominator.R;
 
 public class SignUpActivity extends AppCompatActivity {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    SharedPreferences pref;
-    SharedPreferences.Editor prefEditor;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor prefEditor;
 
-    ImageView avatar;
-    Button createBtn;
-    EditText name;
-    EditText password;
-    DatabaseService db;
-    Bitmap photo;
-    User currentUser;
+    private ImageView avatar;
+    private Button createBtn;
+    private EditText name;
+    private EditText password;
+    private DatabaseService db;
+    private Bitmap photo;
+    private User currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    private BroadcastReceiver mReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
         {
