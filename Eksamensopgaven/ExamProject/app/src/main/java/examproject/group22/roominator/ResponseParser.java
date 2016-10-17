@@ -35,7 +35,7 @@ public class ResponseParser
 
     private ArrayList<User> getUsersFromJson(JSONArray users)
     {
-        ArrayList<User> usersArray = new ArrayList<User>();
+        ArrayList<User> usersArray = new ArrayList<>();
         try
         {
             for (int i = 0; i < users.length(); i++)
@@ -98,7 +98,7 @@ public class ResponseParser
 
     public ArrayList<Apartment> GetAllApartmentsNoGroceries(String response)
     {
-        ArrayList<Apartment> apartments = new ArrayList<Apartment>();
+        ArrayList<Apartment> apartments = new ArrayList<>();
         try{
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++)
@@ -157,8 +157,8 @@ public class ResponseParser
         return new Timestamp(date.getTime());
     }
 
-    private ArrayList<GroceryItem> parseGroceries(JSONArray groceries) throws JSONException, ParseException {
-        ArrayList<GroceryItem> groceryItemArrayList = new ArrayList<GroceryItem>();
+    private ArrayList<GroceryItem> parseGroceries(JSONArray groceries) throws JSONException {
+        ArrayList<GroceryItem> groceryItemArrayList = new ArrayList<>();
         for(int g = 0; g < groceries.length(); g++)
         {
             JSONObject currentGrocery = groceries.getJSONObject(g);

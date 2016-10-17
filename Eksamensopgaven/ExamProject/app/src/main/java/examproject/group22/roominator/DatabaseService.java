@@ -241,7 +241,7 @@ public class DatabaseService{
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_APARTMENTS;
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         params.put("Name",a.name);
         params.put("Pass",a.password);
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
@@ -280,7 +280,7 @@ public class DatabaseService{
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS+"/"+u.id;
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -409,7 +409,7 @@ public class DatabaseService{
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS;
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         params.put("Name",u.name);
         params.put("Pass",u.password);
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
@@ -433,7 +433,7 @@ public class DatabaseService{
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_USERS+"/"+u.id;
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         params.put("Id", Integer.toString(u.id));
         params.put("Name", u.name);
         params.put("Pass", u.password);
@@ -459,7 +459,7 @@ public class DatabaseService{
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES;
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         params.put("Name", name);
         params.put("Creation", parser.TIME_FORMAT.format(creation));
         params.put("ApartmentID", Integer.toString(apartmentID));
@@ -490,7 +490,7 @@ public class DatabaseService{
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+i.id;
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         params.put("Id", Integer.toString(i.id));
         params.put("Name", i.name);
         params.put("Price", Integer.toString(i.price));
@@ -513,11 +513,6 @@ public class DatabaseService{
                     }
         });
         queue.add(req);
-    }
-
-    public void setContext(Context c)
-    {
-        current_context = c;
     }
 
 }

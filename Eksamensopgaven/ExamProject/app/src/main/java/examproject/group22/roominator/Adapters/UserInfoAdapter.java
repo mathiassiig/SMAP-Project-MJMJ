@@ -28,7 +28,6 @@ public class UserInfoAdapter extends ArrayAdapter<User> {
     public UserInfoAdapter(Context context, ArrayList<User> users)
     {
         super(context, 0, users);
-        ArrayList<User> users1 = users;
     }
 
     @Override

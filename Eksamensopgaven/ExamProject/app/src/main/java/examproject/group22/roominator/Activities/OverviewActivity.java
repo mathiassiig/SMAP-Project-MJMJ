@@ -65,8 +65,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver,new IntentFilter(INTENT_UPDATE_ALL_DATA));
         Intent i = getIntent();
         currentApartmentID = i.getIntExtra("apartmentID", 0);
-        User u = (User)i.getSerializableExtra("User");
-        currentUser = u;
+        currentUser = (User)i.getSerializableExtra("User");
         startNotificationService(currentApartmentID);
         SetUpGui();
     }

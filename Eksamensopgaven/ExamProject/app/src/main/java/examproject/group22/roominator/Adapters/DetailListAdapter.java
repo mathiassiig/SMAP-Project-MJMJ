@@ -21,11 +21,9 @@ import examproject.group22.roominator.R;
 
 public class DetailListAdapter extends ArrayAdapter<GroceryItem>
 {
-    private final ArrayList<GroceryItem> groceryItems;
     public DetailListAdapter(Context context, ArrayList<GroceryItem> groceryItems)
     {
         super(context, 0, groceryItems);
-        this.groceryItems = groceryItems;
     }
 
     private final DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
