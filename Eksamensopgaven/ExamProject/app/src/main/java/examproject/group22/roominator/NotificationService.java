@@ -27,9 +27,6 @@ import examproject.group22.roominator.Models.GroceryItem;
 
 public class NotificationService extends Service {
     private static final int LOOP_TIME = 5;
-    private static final String SHARED_GROCERY_FILE = "Groceries";
-
-    private final IBinder binder = new LocalBinder();
 
     private SharedPreferences sharedPref;
     private int apartment_id;
@@ -125,15 +122,6 @@ public class NotificationService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return binder;
-    }
-
-    //https://www.youtube.com/watch?v=0c4jRCm353c
-    //https://developer.android.com/guide/components/bound-services.html
-    private class LocalBinder extends Binder {
-       public NotificationService getService() {
-            // Return this instance of weatherService so clients can call public methods
-            return NotificationService.this;
-        }
+        return null;
     }
 }

@@ -32,18 +32,14 @@ import examproject.group22.roominator.Adapters.UserInfoAdapter;
 
 public class UsersFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    ArrayList<User> userInfo;
-
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public Apartment currentApartment;
     private ListAdapter userAdapter;
     private ListView listView;
     private final ArrayList<User> users = new ArrayList<>();
     private UserItemClickListener mListener;
-    private TextView txtview_Total;
 
 
     public UsersFragment() {
@@ -96,7 +92,7 @@ public class UsersFragment extends Fragment implements AdapterView.OnItemClickLi
 
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-        txtview_Total = (TextView)view.findViewById(R.id.customUser_txtTotal);
+        TextView txtview_Total = (TextView) view.findViewById(R.id.customUser_txtTotal);
         listView = (ListView) view.findViewById(R.id.overviewList);
 
         userAdapter = new UserInfoAdapter(getContext(),users);

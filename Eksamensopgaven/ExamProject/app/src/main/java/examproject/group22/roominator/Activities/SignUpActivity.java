@@ -27,7 +27,6 @@ public class SignUpActivity extends AppCompatActivity {
     private SharedPreferences.Editor prefEditor;
 
     private ImageView avatar;
-    private Button createBtn;
     private EditText name;
     private EditText password;
     private DatabaseService db;
@@ -39,7 +38,6 @@ public class SignUpActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter(DatabaseService.INTENT_TRY_MAKING_NEW_USER));
         setContentView(R.layout.activity_sign_up);
         avatar = (ImageView)findViewById(R.id.avatar);
-        createBtn = (Button)findViewById(R.id.singUp_button);
         name = (EditText)findViewById(R.id.signup_name_txt);
         password = (EditText)findViewById(R.id.singUp_password_txt);
         db = DatabaseService.getInstance(getApplicationContext());

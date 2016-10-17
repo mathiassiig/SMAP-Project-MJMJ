@@ -5,32 +5,17 @@
     <string name="loginActivity">User login</string>
     <string name="loginApartmentActivity">Apartment login</string>
     <string name="SignUpActivity">Create user</string>
-    <string name="AddActivity">Add product</string>
-    <string name="BuyActivity">Buy product</string>
-
 
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Login</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
     <string name="error_login_apartmentPass">That apartment exists, but the password is wrong!</string>
     <string name="error_login_apartmentShortUser">Username must be at least 1 character</string>
     <string name="error_login_apartmentShortPass">Password must be at least 1 character</string>
     <string name="new_apartment">New Apartment?</string>
     <string name="apartment_notFound">Apartment not found. Create a new one with this name and password?</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_shopping_list">Shopping List</string>
     <string name="title_activity_add_product">Add Product</string>
     <string name="title_activity_buy_product">Buy Product</string>
-    <string name="title_activity_overview">Overview</string>
 
     <!-- Strings related to addProduct -->
     <string name="addproduct_txtName">Product:</string>
@@ -50,7 +35,6 @@
     <!-- Strings related to overviewActivity -->
     <string name="overview_btnShoppinglist">Shopping list</string>
     <string name="overview_btnUserList">Overview</string>
-    <string name="overview_btnUserProfile">Profile</string>
 
     <!-- Strings related to deleteUserFragment -->
     <string name="dialog_user_title">Do you want to remove the user from the apartment?</string>
@@ -67,17 +51,14 @@
     <string name="dialog_product_deleted">The product is deleted</string>
 
     <!-- Strings related to ProfileFragment -->
-    <string name="profile_lbName">Name:</string>
 
     <!-- Strings related to UsersInfoAdapter -->
     <string name="users_total">Paid:</string>
 
-    <string name="hello_blank_fragment"></string>
     <string name="signUp_password">Password</string>
     <string name="signUp_create_button">Create</string>
 
     <string name="apartment_name">Apartment</string>
-    <string name="addproduct_txtNumber">Pieces</string>
     <string name="menu_action_logout">Logout</string>
     <string name="username">Username</string>
 
