@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.IntentCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -246,7 +245,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
-        db.delete_user(currentApartment.users.get(userPos).id);
+        db.delete_user(currentApartment.users.get(userPos));
         Toast.makeText(this, R.string.dialog_user_deleted, Toast.LENGTH_LONG).show();
     }
 
@@ -277,5 +276,5 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     {
         super.onDestroy();
     }
-    
+
 }

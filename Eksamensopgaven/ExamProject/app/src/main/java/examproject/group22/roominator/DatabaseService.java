@@ -263,10 +263,44 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void delete_user(final int user_id)
+    public void delete_user(User u)
+    {
+        for(int i = 0; i < u.boughtByUser.size(); i++)
+        {
+            boolean Last = false;
+            if(i == u.boughtByUser.size()-1)
+                Last = true;
+            delete_grocery(u.boughtByUser.get(i).id, Last, u);
+        }
+    }
+
+    private void delete_user_itself(User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
-        String url = HOST_API+TABLE_USERS+"/"+user_id;
+        String url = HOST_API+TABLE_USERS+"/"+u.id;
+        Map<String,String> params = new HashMap<String, String>();
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        Send_GUI_UpdateRequest();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                String hello = error.getMessage();
+                Log.v("Hello", hello);
+            }
+        });
+        queue.add(req);
+    }
+
+    public void delete_grocery(final int grocery_id)
+    {
+        RequestQueue queue = Volley.newRequestQueue(current_context);
+        String url = HOST_API+TABLE_GROCERIES+"/"+grocery_id;
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -284,7 +318,7 @@ public class DatabaseService{
         queue.add(req);
     }
 
-    public void delete_grocery(final int grocery_id)
+    public void delete_grocery(final int grocery_id, final boolean LastBought, final User u)
     {
         RequestQueue queue = Volley.newRequestQueue(current_context);
         String url = HOST_API+TABLE_GROCERIES+"/"+grocery_id;
@@ -293,7 +327,8 @@ public class DatabaseService{
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        //TODO: ja det gik fint du hej
+                        if(LastBought)
+                            delete_user_itself(u);
                     }
                 }, new Response.ErrorListener() {
             @Override
