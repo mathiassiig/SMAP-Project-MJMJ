@@ -44,11 +44,11 @@
     <string name="overview_btnUserProfile">Profile</string>
 
     <!-- Strings related to deleteUserFragment -->
-    <string name="dialog_user_title">Do you want to delete user?</string>
+    <string name="dialog_user_title">Do you want to remove user?</string>
     <string name="dialog_user_message">The users data will be deleted permanently</string>
     <string name="dialog_user_btnCancel">Cancel</string>
     <string name="dialog_user_btnOK">OK</string>
-    <string name="dialog_user_deleted">The user is deleted</string>
+    <string name="dialog_user_deleted">The user is removed from the aparment</string>
 
     <!-- Strings related to deleteProductFragment -->
     <string name="dialog_product_message">Do you want to delete the product?</string>
