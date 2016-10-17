@@ -123,14 +123,7 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
         public void onReceive(Context context, Intent intent)
         {
             Apartment a = (Apartment)intent.getSerializableExtra("apartment");
-            /// gemmer til sharedpreferences
-            SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
-            SharedPreferences.Editor prefEditor = sharedPref.edit();
-            for (GroceryItem g:a.groceries)
-            {
-                prefEditor.putInt(Integer.toString(g.id),g.buyerID);
-            }
-            prefEditor.apply();
+            SaveToSP(a);
             ///
             currentApartment = a;
             unBoughts = new ArrayList<>();
@@ -140,6 +133,18 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
             UpdateGroceriesFragment(unBoughts);
         }
     };
+
+    private void SaveToSP(Apartment a)
+    {
+        SharedPreferences sharedPref = OverviewActivity.this.getSharedPreferences("Groceries",MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.clear();
+        for (GroceryItem g:a.groceries)
+        {
+            prefEditor.putInt(Integer.toString(g.id),g.buyerID);
+        }
+        prefEditor.apply();
+    }
 
     private BroadcastReceiver updateReceiver = new BroadcastReceiver() {
         @Override

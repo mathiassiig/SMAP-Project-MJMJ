@@ -75,7 +75,6 @@ public class DatabaseService{
                 try
                 {
                     Apartment a = parser.parseApartmentWithGroceries(response);
-                    saveGroceriesToPref(a.groceries);
                     sendApartmentWithGroceries(a, forService);
                 }
                 catch (ParseException e)
@@ -519,21 +518,6 @@ public class DatabaseService{
     public void setContext(Context c)
     {
         current_context = c;
-    }
-
-    public void saveGroceriesToPref(List<GroceryItem> groceries){
-        try {
-            SharedPreferences sharedPref = current_context.getSharedPreferences("Groceries", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            for (GroceryItem g : groceries) {
-                String id = Integer.toString(g.id);
-                String boughtStamp = g.boughtStamp.toString();
-                editor.putString(id, boughtStamp);
-                editor.apply();
-            }
-        }catch (Exception e){
-            Log.v("Debug",e.toString());
-        }
     }
 
 }
