@@ -67,7 +67,7 @@ public class ApartmentLogIn extends AppCompatActivity {
         currentUser = (User)i.getSerializableExtra("User");
     }
 
-    private void onClickLogInApartment(View view){
+    public void onClickLogInApartment(View view){
         String apartmentname = name.getText().toString();
         String apassword = password.getText().toString();
         if(apartmentname.equals(""))
