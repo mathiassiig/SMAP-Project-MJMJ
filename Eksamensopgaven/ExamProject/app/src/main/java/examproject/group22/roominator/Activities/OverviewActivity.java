@@ -214,8 +214,13 @@ public class OverviewActivity extends AppCompatActivity implements UsersFragment
     @Override
     public void onUserItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         userPos = position;
-        DialogFragment dialog= new DeleteUserFragment();
-        dialog.show(getSupportFragmentManager(),"DeleteUserDialogFragment");
+        User u = currentApartment.users.get(userPos);
+        if(u.id == currentUser.id)
+            Toast.makeText(this, R.string.dialog_user_cannot_delete, Toast.LENGTH_LONG).show();
+        else {
+            DialogFragment dialog = new DeleteUserFragment();
+            dialog.show(getSupportFragmentManager(), "DeleteUserDialogFragment");
+        }
     }
 
     @Override
