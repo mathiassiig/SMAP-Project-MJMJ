@@ -509,7 +509,7 @@ public class DatabaseService{
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-
+                        Send_GUI_UpdateRequest();
                     }
         });
         queue.add(req);
